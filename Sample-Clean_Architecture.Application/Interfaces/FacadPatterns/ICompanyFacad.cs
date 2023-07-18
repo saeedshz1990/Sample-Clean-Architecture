@@ -2,29 +2,29 @@
 {
     public interface ICompanyFacad
     {
-        IAddNewCompanyFinancialCycleServices AddNewCompanyFinancialCycleServices { get; }
+        //IAddNewCompanyFinancialCycleServices AddNewCompanyFinancialCycleServices { get; }
 
-        IAddNewCompanyBranchServices AddNewCompanyBranchServices { get; }
+        //IAddNewCompanyBranchServices AddNewCompanyBranchServices { get; }
 
-        IGetCompanyFinancialCycleServices GetCompanyFinancialCycleServices { get; }
+        //IGetCompanyFinancialCycleServices GetCompanyFinancialCycleServices { get; }
 
-        IGetCompanyBranchServices GetCompanyBranchServices { get; }
+        //IGetCompanyBranchServices GetCompanyBranchServices { get; }
        
-        IAddNewCompanyService AddNewCompanyService { get; }
-        IGetCompanyService GetCompanyService { get; }
+        //IAddNewCompanyService AddNewCompanyService { get; }
+        //IGetCompanyService GetCompanyService { get; }
        
-        IGetCompanyInfoService GetCompanyInfoService { get; }
+        //IGetCompanyInfoService GetCompanyInfoService { get; }
        
-        IGetCompanyFinancialCycleInfoService GetCompanyFinancialCycleInfoService { get; }
+        //IGetCompanyFinancialCycleInfoService GetCompanyFinancialCycleInfoService { get; }
        
-        IGetCompanyBranchInfoService GetCompanyBranchInfoService { get; }
+        //IGetCompanyBranchInfoService GetCompanyBranchInfoService { get; }
 
-        public IGetCompanyUsersServices GetCompanyUsersServices { get; }
+        //public IGetCompanyUsersServices GetCompanyUsersServices { get; }
 
-        public IAddNewCompanyUserServices AddNewCompanyUserServices { get; }
+        //public IAddNewCompanyUserServices AddNewCompanyUserServices { get; }
 
-        IGetCompanyUserInfoService GetCompanyUserInfoService { get; }
+        //IGetCompanyUserInfoService GetCompanyUserInfoService { get; }
 
-        public IDeleteCompanyUserService DeleteCompanyUserService { get; }
+        //public IDeleteCompanyUserService DeleteCompanyUserService { get; }
     }
 }
