@@ -8,7 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
+    <Folder Include="Services\Account\" />
+    <Folder Include="Services\Common\" />
+    <Folder Include="Services\Beneficiary\" />
+    <Folder Include="Services\Companies\" />
+    <Folder Include="Services\CostCenter\" />
+    <Folder Include="Services\Currencies\" />
+    <Folder Include="Services\ExchangeRate\" />
+    <Folder Include="Services\MemoryCash\" />
+    <Folder Include="Services\Vouchers\" />
+    <Folder Include="Services\Users\" />
+    <Folder Include="Services\SuffixPrefix\" />
+    <Folder Include="Services\Project\" />
   </ItemGroup>
 
 </Project>
