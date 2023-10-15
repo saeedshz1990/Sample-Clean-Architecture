@@ -22,4 +22,9 @@
     <Folder Include="Services\Project\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Sample-Clean_Architecture.Common\Sample-Clean_Architecture.Common.csproj" />
+    <ProjectReference Include="..\Sample-Clean_Architecture.Domain\Sample-Clean_Architecture.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -31,6 +31,8 @@ namespace Sample_Clean_Architecture.Common
         private readonly int _requestedLength;
         private readonly int _iterCount;
 
+        public object KeyDerivationPrf { get; private set; }
+
         public PasswordHasher()
         {
             _useAspNetCore = true;
