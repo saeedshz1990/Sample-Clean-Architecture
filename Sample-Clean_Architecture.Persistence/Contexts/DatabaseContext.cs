@@ -1,22 +1,44 @@
-﻿using Sample_Clean_Architecture.Application.Services.Account.Commands.AddNewAccountGroup;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Sample_Clean_Architecture.Application.Interfaces.Contexts;
+using Sample_Clean_Architecture.Application.Services.Account.Commands.AddNewAccountGroup;
 using Sample_Clean_Architecture.Application.Services.Account.Commands.AddNewAccountLedger;
 using Sample_Clean_Architecture.Application.Services.Account.Queries.GetAccount;
+using Sample_Clean_Architecture.Application.Services.Account.Queries.GetAccountGroup;
+using Sample_Clean_Architecture.Application.Services.Beneficiary.Commands.AddNewBenefeciary;
 using Sample_Clean_Architecture.Application.Services.Beneficiary.Queries.GetBenefeciaries;
+using Sample_Clean_Architecture.Application.Services.Common.Commands.UserProfile;
+using Sample_Clean_Architecture.Application.Services.Common.Queries.GetMenuItem;
 using Sample_Clean_Architecture.Application.Services.Companies.Commands.AddNewCompany;
+using Sample_Clean_Architecture.Application.Services.Companies.Commands.AddNewCompanyUser;
 using Sample_Clean_Architecture.Application.Services.Companies.Queries.GetCompanies;
+using Sample_Clean_Architecture.Application.Services.Companies.Queries.GetCompanyBranches;
 using Sample_Clean_Architecture.Application.Services.Companies.Queries.GetCompanyFinancialCycle;
+using Sample_Clean_Architecture.Application.Services.Companies.Queries.GetCompanyUsers;
 using Sample_Clean_Architecture.Application.Services.CostCenter.Commands.AddNewCostCenter;
+using Sample_Clean_Architecture.Application.Services.CostCenter.Queries.GetCostCenters;
 using Sample_Clean_Architecture.Application.Services.Currencies.Queries.GetCurrencies;
 using Sample_Clean_Architecture.Application.Services.ExchangeRate.Queries.GetExchangeRate;
 using Sample_Clean_Architecture.Application.Services.Project.Commands.AddNewProject;
+using Sample_Clean_Architecture.Application.Services.Project.Queries.GetProjects;
+using Sample_Clean_Architecture.Application.Services.SuffixPrefix.Queries.GetSuffixPrefix;
+using Sample_Clean_Architecture.Application.Services.SuffixPrefix.Queries.LoadSuffixPrefix;
+using Sample_Clean_Architecture.Application.Services.Users.Commands.UserChange;
+using Sample_Clean_Architecture.Application.Services.Users.Commands.UserForgot;
+using Sample_Clean_Architecture.Application.Services.Users.Commands.UserLogin;
+using Sample_Clean_Architecture.Application.Services.Users.Queries.GetUserAccesses;
+using Sample_Clean_Architecture.Application.Services.Users.Queries.GetUserBranchAccess;
 using Sample_Clean_Architecture.Application.Services.Vouchers.JournalVoucher.Commands.AddNewJournalVoucher;
 using Sample_Clean_Architecture.Application.Services.Vouchers.JournalVoucher.Queries.LoadJournalVoucher;
 using Sample_Clean_Architecture.Application.Services.Vouchers.PaymentVoucher.Queries.LoadPaymentlVoucher;
 using Sample_Clean_Architecture.Application.Services.Vouchers.Remittance.Queries.GetRemittanceForInsert;
 using Sample_Clean_Architecture.Application.Services.Vouchers.Remittance.Queries.LoadRemittance;
+using Sample_Clean_Architecture.Common;
 using Sample_Clean_Architecture.Common.Dtos;
+using Sample_Clean_Architecture.Domain.Entities.Users;
 using System.Data;
-
+using System.Data.SqlClient;
+using static Sample_Clean_Architecture.Common.Enums;
 
 namespace Sample_Clean_Architecture.Persistence.Contexts
 {

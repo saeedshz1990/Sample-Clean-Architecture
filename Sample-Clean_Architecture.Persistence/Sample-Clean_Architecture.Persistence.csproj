@@ -6,7 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
+	<ItemGroup>
+		<PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
+		<PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sample-Clean_Architecture.Application\Sample-Clean_Architecture.Application.csproj" />
   </ItemGroup>
