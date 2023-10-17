@@ -19,11 +19,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample-Clean_Architecture.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample-Clean_Architecture.Application", "Sample-Clean_Architecture.Application\Sample-Clean_Architecture.Application.csproj", "{3552C283-1DB5-4AE3-88D2-7EAF8E4D96FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample-Clean_Architecture.Common", "Sample-Clean_Architecture.Common\Sample-Clean_Architecture.Common.csproj", "{B994C9F0-A98C-4D46-9356-57C4C09C1133}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample-Clean_Architecture.Common", "Sample-Clean_Architecture.Common\Sample-Clean_Architecture.Common.csproj", "{B994C9F0-A98C-4D46-9356-57C4C09C1133}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample-Clean_Architecture.Infrastructure", "Sample-Clean_Architecture.Infrastructure\Sample-Clean_Architecture.Infrastructure.csproj", "{800B4757-011F-4800-8D38-53EDD0BFCA9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample-Clean_Architecture.Infrastructure", "Sample-Clean_Architecture.Infrastructure\Sample-Clean_Architecture.Infrastructure.csproj", "{800B4757-011F-4800-8D38-53EDD0BFCA9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample-Clean_Architecture.Persistence", "Sample-Clean_Architecture.Persistence\Sample-Clean_Architecture.Persistence.csproj", "{11E5C225-DDFA-4AE6-8A9A-A7E7AAC969F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample-Clean_Architecture.Persistence", "Sample-Clean_Architecture.Persistence\Sample-Clean_Architecture.Persistence.csproj", "{11E5C225-DDFA-4AE6-8A9A-A7E7AAC969F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample-Clean_Architecture.RestApi", "Sample-Clean_Architecture.RestApi\Sample-Clean_Architecture.RestApi.csproj", "{5AB0767C-6545-42EF-B72D-102CE7826A74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample-Clean_Architecture.Web", "Sample-Clean_Architecture.Web\Sample-Clean_Architecture.Web.csproj", "{F8438007-2CBF-4DB2-AA1C-FF3A6D30900D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +55,14 @@ Global
 		{11E5C225-DDFA-4AE6-8A9A-A7E7AAC969F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11E5C225-DDFA-4AE6-8A9A-A7E7AAC969F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11E5C225-DDFA-4AE6-8A9A-A7E7AAC969F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AB0767C-6545-42EF-B72D-102CE7826A74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AB0767C-6545-42EF-B72D-102CE7826A74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AB0767C-6545-42EF-B72D-102CE7826A74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AB0767C-6545-42EF-B72D-102CE7826A74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8438007-2CBF-4DB2-AA1C-FF3A6D30900D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8438007-2CBF-4DB2-AA1C-FF3A6D30900D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8438007-2CBF-4DB2-AA1C-FF3A6D30900D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8438007-2CBF-4DB2-AA1C-FF3A6D30900D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,6 +77,8 @@ Global
 		{B994C9F0-A98C-4D46-9356-57C4C09C1133} = {E0FDF089-F1B7-4C93-B939-20C89ED6F668}
 		{800B4757-011F-4800-8D38-53EDD0BFCA9E} = {0170F2BF-C646-49C2-86BC-DC8180518182}
 		{11E5C225-DDFA-4AE6-8A9A-A7E7AAC969F8} = {0170F2BF-C646-49C2-86BC-DC8180518182}
+		{5AB0767C-6545-42EF-B72D-102CE7826A74} = {CB3BF06B-58A0-4BF8-8744-ED6F5C9DE4E2}
+		{F8438007-2CBF-4DB2-AA1C-FF3A6D30900D} = {CB3BF06B-58A0-4BF8-8744-ED6F5C9DE4E2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6D968B94-93B0-4920-9E2E-5C879456B852}
