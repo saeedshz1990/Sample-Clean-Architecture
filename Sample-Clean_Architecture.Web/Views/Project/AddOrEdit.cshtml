@@ -1,0 +1,112 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model Demo.Web.Models.Project.ProjectInfoModel;
+
+@{
+    Layout = null;
+    ViewData["ButtonTitle"] = Model.Projects_Id > 0 ? "Update" : "Save";
+    ViewData["Project_Status"] = Model.Projects_Id > 0 ? Model.Projects_Status : 1;
+}
+<link rel="stylesheet" href="~/vendors/datepicker/daterangepicker.css">
+
+<form asp-action="AddOrEdit" asp-route-id="@Model.Projects_Id" method="POST" onsubmit="return jQueryAjaxPost(this);">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Projects_Id" />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Projects_Number" class="control-label"></label>
+                <input asp-for="Projects_Number" type="text" class="form-control" autofocus />
+                <span asp-validation-for="Projects_Number" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Projects_Name" class="control-label"></label>
+                <input asp-for="Projects_Name" type="text" class="form-control" autofocus />
+                <span asp-validation-for="Projects_Name" class="text-danger"></span>
+            </div>
+        </div>
+    </div><div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Projects_StartDate" class="control-label"></label>
+                <input type="text" asp-for="Projects_StartDate" placeholder="@ViewBag.DateFormat" class="form-control" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Projects_EndDate" class="control-label"></label>
+                <input type="text" asp-for="Projects_EndDate" placeholder="@ViewBag.DateFormat" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="CostCenter_Id" class="control-label"></label>
+                <select asp-for="CostCenter_Id" class="form-control select2" data-placeholder="select" asp-items="@ViewBag.CostCenter"></select>
+                <span asp-validation-for="CostCenter_Id" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Projects_Status" class="control-label"></label>
+                <select asp-for="Projects_Status" class="form-control select2" data-placeholder="select" asp-items="@ViewBag.ProjectStatus"></select>
+                <span asp-validation-for="Projects_Status" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label asp-for="Projects_Description" class="control-label"></label>
+                <input asp-for="Projects_Description" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+
+        @*<div class="col-md-2"></div>
+            <div class="col-md-8 text-center">
+                <button type="submit" class="btn btn-success btn-block">@ViewData["ButtonTitle"]</button>
+            </div>*@
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-8">
+                    <label class="control-label" style="color:@Model.OprMessage.Color">@Model.OprMessage.Message</label>
+                </div>
+                <div class="col-md-2">
+                    @*<input type="submit" value="Submit" class="btn btn-success btn-block" />*@
+                    <button type="submit" class="btn btn-success btn-block">@ViewData["ButtonTitle"]</button>
+                </div>
+                <div class="col-md-2 text-center">
+                    <input type="button" value="Close" class="btn btn-primary btn-block" onclick="jQueryAjaxCloseDialog('@Url.Action("Close","Project",null,Context.Request.Scheme)')" />
+                </div>
+            </div>
+        </div>
+   
+</form>
+<script type="text/javascript">
+
+            $(document).ready(function () {
+
+                var dateToday = new Date('2000/01/01');
+                $('input[name="Projects_StartDate"]').datepicker({
+                    dateFormat: "@ViewBag.DateFormat",
+                    minDate: dateToday,
+                    showOtherMonths: true,
+                    firstDay: 1
+                });
+
+                $('input[name="Projects_EndDate"]').datepicker({
+                    dateFormat: "@ViewBag.DateFormat",
+                    minDate: dateToday,
+                    showOtherMonths: true,
+                    firstDay: 1
+                });
+
+            });
+
+
+</script>

@@ -1,0 +1,205 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model Demo.Common.Dtos.InFormAccess
+
+<div class="col-md-12">
+    <h1 class="text-center"><i class="fas fa-comments-dollar text-success"></i> @localizer["PageTitle"] </h1>
+    <input type="hidden" asp-for="Insert_Row" />
+    <input type="hidden" asp-for="Edit_Row" />
+    <input type="hidden" asp-for="Delete_Row" />
+    <input type="hidden" id="account_group_id" value="@ViewBag.AccountGroupId" />
+    <input id="search-account-ledger" class="form-control search-input" placeholder="Plase enter ledger name" />
+    <br />
+    <div id="jstree-accunts"></div>
+</div>
+
+
+
+<script type="text/javascript">
+    "use strict";
+
+    var selectedData;
+
+    $(function () {
+        $('#jstree-accunts').jstree({
+
+            "plugins": ["contextmenu", "state", "types", "wholerow", "sort", "unique", "search"],
+
+            contextmenu: { items: null },
+            "search": {
+                "case_sensitive": false,
+                'show_only_matches': true
+            },
+            "core": {
+                "multiple": true,
+                "check_callback": true,
+                'data': {
+                    'url': '/Account/GetTreeJson',
+                    "type": "POST",
+                    "dataType": "JSON",
+                    'async': 'true',
+                    'data': function (node) {
+                        return {
+                            id: node.id,
+                            accountGroupId: $('#account_group_id').val(),
+                        };
+                    }
+                },
+                'themes': {
+                    'variant': 'small',
+                    "icons": false,
+                }
+            }
+        }).on('search.jstree', function (nodes, str, res) {
+
+            if (str.nodes.length === 0) {
+                $('#jstree-accunts').jstree(true).hide_all();
+                rebuildTree();
+            }
+        }).on('select_node.jstree', function (e, data) {
+
+            selectedData = data;
+        });
+    });
+    var treeLoadComplet = false;
+    function rebuildTree() {
+        $('.jstree-wholerow').prop('style', 'height:37px;border-top:1px solid lightgray;border-right:1px solid lightgray;border-left:1px solid lightgray');
+        $('.jstree-anchor').prop('style', 'height:auto;width:100%;margin-top:3px');
+
+        $('.jstree-icon').prop('style', 'margin-top:5px');
+    }
+     function showAccountPopup(id, kind) {
+            var account_group_id = $('#account_group_id').val();
+            var title = 'Add Account ';
+
+            switch (account_group_id) {
+                case '22':
+                    title += 'Supplier';
+                    break;
+                case '26':
+                    title += 'Customer';
+                    break;
+                default:
+                    title += 'Ledger';
+            }
+
+            switch (kind) {
+                case 'new':
+                    if ($('#Insert_Row').val() > 0)
+                        showInPopup('@Url.Action("AddOrEdit", "Account", null, Context.Request.Scheme)' + '/' + parseInt(id) * -1 , title);
+                    else
+                        alert('No Access');
+                    break;
+                case 'edit':
+                    if ($('#Edit_Row').val() > 0) {
+
+                        showInPopup('@Url.Action("AddOrEdit", "Account", null, Context.Request.Scheme)' +'/'+ id, title);
+                    }
+                    else
+                        alert('No Access');
+                    break;
+                case 'delete':
+                    if ($('#Delete_Row').val() > 0)
+                        jQueryAjaxDeleteWithParam(id, '@Url.Action("Delete", "Account Ledger", null, Context.Request.Scheme)');
+                    else
+                        alert('No Access');
+                    break;
+                case 'view':
+                    showInPopup('@Url.Action("ViewInfo", "Account", null, Context.Request.Scheme)' +'/'+ id, title+" Information");
+                    break;
+            }
+        }
+    $(document).ready(function () {
+
+        $(document).on('keyup', '#search-account-ledger', function () {
+            var search = $(this).val();
+
+            $('#jstree-accunts').jstree(true).show_all();
+            $('#jstree-accunts').jstree('search', search);
+            rebuildTree();
+        });
+        $('#jstree-accunts').bind('ready.jstree', function (e, data) {
+
+            $('#jstree-accunts').prop('style', 'border:1px solid lightgray');
+            rebuildTree();
+
+            treeLoadComplet = true;
+
+        })
+
+
+        //$(document).on('click', '#jstree-accunts .account-accounts .add-account-ledger', function (e) {
+        //    e.preventDefault();
+
+        //    $('#jstree-accunts .account-accounts .add-account-ledger').prop('disabled', true);
+
+        //    var account_group_id = $(this).parents().eq(3).attr('id');
+
+        //    var title = 'Add Account ';
+
+        //    switch ($('#account_group_id').val()) {
+        //        case '22':
+        //            title += 'Supplier';
+        //            break;
+        //        case '26':
+        //            title += 'Customer';
+        //            break;
+        //        default:
+        //            title += 'Ledger';
+        //    }
+
+        //    showInPopup("AddOrEdit/0/" + account_group_id, title);
+
+        //    setTimeout(function () {
+        //        $('#jstree-accunts .account-accounts .add-account-ledger').prop('disabled', false);
+        //    }, 1000);
+
+        //});
+
+        //$(document).on('click', '#jstree-accunts .account-accounts .edit-account-ledger', function (e) {
+        //    e.preventDefault();
+
+        //    $('#jstree-accunts .account-accounts .edit-account-ledger').prop('disabled', false);
+
+        //    var account_id = $(this).parents().eq(3).attr('id');
+
+        //    var title = 'Edit Account ';
+
+        //    switch ($('#account_group_id').val()) {
+        //        case '22':
+        //            title += 'Supplier';
+        //            break;
+        //        case '26':
+        //            title += 'Customer';
+        //            break;
+        //        default:
+        //            title += 'Ledger';
+        //    }
+
+        //    showInPopup("AddOrEdit/" + account_id + "/0", title);
+
+        //    setTimeout(function () {
+        //        $('#jstree-accunts .account-accounts .edit-account-ledger').prop('disabled', false);
+        //    }, 1000);
+        //});
+
+        //$(document).on('click', '#jstree-accunts .account-accounts .remove-account-ledger', function (e) {
+        //    e.preventDefault();
+
+        //    $('#jstree-accunts .account-accounts .remove-account-ledger').prop('disabled', false);
+        //    var account_id = $(this).parents().eq(3).attr('id');
+
+        //    swal({
+        //        title: "Are you sure?",
+        //        text: "Once deleted, you will not be able to recover this imaginary account!",
+        //        icon: "warning",
+        //        buttons: true,
+        //        dangerMode: true,
+        //    }).then(function (willDelete) {
+        //        if (willDelete) {
+        //            toastr.success('Account removed successfully!');
+        //            $('#jstree-accunts .account-accounts .remove-account-ledger').prop('disabled', false);
+        //        }
+        //    });
+        //});
+    });
+</script>

@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Demo.Web.Models.Companies.CompanyListModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="card">
+    <div class="card-body">      
+        <div id="view-all">
+            @await Html.PartialAsync("_ViewAll", Model)
+        </div>
+    </div>
+    </div>
+        @*@section Scripts{
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }*@

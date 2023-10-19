@@ -1,0 +1,78 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model Demo.Web.Models.Companies.CompanyUserModel
+
+@{ Layout = null; }
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="AddOrEdit" asp-route-id="@Model.CompanyUsers_Id" onsubmit="return jQueryAjaxPostL2(this);">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CompanyUsers_Id" />
+            <input type="hidden" asp-for="Company_Id" />
+
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+               
+                   
+                    @if (Model.CompanyUsers_Id == 0)
+                    {
+                <input asp-for="UserName" class="form-control" />
+                    }
+                    else{
+                    <input asp-for="UserName" class="form-control" readonly="readonly" />
+                    }
+
+              
+               
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="UserDescription" class="control-label"></label>
+                        @if (Model.CompanyUsers_Id == 0)
+        {
+                        <input asp-for="UserDescription" class="form-control" />
+                        }
+            else
+            {
+        <input asp-for="UserDescription" class="form-control" readonly="readonly" />
+            }
+
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="CompanyUserStatus" class="control-label"></label>
+                        <select asp-for="CompanyUserStatus" class="form-control ">
+                            <option value="Pending">Pending</option>
+                            <option value="Active">Active</option>
+                            <option value="Disable">Disable</option>
+                        </select>
+                        <span asp-validation-for="CompanyUserStatus" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="UserStatus" class="control-label"></label>
+                        <input asp-for="UserStatus"  class="form-control" readonly="readonly"/>
+                       
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-6 offset-md-3">
+                    <input type="submit" value="Submit" class="btn btn-primary btn-block" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

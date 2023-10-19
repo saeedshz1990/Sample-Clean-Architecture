@@ -1,0 +1,11 @@
+﻿@model IEnumerable<Demo.Web.Models.CostCenter.CostCenterModel>
+
+<div class="card">
+    <div class="card-body">
+        <div id="view-all">
+            @await Html.PartialAsync("_ViewAll", Model)
+        </div>
+    </div>
+</div>
+
+

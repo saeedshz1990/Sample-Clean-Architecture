@@ -1,0 +1,63 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model Demo.Web.Models.Currency.CurrencyInfoModel
+
+@{ Layout = null;
+    ViewData["ButtonTitle"] = Model.Currency_Id > 0 ? "Update" : "Save";
+    }
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="AddOrEdit" asp-route-id="@Model.Currency_Id" onsubmit="return jQueryAjaxPost(this);">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Currency_Id" />
+            <input type="hidden" asp-for="Company_Id" />
+
+            <div class="row">
+                <div class="col-md-12">
+                    <label asp-for="Currency_Name" class="control-label"></label>
+                    <input asp-for="Currency_Name" class="form-control" />
+                    <span asp-validation-for="Currency_Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Currency_Symbol" class="control-label"></label>
+                        <input asp-for="Currency_Symbol" class="form-control" />
+                        <span asp-validation-for="Currency_Symbol" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Currency_Subunit" class="control-label"></label>
+                        <input asp-for="Currency_Subunit" class="form-control" />
+                        <span asp-validation-for="Currency_Subunit" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="form-group">
+            <div class="col-md-6 offset-md-3">
+                <input type="submit" value="Submit" class="btn btn-primary btn-block" />
+            </div>
+        </div>*@
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-8">
+                        <label class="control-label" style="color:@Model.OprMessage.Color">@Model.OprMessage.Message</label>
+                    </div>
+                    <div class="col-md-2">
+                        @*<input type="submit" value="Submit" class="btn btn-success btn-block" />*@
+                        <button type="submit" class="btn btn-success btn-block">@ViewData["ButtonTitle"]</button>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <input type="button" value="Close" class="btn btn-primary btn-block" onclick="jQueryAjaxCloseDialog('@Url.Action("Close","Currency",null,Context.Request.Scheme)')" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

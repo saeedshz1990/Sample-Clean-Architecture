@@ -1,0 +1,102 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model IEnumerable<Demo.Web.Models.CostCenter.CostCenterModel>
+
+<div class="col-md-12">
+
+    <h1 class="text-center"><i class="fas fa-comments-dollar text-success"></i> @localizer["PageTitle"] </h1>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CostCenter_Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status_Description)
+                </th>
+                 
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                    <a onclick="showInPopup('@Url.Action("AddOrEdit","CostCenter",new {id=0},Context.Request.Scheme)','New Cost Center')" class="btn btn-success text-white"><i class="fa fa-plus"></i></a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+
+                        @Html.DisplayFor(modelItem => item.CostCenter_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status_Description)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.CostCenter_Id)
+                    </td>
+
+                    <td>
+                        @Html.HiddenFor(modelItem => item.CostCenter_Used)
+                    </td>
+
+                    <td>
+                        <div>
+                            <a onclick="showInPopup('@Url.Action("AddOrEdit","CostCenter",new {id=item.CostCenter_Id},Context.Request.Scheme)','Edit Cost Center')" class="btn btn-info text-white" title="Edit Suffix Prefix"><i class="fa fa-pencil"></i> </a>
+                            <a onclick="showInPopup('@Url.Action("Index","BranchUsers",new {id=item.CostCenter_Id,kind=2},Context.Request.Scheme)','Cost Center Users')" class="btn btn-primary text-white" title="Branch Users"><i class="fa fa-user"></i> </a>
+                            @if (item.CostCenter_Used == false)
+                            {
+                                @*<button type="submit" value="Delete" class="btn btn-danger" onclick="deleteCostcenter(@item.CostCenter_Id)"><i class="fa fa-trash"></i></button>*@
+                                <form asp-action="Delete" asp-route-id="@item.CostCenter_Id" onsubmit="return jQueryAjaxDelete(this)" class="d-inline">
+                                    <input type="hidden" asp-for="@item.CostCenter_Id" />
+                                    <button type="submit" value="Delete" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+
+                                </form>
+                            }
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+@*<script type="text/javascript">
+    function deleteCostcenter(id) {
+
+        try {
+
+            $.ajax({
+                type: 'POST',
+                url: '/CostCenter/Delete',
+                dataType: "JSON",
+                data: {
+                    Id: id
+                },
+
+                success: function (res) {
+
+                    if (res.isSuccess != undefined && res.isSuccess == false) {
+                        toastr.warning(res.message);
+                    } else
+                        if (res.isValid) {
+                            $('#view-all').html(res.html)
+
+                        }
+                        else
+                            toastr.warning('Error');
+                },
+                error: function (err) {
+                    console.log(err)
+                }
+            })
+            //to prevent default form submit event
+            return false;
+        } catch (ex) {
+            console.log(ex)
+        }
+
+    }
+</script>*@

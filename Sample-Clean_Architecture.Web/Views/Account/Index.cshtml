@@ -1,0 +1,37 @@
+﻿
+@model Demo.Common.Dtos.InFormAccess
+
+@{ ViewData["Title"] = "Index"; }
+<div class="card">
+    <div class="card-body">
+
+        <div id="view-all">
+            @await Html.PartialAsync("_ViewAll", Model)
+        </div>
+    </div>
+</div>
+@*@{
+        ViewData["Title"] = @localizer["PageTitle"] + " - Index";
+    }
+    <div class="card">
+        <div class="card-body">
+            <div id="view-all">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="text-center"><i class="fas fa-comments-dollar text-success"></i> @localizer["PageTitle"] </h1>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12 form-group pt-3">
+                                <input type="hidden" id="account_group_id" value="@ViewData["AccountGroupId"]" />
+                                <input id="search-account-ledger" class="form-control" placeholder="Plase enter ledger name" />
+                            </div>
+                            <div class="col-md-12">
+                                @await Html.PartialAsync("_ViewAll", Model)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@

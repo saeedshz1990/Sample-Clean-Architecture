@@ -1,0 +1,139 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model Demo.Web.Models.Account.AccountGroupModel
+@using Demo.Web;
+@{ Layout = null;
+    ViewData["ButtonTitle"] = Model.AccountGroup_Id > 0 ? "Update" : "Save";}
+
+<div class="row">
+    <div class="col-md-12" >
+        <form asp-action="AddOrEdit" asp-route-id="@Model.AccountGroup_Id" onsubmit="return jQueryAjaxPost(this);">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AccountGroup_Id" />
+            <input type="hidden" asp-for="Parent" />
+            <input type="hidden" asp-for="Company_Id" />
+
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                
+                        <input asp-for="Name" class="form-control" />
+               
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="AccountGroup_Id" class="control-label"></label>
+                        @if (ViewBag.HasChild == false || ViewBag.IsRoot == true)
+                        {
+                            <select asp-for="Parent" class="form-control" asp-items="@ViewBag.AccountGroups" onchange="fillNature(this.value)"></select>
+
+                        }
+
+                        else
+                        {
+                            <select asp-for="Parent" class="form-control" asp-items="@ViewBag.AccountGroups" disabled></select>
+
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Nature_Id" class="control-label"></label>
+
+                        @if (ViewBag.IsRoot == true)
+                        {
+                            <select asp-for="Nature_Id" class="form-control" asp-items="@ViewBag.Natures"></select>
+
+                        }
+                        else
+                        {
+                            <select asp-for="Nature_Id" class="form-control" asp-items="@ViewBag.Natures" disabled></select>
+
+                        }
+                        
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="GrossProfit" class="control-label"></label>
+                        @if (ViewBag.IsRoot == true)
+                        {
+                            <select asp-for="GrossProfit" class="form-control">
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+
+                        }
+                        else
+                        {
+                            <select asp-for="GrossProfit" class="form-control" disabled>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Narration" class="control-label"></label>
+                      
+                            <input asp-for="Narration" class="form-control" />
+                      
+                      
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-8">
+                        <label class="control-label" style="color:@Model.OprMessage.Color">@Model.OprMessage.Message</label>
+                    </div>
+                    <div class="col-md-2">
+                       
+                            <button type="submit" class="btn btn-success btn-block">@ViewData["ButtonTitle"]</button>
+                      
+                        </div>
+                    <div class="col-md-2 text-center">
+                        <input type="button" value="Close" class="btn btn-primary btn-block" onclick="jQueryAjaxCloseDialog('@Url.Action("Close","Account",null,Context.Request.Scheme)')" />
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="form-group">
+            <div class="col-md-6 offset-md-3">
+                @if (Model.Company_Id != 0)
+                {
+                    <input type="submit" value="Submit" class="btn btn-primary btn-block" />
+                }
+            </div>
+        </div>*@
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    function fillNature(accountGroup_Id) {
+        $.ajax({
+            url: '/AccountGroup/GetNatureJson',
+            type: "GET",
+            dataType: "JSON",
+            data: { id: accountGroup_Id },
+            success: function (res) {
+                $("#Nature_Id").val(res);
+               
+            }
+        });
+    }
+</script>

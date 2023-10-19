@@ -1,0 +1,74 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model Demo.Web.Models.Companies.CurrentDateModel
+
+@{ Layout = null; }
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="SetCurrentDate"  method="POST" id="save-current-date-form" onsubmit="SetCurrentDate">
+           
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="CurrentDate" class="control-label"></label>
+                        <input asp-for="CurrentDate" class="form-control" />
+                        <span asp-validation-for="CurrentDate" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary btn-block" />
+                        <input type="button" value="Reset" onclick="resetCurrentDate()" class="btn btn-success btn-block" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    function resetCurrentDate() {
+      
+
+            $.ajax({
+                url: '/Home/ResetCurrentDate',
+                type: "POST",
+                dataType: "JSON",
+                
+                success: function (res) {
+                    $('#CurrentDate').val(res);
+                   
+                }
+            });
+      }
+    
+ $(document).ready(function () {
+
+     $('#save-current-date-form').submit(function (e) {
+         e.preventDefault();
+         
+         var currDate = $('#CurrentDate').val();
+         $.ajax({
+             url: '/Home/SetCurrentDate',
+             type: "POST",
+             dataType: "JSON",
+             data: { currentDate: currDate },
+             success: function (res) {
+                 $('#lnkCurrentDate').html(res);
+                 $('#btnWorkday').val('WorkDay : '+ res);
+
+             }
+         });
+     });
+
+
+     
+     $('input[name="CurrentDate"]').datepicker({
+                    dateFormat: "@ViewBag.DateFormat",
+                    minDate: 0,
+                    showOtherMonths: true,
+                    firstDay: 1
+                    });
+                    });
+</script>

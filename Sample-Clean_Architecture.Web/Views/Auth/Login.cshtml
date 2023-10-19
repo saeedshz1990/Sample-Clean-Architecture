@@ -1,0 +1,122 @@
+﻿@model Demo.Web.Models.Auth.LoginModel;
+@{
+    Layout = null;
+    var returnUrl = @Context.Request.Query["returnurl"];
+}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/media/image/favicon.png" />
+
+    <!-- Plugin styles -->
+    <link rel="stylesheet" href="~/vendors/bundle.css" type="text/css">
+
+    <!-- App styles -->
+    <link rel="stylesheet" href="~/css/app.css" type="text/css">
+</head>
+
+<body class="form-membership">
+
+    <!-- begin::page loader-->
+    <div class="page-loader">
+        <div class="spinner-border"></div>
+    </div>
+    <!-- end::page loader -->
+
+    <div class="form-wrapper">
+
+        <!-- logo -->
+        <div class="logo">
+            <img src="~/media/image/logo-sm.png" alt="image">
+        </div>
+        <!-- ./ logo -->
+
+        <h5>Sign in </h5>
+        @if (ViewData["Message"] != null)
+        {
+            <div class="alert alert-success alert-with-border m-b-0" role="alert">
+                
+                <p>@ViewData["Message"]</p>
+            </div>
+            <br/>
+        }
+        <!-- form -->
+        <form asp-action="Login" asp-route-returnurl="@returnUrl">
+            <div class="form-group">
+                <input type="text" asp-for="@Model.UserName" class="form-control" placeholder="Username" required autofocus>
+            </div>
+            <div class="form-group">
+                <input type="password" asp-for="@Model.Password" class="form-control" placeholder="Password" required>
+            </div>
+            <div class="form-group d-flex justify-content-between">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" checked="" id="customCheck1">
+                    <label class="custom-control-label" for="customCheck1">Remember me</label>
+                </div>
+                @*<a href="recover-password.html">Reset password</a>*@
+                <a asp-controller="Auth" asp-action="Forgot" class="btn btn-outline-light btn-sm">Forgot Password ?</a>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+            <hr>
+            @*<p class="text-muted">Login with your social media account.</p>
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <a href="#" class="btn btn-floating btn-facebook">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" class="btn btn-floating btn-twitter">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" class="btn btn-floating btn-dribbble">
+                        <i class="fa fa-dribbble"></i>
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" class="btn btn-floating btn-linkedin">
+                        <i class="fa fa-linkedin"></i>
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" class="btn btn-floating btn-google">
+                        <i class="fa fa-google"></i>
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" class="btn btn-floating btn-behance">
+                        <i class="fa fa-behance"></i>
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" class="btn btn-floating btn-instagram">
+                        <i class="fa fa-instagram"></i>
+                    </a>
+                </li>
+            </ul>
+            <hr>*@
+            <p class="text-muted">Don't have an account?</p>
+            <a asp-controller="Auth" asp-action="Register" class="btn btn-outline-light btn-sm">Register now!</a>
+        </form>
+        <!-- ./ form -->
+
+    </div>
+
+    <!-- Plugin scripts -->
+    <script src="~/vendors/bundle.js"></script>
+
+    <!-- App scripts -->
+    <script src="~/js/app.js"></script>
+</body>
+
+</html>

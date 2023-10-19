@@ -1,0 +1,208 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model Demo.Common.Dtos.InFormAccess
+   
+<div class="col-md-12">
+    <h1 class="text-center"><i class="fas fa-comments-dollar text-success"></i> @localizer["PageTitle"] </h1>
+    <input type="hidden" asp-for="Insert_Row" />
+    <input type="hidden" asp-for="Edit_Row" />
+    <input type="hidden" asp-for="Delete_Row" />
+    <input id="search-input" class="form-control search-input" placeholder="Plase enter group name" />
+    <br />
+    <div id="jstree" >
+    </div>
+</div>
+<script type="text/javascript">
+
+
+    function customMenu(node) {
+        // The default set of all items
+        var items = {
+
+            createItem: {
+                label: "New",
+                _disabled: $('#Insert_Row').val() ==0,
+                action: function (node) {
+                    //if ($('#Insert_Row').val()>0)
+                    //    showInPopup("AddOrEdit/" + parseInt(selectedData.node.id) * -1, "Account Group");
+                    //else
+                    //    alert('No Access');
+                    showPopup(parseInt(selectedData.node.id), 'new')
+
+                }
+            },
+
+            renameItem: { // The "rename" menu item
+                label: "Edit",
+                _disabled: $('#Edit_Row').val() == 0,
+                action: function (node) {
+                    //if ($('#Edit_Row').val() > 0)
+                    //    showInPopup("AddOrEdit/" + selectedData.node.id, "Account Group");
+                    //else
+                    //    alert('No Access');
+                    showPopup(selectedData.node.id, 'edit')
+
+                }
+            },
+
+            deleteItem: {
+                label: "Delete",
+                _disabled: $('#Delete_Row').val() == 0,
+                action: function (node) {
+
+                    //if ($('#Delete_Row').val() > 0)
+                    //    showInPopup("DeleteConfirmed/" + selectedData.node.id, "Delete Account Group");
+                    //else
+                    //    alert('No Access');
+                    showPopup(selectedData.node.id, 'delete');
+
+
+                },
+            },
+            viewItem: { // The "view" menu item
+                label: "View",
+
+                action: function (node) {
+
+                   // showInPopup("ViewInfo/" + selectedData.node.id, "Account Group Information");
+                    showPopup(selectedData.node.id, 'view')
+                }
+            }
+
+        };
+
+        if (parseInt( $(node)[0].li_attr.data) == 0) {
+            // Delete the "delete" menu item
+            delete items.deleteItem;
+            delete items.renameItem;
+        }
+        if ($(node)[0].id == '0') {
+            // Delete the "delete" menu item
+            delete items.deleteItem;
+            delete items.renameItem;
+            delete items.viewItem;
+            delete items.createItem;
+
+        }
+
+        return items;
+    }
+    var selectedData;
+
+    function showPopup(id,kind) {
+        switch (kind) {
+            case 'new':
+                if ($('#Insert_Row').val() > 0)
+                    showInPopup("AddOrEdit/" + parseInt(id) * -1, "Account Group");
+                else
+                    alert('No Access');
+                break;
+            case 'edit':
+                if ($('#Edit_Row').val() > 0)
+                    showInPopup("AddOrEdit/" + id, "Account Group");
+                else
+                    alert('No Access');
+                break;
+            case 'delete':
+                if ($('#Delete_Row').val() > 0)
+                    jQueryAjaxDeleteWithParam( id,'@Url.Action("Delete", "AccountGroup", null, Context.Request.Scheme)');
+                else
+                    alert('No Access');
+                break;
+            case 'view':
+                showInPopup("ViewInfo/" + id, "Account Group Information");
+                break;
+        }
+    }
+
+    $(function () {
+        $('#jstree').jstree({
+
+            "plugins": ["contextmenu", "state", "types", "wholerow", "sort", "unique", "search"],
+
+            contextmenu: { items: customMenu },
+            "search": {
+                "case_sensitive": false,
+                'show_only_matches': true
+
+            },
+            "core": {
+                "multiple": true,
+                "check_callback": true,
+              
+                'data': {
+                    'url': '/AccountGroup/GetTreeJson',
+                    "type": "POST",
+                    "dataType": "json",
+                    "contentType": "application/json; charset=utf8",
+                    'data': function (node) {
+                        return {
+                            'id': node.id,
+                        };
+                    }
+                },
+
+                'themes': {
+                    'variant': 'small'
+                }
+
+            }
+        }).on('search.jstree', function (nodes, str, res) {
+
+            if (str.nodes.length === 0) {
+                $('#jstree').jstree(true).hide_all();
+     rebuildTree();
+            }
+        }).on('select_node.jstree', function (e, data) {
+
+            selectedData = data;
+            //if (treeLoadComplet == true) {
+            //    $('#jstree .btn-group').hide();
+            //    $('#div_' + data.node.id).show();
+            //}
+
+        }).on('open_node.jstree', function (e, data) {
+
+            rebuildTree();
+
+        }).on('hover_node.jstree', function (e, data) {
+            //if (treeLoadComplet == true) {
+            //    $('#jstree .btn-group').hide();
+            //    $('#div_' + selectedData.node.id).show();
+            //    $('#div_' + data.node.id).show();
+            //}
+        });
+    });
+
+
+    var treeLoadComplet = false;
+    function rebuildTree() {
+        $('.jstree-wholerow').prop('style', 'height:37px;border-top:1px solid lightgray;border-right:1px solid lightgray;border-left:1px solid lightgray');
+        $('.jstree-anchor').prop('style', 'height:auto;width:100%;margin-top:3px');
+
+        $('.jstree-icon').prop('style', 'margin-top:5px');
+    }
+    $(document).ready(function () {
+
+
+        $(".search-input").keyup(function () {
+            var searchString = $(this).val();
+
+            $('#jstree').jstree(true).show_all();
+            $('#jstree').jstree('search', searchString);
+            rebuildTree();
+        });
+
+        $('#jstree').bind('ready.jstree', function (e, data) {
+           
+            $('#jstree').prop('style', 'border:1px solid lightgray');
+            rebuildTree();
+          
+            treeLoadComplet = true;
+            
+        })
+
+    });
+
+</script>
+
+@*<script src="~/js/accountGroupTree.js"></script>*@

@@ -1,0 +1,371 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model Demo.Web.Models.Companies.CompanyModel
+
+@{ Layout = null;
+    ViewData["ButtonTitle"] = Model.CompanyId > 0 ? "Update" : "Save";
+    }
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="AddOrEdit" id="frm1" asp-route-id="@Model.CompanyId" onsubmit="return jQueryAjaxPost(this);">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CompanyId" />
+            <input type="hidden" asp-for="Company_LedgerInserted" />
+
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="BussinessName" class="control-label"></label>
+                        <input asp-for="BussinessName" class="form-control" />
+                        <span asp-validation-for="BussinessName" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <label asp-for="AliasName" class="control-label"></label>
+                        <input asp-for="AliasName" class="form-control" />
+                        <span asp-validation-for="AliasName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="CurrencyAutoupdate" class="control-label"></label>
+                        <input asp-for="CurrencyAutoupdate" class="form-control" />
+                        @*<span asp-validation-for="AliasName" class="text-danger"></span>*@
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Address" class="control-label"></label>
+                        <textarea asp-for="Address" class="form-control"></textarea>
+                        @*<span asp-validation-for="Address" class="text-danger"></span>*@
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="PhoneNo" class="control-label"></label>
+                        <input asp-for="PhoneNo" class="form-control" />
+                        @*<span asp-validation-for="PhoneNo" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Fax" class="control-label"></label>
+                        <input asp-for="Fax" class="form-control" />
+                        @*<span asp-validation-for="Fax" class="text-danger"></span>*@
+                    </div>
+                </div>
+                @*<div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Amount" class="control-label"></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                        </div>
+                        <input asp-for="Amount" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
+            </div>*@
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" placeholder="Example:DumiSoft@@Gmail.Com" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Mobile" class="control-label"></label>
+                        <input asp-for="Mobile" class="form-control" />
+                        <span asp-validation-for="Mobile" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Web" class="control-label"></label>
+                        <input asp-for="Web" class="form-control" />
+                        @*<span asp-validation-for="Web" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Country_Id" class="control-label"></label>
+                        <select asp-for="Country_Id" class="form-control select2" data-placeholder="select" asp-items="@ViewBag.Countries" onchange="SetCurrencyInfo(this)"></select>
+                        @*<span asp-validation-for="Country_Id" class="text-danger"></span>*@
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="CurrencyName" class="control-label"></label>
+                        @if (@Model.CompanyId == 0)
+                        {
+                            <select asp-for="Country_Currency_Id" class="form-control select2" data-placeholder="select" asp-items="@ViewBag.CountryCurrencies" onchange="setSubCurrency(this)"></select>
+                        }
+                        else
+                        {
+                            <input asp-for="CurrencyName" class="form-control" readonly="readonly" />
+                        }
+
+                        @*<span asp-validation-for="CurrencyName" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="SubCurrency" class="control-label"></label>
+                        @if (@Model.CompanyId == 0)
+                        {
+                            @*<select asp-for="Country_Id" id="drpSubCurrency" class="form-control select2" data-placeholder="select" asp-items="@ViewBag.CurrencySubunits"></select>*@
+                            <input asp-for="SubCurrency" class="form-control" />
+                        }
+                        else
+                        {
+                            <input asp-for="SubCurrency" class="form-control" readonly="readonly" />
+                        }
+                        @*<span asp-validation-for="CurrencySymbol" class="text-danger"></span>*@
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="DateFormats_Id" class="control-label"></label>
+                        <select asp-for="DateFormats_Id" class="form-control" asp-items="@ViewBag.DateFormats" onchange="rebuildDatepicker()"></select>
+                        @*<span asp-validation-for="DateFormats_Id" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="DateSeperator" class="control-label"></label>
+                        <select asp-for="DateSeperator" class="form-control">
+                            <option value="1">/</option>
+                            <option value="2">-</option>
+                            <option value="3">.</option>
+
+                        </select>
+                        @*<span asp-validation-for="DateSeperator" class="text-danger"></span>*@
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="CompanyLogo" class="control-label"></label>
+                                <input asp-for="CompanyLogo" accept="image/*" class="file-upload" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="data:image/png;base64,@Model.CompanyLogoBase64" class="rounded-circle" height="80" width="80" id="imgLogo" asp-append-version="true" />
+                        </div>
+                    </div>
+                    @*<label asp-for="CompanyLogo" class="control-label"></label>*@
+                    @*<span asp-validation-for="CompanyLogo" class="text-danger"></span>*@
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="PostalCode" class="control-label"></label>
+                        <input asp-for="PostalCode" class="form-control" />
+                        @*<span asp-validation-for="PostalCode" class="text-danger"></span>*@
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="TransactionType" class="control-label"></label>
+                        <select asp-for="TransactionType" class="form-control">
+                            <option value="1">End Less</option>
+                            <option value="2">Yearly Base</option>
+                        </select>
+                        @*<span asp-validation-for="TransactionType" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="TransactionStart" class="control-label"></label>
+                        <input asp-for="TransactionStart" class="form-control" />
+                        @*<span asp-validation-for="TransactionStart" class="text-danger"></span>*@
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Tax1" class="control-label"></label>
+                        <input asp-for="Tax1" class="form-control" />
+                        @*<span asp-validation-for="Tax1" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Tax2" class="control-label"></label>
+                        <input asp-for="Tax2" class="form-control" />
+                        @*<span asp-validation-for="Tax2" class="text-danger"></span>*@
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Tax3" class="control-label"></label>
+                        <input asp-for="Tax3" class="form-control" />
+                        @*<span asp-validation-for="Tax3" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @if (@Model.Company_LedgerInserted == false)
+                        {
+                            <label asp-for="DefaultLedgerId" class="control-label"></label>
+                            <select asp-for="DefaultLedgerId" class="form-control" asp-items="@ViewBag.DefaultLedgers"></select>}
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-8">
+                        <label class="control-label" style="color:@Model.OprMessage.Color">@Model.OprMessage.Message</label>
+                    </div>
+                    <div class="col-md-2">
+                        @*<input type="submit" value="Submit" class="btn btn-success btn-block" />*@
+                        <button type="submit" class="btn btn-success btn-block">@ViewData["ButtonTitle"]</button>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <input type="button" value="Close" class="btn btn-primary btn-block" onclick="jQueryAjaxCloseDialog('@Url.Action("Close","Company",null,Context.Request.Scheme)')" />
+                    </div>
+                </div>
+            </div>
+        </form>
+        @*<form asp-action="Close" onsubmit="return jQueryAjaxCloseDialog(this)" class="d-inline">
+
+            <input type="submit" value="Close" class="btn btn-primary btn-block" />
+        </form>*@
+    </div>
+</div>
+
+
+
+
+<script>
+    function rebuildDatepicker() {
+
+        var dateformat = $('#DateFormats_Id').find("option:selected").text().replace(/\s/g, '/').toLowerCase().replace('yyyy', 'yy');
+
+            //var transactionStart = $('#TransactionStart').val();
+            //var yy = transactionStart.substring(olddateformat.indexOf('yy'), olddateformat.indexOf('yy')+4);
+            //var mm = transactionStart.substring(olddateformat.indexOf('mm'), olddateformat.indexOf('mm')+2);
+            //var dd = transactionStart.substring(olddateformat.indexOf('dd'), olddateformat.indexOf('dd')+2);
+            //transactionStart = dateformat.replace('yy', yy).replace('mm', mm).replace('dd', dd);
+            //$('#TransactionStart').val(transactionStart);
+            //olddateformat = dateformat;
+
+        $('input[name="TransactionStart"]').datepicker("option", "dateFormat", dateformat);
+
+    }
+    var olddateformat;
+    $(document).ready(function () {
+        var dateToday = new Date('2000/01/01');
+        //$('input[name="single-date-picker"]').daterangepicker({
+        //    singleDatePicker: true,
+        //    showDropdowns: true
+        //});
+         olddateformat = $('#DateFormats_Id').find("option:selected").text().replace(/\s/g, '/').toLowerCase().replace('yyyy', 'yy');
+        $('input[name="TransactionStart"]').datepicker({
+            dateFormat: olddateformat,
+            minDate: dateToday,
+            showOtherMonths: true,
+            firstDay: 1
+        });
+        //rebuildDatepicker();
+        CompanyLogo.onchange = evt => {
+            const [file] = CompanyLogo.files
+            if (file) {
+                imgLogo.src = URL.createObjectURL(file)
+            }
+        }
+        if ($('.select2').length > 0) {
+            $('.select2').each(function () {
+
+                if ($(this).attr('data-select2-id') == undefined) {
+                    $(this).select2({
+                        placeholder: $(this).data('placeholder'),
+                    })
+                }
+            });
+        }
+        setSubCurrency();
+        //var countries = [
+        //    "Afghanistan",
+        //    "Albania",
+        //    "Algeria",
+        //    "AmericanSamoa",
+        //    "Andorra",
+        //    "Angola",
+        //    "Anguilla",
+        //    "Antigua&Barbuda",
+        //    "Argentina",
+        //    "Armenia",
+        //    "Aruba",
+        //    "Australia",
+        //    "Austria"];
+        //$("#CurrencyName").autocomplete({
+        //    source: '/Company/test',
+        //    appendTo: $('#frm1')
+        //});
+
+        @*$("#CurrencyName").autocomplete({
+            source: JSON.parse("@Html.Raw(ViewBag.CurrencyLst)"),
+            appendTo: $('#frm1')
+        });
+        $("#CurrencySymbol").autocomplete({
+            source: JSON.parse("@Html.Raw(ViewBag.SymbolLst)"),
+            appendTo: $('#frm1')
+        });*@
+
+    });
+    function SetCurrencyInfo(ctrl) {
+       // debugger;
+        $('#Country_Currency_Id').val($(ctrl).val()).trigger('change');
+        setSubCurrency();
+       
+    }
+    function setSubCurrency() {
+          var currencySubunitLst = JSON.parse("@Html.Raw(ViewBag.currencySubunitLst)");
+       // $("#Country_Currency_Id option:selected").text();
+        var countryCurrency_Id =parseInt( $('#Country_Currency_Id').val());
+        var currencySubunit = currencySubunitLst.find(x => x.country_Id === countryCurrency_Id).currency_Subunit;
+        $('#SubCurrency').val(currencySubunit);
+    }
+    
+</script>

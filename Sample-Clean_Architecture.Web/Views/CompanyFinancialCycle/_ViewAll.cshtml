@@ -1,0 +1,62 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model IEnumerable<Demo.Web.Models.Companies.CompanyFinancialCycleModel>
+
+
+<div class="col-md-12 ">
+    <h1 class="text-center"><i class="fas fa-comments-dollar text-success"></i> @localizer["PageTitle"] </h1>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FinancialCycle_Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FinancialCycle_FromDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FinancialCycle_ToDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FinancialCycle_isActive)
+                </th>
+
+                <th>
+                    <a onclick="showInPopupL2('@Url.Action("AddOrEdit","CompanyFinancialCycle",new {id=0,cId=ViewBag.Company_Id},Context.Request.Scheme)','New Company Financial Cycle')" class="btn btn-success text-white"><i class="fa fa-plus"></i></a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FinancialCycle_Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FinancialCycle_FromDate)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.FinancialCycle_ToDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FinancialCycle_isActive)
+                </td>
+
+
+                <td>
+                    <div>
+                        <a onclick="showInPopupL2('@Url.Action("AddOrEdit","CompanyFinancialCycle",new {id=item.FinancialCycle_Id,cId=item.Company_Id},Context.Request.Scheme)','Update Company Financial Cycle')" class="btn btn-info text-white" title="Edit Company Financial Cycle"><i class="fa fa-pencil"></i> </a>
+                        <form asp-action="Delete" asp-route-id="@item.FinancialCycle_Id" onsubmit="return jQueryAjaxDeleteL2(this)" class="d-inline">
+                            <input type="hidden" asp-for="@item.Company_Id" />
+                            <input type="hidden" asp-for="@item.FinancialCycle_Id" />
+                            @*<input type="submit" value="Delete" class="btn btn-danger"  />*@
+                        </form>
+                       
+                    </div>
+                </td>
+            </tr>
+}
+        </tbody>
+    </table>
+</div>

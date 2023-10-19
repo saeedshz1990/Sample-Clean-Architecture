@@ -1,0 +1,111 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model DumiSoft.Web.Models.Companies.CompanyViewModel;
+
+@{
+    ViewData["Title"] = "Add product";
+    ViewData["IsAuthPage"] = false;
+    ViewData["Menu"] = "add-product";
+   
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Overview</h6>
+                <form id="productForm">
+                    <div class="form-group">
+                        <label asp-for="BussinessName">BussinessName </label>
+                        <input type="text" asp-for="BussinessName" class="form-control" id="BussinessName">
+                        <span asp-validation-for="BussinessName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="basicInput"> Brand </label>
+                        <input type="text" class="form-control" id="Brand">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="basicInput"> Price</label>
+                        <input type="number" class="form-control" id="Price" name="Price">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="basicInput"> Inventory</label>
+                        <input type="number" class="form-control" id="Inventory">
+                    </div>
+
+
+                    <div class="form-group form-check">
+                        <label for="basicInput">Show In Site </label>
+                        <input type="checkbox" class="form-control" id="Displayed">
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="basicInput">Categories </label>
+
+                        <select class="form-control" id="Category" asp-items="@ViewBag.Categories"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="basicInput"> Description</label>
+                        <textarea id="Description" class="form-control " rows="5"></textarea>
+                    </div>
+                    <a id="btnAddProduct" class="btn btn-primary"> AddProduct  </a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script type="text/javascript">
+
+        "use scrict";
+
+        $(window).on('load', function () {
+            $(document).on('click', '#btnAddProduct', function (e) {
+
+                e.preventDefault();
+                alert('');
+
+                var data = new FormData();
+
+                //دریافت مقادیر از تکس باکس ها و....
+                data.append("Name", $("#Name").val());
+                data.append("Brand", $("#Brand").val());
+                data.append("Price", $("#Price").val());
+                data.append("Inventory", $("#Inventory").val());
+                data.append("Displayed", $("#Displayed").attr("checked") ? true : false);
+                data.append("CategoryId", $('#Category').find('option:selected').val());
+                data.append("Description", $("#Description").val());
+
+
+                // ارسال اطلاعات به کنترلر
+                var ajaxRequest = $.ajax({
+                    type: "POST",
+                    url: "../Products/AddNewProduct",
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
+                    },
+                    success: function (data) {
+
+                        if (data.isSuccess == true) {
+
+                            alert(data.message);
+                        }
+                        else {
+
+                            alert('Fail');
+                        }
+
+                    }
+                }).done(function (xhr, textStatus) {
+                    // Do other operation
+                });
+            });
+        });
+    </script>

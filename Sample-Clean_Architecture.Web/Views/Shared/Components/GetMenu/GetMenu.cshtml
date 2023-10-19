@@ -1,0 +1,67 @@
+﻿@using Demo.Application.Services.Common.Queries.GetMenuItem;
+@model List<MenuItemDto>
+@{
+    Layout = null;
+    bool isFirst = true;
+    bool childIsFirst = true;
+}
+
+@if (Model != null)
+{
+    <div class="navigation-icon-menu">
+        <ul>
+            @foreach (var item in Model)
+            {
+                @if (item.ParentId == 0)
+                {
+                    <li class="@(isFirst==true ? "active" : "")" title="@item.Title">
+                        <a href="@item.Url" title="@item.Title">
+                            <i class="icon ti-pie-chart"></i>
+                        </a>
+                    </li>
+                    isFirst = false;
+                }
+            }
+        </ul>
+    </div>
+    <div class="navigation-menu-body">
+
+        @foreach (var item in Model)
+        {
+            @if (item.ParentId == 0)
+            {
+                @if (item.Childs != null && item.Childs.Count() > 0)
+                {
+                    <ul id="@item.Id" class="@(childIsFirst==true ? "navigation-active" : "")">
+                        <li class="navigation-divider">@item.Title</li>
+                        @foreach (var itemChild in item.Childs)
+                        {
+                            @if (itemChild.Childs.Count() > 0)
+                            {
+                                childIsFirst = false;
+                                <li>
+                                    <a href="#"> @itemChild.Title</a>
+                                    <ul>
+                                        @foreach (var itemChildL2 in itemChild.Childs)
+                                        {
+                                            <li>
+                                                <a href="@itemChildL2.Url">@itemChildL2.Title </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a href="@itemChild.Url" class="@(childIsFirst==true ? "active" : "")"> @itemChild.Title</a>
+                                </li>
+                                childIsFirst = false;
+                            }
+                        }
+                    </ul>
+                }
+            }
+        }
+    </div>
+}

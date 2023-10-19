@@ -1,0 +1,834 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+@{
+    ViewData["Title"] = "Dashboard";
+    ViewData["IsAuthPage"] = false;
+    ViewData["Menu"] = "dashboard";
+   
+}
+
+<link rel="stylesheet" href="~/vendors/datepicker/daterangepicker.css">
+<link rel="stylesheet" href="~/vendors/slick/slick.css">
+<link rel="stylesheet" href="~/vendors/slick/slick-theme.css">
+<link rel="stylesheet" href="~/vendors/vmap/jqvmap.min.css">
+
+<div class="card">
+    <div class="card-body">
+        <div class="card-title d-flex justify-content-between align-items-center">
+            <h6>Sales Channels</h6>
+            <div class="slick-single-arrows">
+                <a class="btn btn-outline-light btn-sm">
+                    <i class="ti-angle-left"></i>
+                </a>
+                <a class="btn btn-outline-light btn-sm">
+                    <i class="ti-angle-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="row slick-single-item">
+            <div class="col-xl-3 col-lg-6 col-lg-6 col-sm-12">
+                <div class="card border mb-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div>
+                                <div class="icon-block icon-block-sm bg-danger icon-block-floating mr-2">
+                                    <i class="fa fa-money"></i>
+                                </div>
+                            </div>
+                            <span class="text-uppercase font-size-11">All Sales</span>
+                            <h2 class="mb-0 ml-auto font-weight-bold text-danger">$18M</h2>
+                        </div>
+                        <div class="progress" style="height: 5px">
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: 71%" aria-valuenow="71" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-lg-6 col-sm-12">
+                <div class="card border mb-0">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div>
+                                <div class="icon-block icon-block-sm bg-success icon-block-floating mr-2">
+                                    <i class="fa fa-globe"></i>
+                                </div>
+                            </div>
+                            <span class="text-uppercase font-size-11">Direct</span>
+                            <h2 class="mb-0 ml-auto font-weight-bold text-success">$35.5M</h2>
+                        </div>
+                        <div class="progress" style="height: 5px">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 39%" aria-valuenow="39" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-lg-6 col-sm-12">
+                <div class="card border mb-0">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <div class="icon-block icon-block-sm bg-info icon-block-floating mr-2">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                            </div>
+                            <span class="text-uppercase font-size-11">Phone</span>
+                            <h2 class="mb-0 ml-auto font-weight-bold text-info">$5.2M</h2>
+                        </div>
+                        <div class="progress" style="height: 5px">
+                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-lg-6 col-sm-12">
+                <div class="card border mb-0">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <div class="icon-block icon-block-sm bg-facebook icon-block-floating mr-2">
+                                    <i class="fa fa-facebook"></i>
+                                </div>
+                            </div>
+                            <span class="text-uppercase font-size-11">Facebook</span>
+                            <h2 class="mb-0 ml-auto font-weight-bold text-facebook">$5M</h2>
+                        </div>
+                        <div class="progress" style="height: 5px">
+                            <div class="progress-bar bg-facebook" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-lg-6 col-sm-12">
+                <div class="card border mb-0">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <div class="icon-block icon-block-sm bg-whatsapp icon-block-floating mr-2">
+                                    <i class="fa fa-whatsapp"></i>
+                                </div>
+                            </div>
+                            <span class="text-uppercase font-size-11">Whatsapp</span>
+                            <h2 class="mb-0 ml-auto font-weight-bold text-whatsapp">$5M</h2>
+                        </div>
+                        <div class="progress" style="height: 5px">
+                            <div class="progress-bar bg-whatsapp" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-lg-6 col-sm-12">
+                <div class="card border mb-0">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <div class="icon-block icon-block-sm bg-instagram icon-block-floating mr-2">
+                                    <i class="fa fa-instagram"></i>
+                                </div>
+                            </div>
+                            <span class="text-uppercase font-size-11">Instagram</span>
+                            <h2 class="mb-0 ml-auto font-weight-bold text-instagram">$5M</h2>
+                        </div>
+                        <div class="progress" style="height: 5px">
+                            <div class="progress-bar bg-instagram" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-lg-6 col-sm-12">
+                <div class="card border mb-0">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <div class="icon-block icon-block-sm bg-google icon-block-floating mr-2">
+                                    <i class="fa fa-instagram"></i>
+                                </div>
+                            </div>
+                            <span class="text-uppercase font-size-11">Google</span>
+                            <h2 class="mb-0 ml-auto font-weight-bold text-google">$5M</h2>
+                        </div>
+                        <div class="progress" style="height: 5px">
+                            <div class="progress-bar bg-google" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-lg-6 col-sm-12">
+                <div class="card border mb-0">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <div class="icon-block icon-block-sm bg-warning icon-block-floating mr-2">
+                                    <i class="fa fa-star"></i>
+                                </div>
+                            </div>
+                            <span class="text-uppercase font-size-11">Other</span>
+                            <h2 class="mb-0 ml-auto font-weight-bold text-warning">$5M</h2>
+                        </div>
+                        <div class="progress" style="height: 5px">
+                            <div class="progress-bar bg-warning-gradient" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-6 col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Reports</h6>
+                <div class="row mb-4">
+                    <div class="col-xl-6 col-md-12 text-primary">
+                        <h5 class="font-size-23">$560.234,076</h5>
+                        <h6 class="text-uppercase font-size-11">Total Sales</h6>
+                    </div>
+                    <div class="col-xl-6 col-md-12 text-success">
+                        <h5 class="font-size-23">$620,076</h5>
+                        <h6 class="text-uppercase font-size-11">Average</h6>
+                    </div>
+                </div>
+                <canvas id="chart_demo_1"></canvas>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-6 col-md-12">
+                <div class="card">
+                    <div class="card-header">Total Customers</div>
+                    <div class="card-body text-center">
+                        <div class="mb-2">
+                            <span class="bar-1">2,5,9,6,5,2,4,3,7,5</span>
+                        </div>
+                        <div class="font-size-40 mb-2 font-weight-bold text-primary">1.241</div>
+                        <p class="m-b-0">
+                            <i class="fa fa-caret-up text-primary m-r-5"></i> 23% increase in Last week
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-md-12">
+                <div class="card">
+                    <div class="card-header">Average Order Value</div>
+                    <div class="card-body text-center">
+                        <div class="mb-2">
+                            <span class="bar-3">2,5,9,6,5,2,4,3,7,5</span>
+                        </div>
+                        <div class="font-size-40 mb-2 font-weight-bold text-success">$732.52</div>
+                        <p class="m-b-0">
+                            <i class="fa fa-caret-down text-danger m-r-5"></i> 4 lead less than last week
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                Sales Channels
+                <ul class="list-inline">
+                    <li class="list-inline-item mb-0">
+                        <a href="#" class="js-card-refresh link-1">
+                            <i class="fa fa-refresh"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item mb-0">
+                        <div class="dropdown">
+                            <a href="#" class="link-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="#" class="dropdown-item">Action</a>
+                                <a href="#" class="dropdown-item">Another action</a>
+                                <a href="#" class="dropdown-item">Something else here</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="mb-5 text-center">
+                    <div class="position-relative">
+                        <div id="sales-circle-graphic" class="circle"></div>
+                        <div class="position-absolute a-0 d-flex flex-column align-items-center justify-content-center">
+                            <h3 class="m-b-0">65%</h3>
+                            <span class="font-size-11 text-uppercase">Average</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <h6>Google</h6>
+                    <div class="d-flex align-items-center">
+                        <div class="progress flex-grow-1" style="height: 5px">
+                            <div class="progress-bar bg-google" role="progressbar" style="width: 42%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <span class="small m-l-10">42%</span>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <h6>Instagram</h6>
+                    <div class="d-flex align-items-center">
+                        <div class="progress flex-grow-1" style="height: 5px">
+                            <div class="progress-bar bg-instagram" role="progressbar" style="width: 34%;" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <span class="small m-l-10">34%</span>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <h6>Whatsapp</h6>
+                    <div class="d-flex align-items-center">
+                        <div class="progress flex-grow-1" style="height: 5px">
+                            <div class="progress-bar bg-whatsapp" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <span class="small m-l-10">60%</span>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <h6>Facebook</h6>
+                    <div class="d-flex align-items-center">
+                        <div class="progress flex-grow-1" style="height: 5px">
+                            <div class="progress-bar bg-facebook" role="progressbar" style="width: 20%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <span class="small m-l-10">20%</span>
+                    </div>
+                </div>
+                <div>
+                    <h6>Linkedin</h6>
+                    <div class="d-flex align-items-center">
+                        <div class="progress flex-grow-1" style="height: 5px">
+                            <div class="progress-bar bg-linkedin" role="progressbar" style="width: 30%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <span class="small m-l-10">30%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-6 col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Regional Sales</h6>
+                <canvas id="chart_demo_9"></canvas>
+                <div class="row">
+                    <div class="col-md-4 mt-3">
+                        <h5 class="font-size-23 text-primary font-weight-bold">$134.234,076</h5>
+                        <h6 class="text-uppercase font-size-11 mb-0">Total Sales</h6>
+                    </div>
+                    <div class="col-md-4 mt-3">
+                        <h5 class="font-size-23 text-warning font-weight-bold">$1.620,076</h5>
+                        <h6 class="text-uppercase font-size-11 mb-0">Average</h6>
+                    </div>
+                    <div class="col-md-4 mt-3">
+                        <h5 class="font-size-23 text-danger font-weight-bold">$20,076</h5>
+                        <h6 class="text-uppercase font-size-11 mb-0">Return</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-body d-flex justify-content-between align-items-center flex-lg-row">
+                    <span>
+                        <span class="icon-block bg-success icon-block-floating icon-block-sm m-r-10">
+                            <i class="fa fa-download font-size-16"></i>
+                        </span>
+                        Report prepared. You can download it now
+                    </span>
+                    <a href="#" class="btn btn-sm btn-light btn-uppercase">Download</a>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">Product Sales</div>
+            <div class="card-body">
+                <div class="m-b-20 d-flex align-items-center">
+                    <div class="icon-block icon-block-outline-success icon-block-floating m-r-10">
+                        <i class="fa fa-cube font-size-18"></i>
+                    </div>
+                    <h2 class="m-0 font-weight-bold">65,353</h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="m-b-10">
+                            4,324
+                            <small class="text-uppercase font-size-11 m-l-5">Total Price</small>
+                        </h3>
+                        <div class="progress m-b-10" style="height: 5px;">
+                            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <i class="fa fa-caret-up text-success"></i> 10% decrease
+                    </div>
+                    <div class="col-md-6">
+                        <h3 class="m-b-10">
+                            2,214
+                            <small class="text-uppercase font-size-11 m-l-5">Total Stock</small>
+                        </h3>
+                        <div class="progress m-b-10" style="height: 5px;">
+                            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <i class="fa fa-caret-down text-danger"></i> 14% increases
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">Purchase Status</div>
+            <div class="card-body">
+                <div class="m-b-20 d-lg-flex justify-content-between align-items-center">
+                    <ul class="list-inline m-l-5">
+                        <li class="list-inline-item text-uppercase font-size-11">
+                            <i class="fa fa-circle text-success m-r-5"></i> Success
+                        </li>
+                        <li class="list-inline-item text-uppercase font-size-11">
+                            <i class="fa fa-circle text-danger m-r-5"></i> Return
+                        </li>
+                    </ul>
+                    <div class="reportrange btn btn-outline-light">
+                        <i class="ti-calendar m-r-10"></i>
+                        <span></span>
+                        <i class="ti-angle-down m-l-10"></i>
+                    </div>
+                    <div class="d-lg-none d-sm-block mb-4"></div>
+                </div>
+                <canvas id="chart_demo_3"></canvas>
+                <div class="row mt-4">
+                    <div class="col-xl-6 col-lg-12">
+                        <div class="card card-body text-success bg-success-bright text-center mb-2">
+                            <h5 class="font-size-23 font-weight-bold">$234.076</h5>
+                            <h6 class="text-uppercase font-size-11 m-b-0">Total Sales</h6>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-12">
+                        <div class="card card-body bg-danger-bright text-danger text-center mb-2">
+                            <h5 class="font-size-23 font-weight-bold">$20.076</h5>
+                            <h6 class="text-uppercase font-size-11 m-b-0">Return</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title">Your Most Recent Earnings</h6>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center m-b-20">
+                            <div class="icon-block m-r-15 icon-block-lg icon-block-outline-success text-success">
+                                <i class="fa fa-bar-chart"></i>
+                            </div>
+                            <div>
+                                <h6 class="text-uppercase font-size-11">Gross Earnings</h6>
+                                <h4 class="m-b-0">$1,958,104</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center m-b-20">
+                            <div class="icon-block m-r-15 icon-block-lg icon-block-outline-danger  text-danger">
+                                <i class="fa fa-hand-lizard-o"></i>
+                            </div>
+                            <div>
+                                <h6 class="text-uppercase font-size-11">Tax Withheld</h6>
+                                <h4 class="m-b-0">$234,769</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center m-b-20">
+                            <div class="icon-block m-r-15 icon-block-lg icon-block-outline-warning text-warning">
+                                <i class="fa fa-dollar"></i>
+                            </div>
+                            <div>
+                                <h6 class="text-uppercase font-size-11">Net Earnings</h6>
+                                <h4 class="m-b-0">$1,608,469</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table m-b-0">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Sales Count</th>
+                                <th>Gross Earnings</th>
+                                <th>Tax Withheld</th>
+                                <th class="text-right">Net Earnings</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>03/15/2018</td>
+                                <td>1,050</td>
+                                <td class="text-success">+ $32,580.00</td>
+                                <td class="text-danger">- $3,023.10</td>
+                                <td class="text-right">$28,670.90</td>
+                            </tr>
+                            <tr>
+                                <td>03/14/2018</td>
+                                <td>780</td>
+                                <td class="text-success">+ $30,065.10</td>
+                                <td class="text-danger">- $2,780.00</td>
+                                <td class="text-right">$26,930.40</td>
+                            </tr>
+                            <tr>
+                                <td>03/13/2018</td>
+                                <td>1.980</td>
+                                <td class="text-success">+ $30,065.10</td>
+                                <td class="text-danger">- $2,780.00</td>
+                                <td class="text-right">$26,930.40</td>
+                            </tr>
+                            <tr>
+                                <td>03/12/2018</td>
+                                <td>300</td>
+                                <td class="text-success">+ $30,065.10</td>
+                                <td class="text-danger">- $2,780.00</td>
+                                <td class="text-right">$26,930.40</td>
+                            </tr>
+                            <tr>
+                                <td>03/11/2018</td>
+                                <td>940</td>
+                                <td class="text-success">+ $30,065.10</td>
+                                <td class="text-danger">- $2,780.00</td>
+                                <td class="text-right">$26,930.40</td>
+                            </tr>
+                            <tr>
+                                <td>03/10/2018</td>
+                                <td>1.280</td>
+                                <td class="text-success">+ $30,065.10</td>
+                                <td class="text-danger">-$2,780.00</td>
+                                <td class="text-right">$26,930.40</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-6 col-md-12">
+        <div class="card">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <span>Income Distribution</span>
+                <div class="dropdown">
+                    <a class="btn btn-outline-light btn-sm" href="#" data-toggle="dropdown">
+                        USA <i class="ti-angle-down m-l-5"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="#" class="dropdown-item">USA</a>
+                        <a href="#" class="dropdown-item">Germany</a>
+                        <a href="#" class="dropdown-item">France</a>
+                        <a href="#" class="dropdown-item">Italy</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="vmap_usa_en" style="height: 300px"></div>
+                <div class="table-responsive">
+                    <table class="table table-borderless m-b-0">
+                        <thead>
+                            <tr>
+                                <th class="wd-40">States</th>
+                                <th class="wd-25 text-right">Orders</th>
+                                <th class="wd-35 text-right">Earnings</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="tx-medium">California</td>
+                                <td class="text-right">12,201</td>
+                                <td class="text-right text-success">$150,200.80</td>
+                            </tr>
+                            <tr>
+                                <td class="tx-medium">Texas</td>
+                                <td class="text-right">11,950</td>
+                                <td class="text-right text-success">$138,910.20</td>
+                            </tr>
+                            <tr>
+                                <td class="tx-medium">Wyoming</td>
+                                <td class="text-right">11,198</td>
+                                <td class="text-right text-success">$132,050.00</td>
+                            </tr>
+                            <tr>
+                                <td class="tx-medium">Florida</td>
+                                <td class="text-right">9,885</td>
+                                <td class="text-right text-success">$127,762.10</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                New Customers
+                <a href="#" class="js-card-refresh link-1">
+                    <i class="fa fa-refresh"></i>
+                </a>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex align-items-center p-l-r-0">
+                        <figure class="avatar avatar-sm avatar-state-success m-r-15">
+                            <span class="avatar-title bg-primary rounded-circle">V</span>
+                        </figure>
+                        <div>
+                            <h6 class="m-b-0">Valentine Maton</h6>
+                            <small class="text-muted">Engineer</small>
+                        </div>
+                        <div class="dropdown ml-auto">
+                            <a href="#" data-toggle="dropdown" class="btn btn-primary btn-sm" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="#" class="dropdown-item">View</a>
+                                <a href="#" class="dropdown-item">Send Message</a>
+                                <a href="#" class="dropdown-item">Assign</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex align-items-center p-l-r-0">
+                        <figure class="avatar avatar-sm avatar-state-success m-r-15">
+                            <img src="~/media/image/avatar.jpg" class="rounded-circle" alt="image">
+                        </figure>
+                        <div>
+                            <h6 class="m-b-0">Holmes Cherryman</h6>
+                            <small class="text-muted">Human resources</small>
+                        </div>
+                        <div class="dropdown ml-auto">
+                            <a href="#" data-toggle="dropdown" class="btn btn-primary btn-sm" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="#" class="dropdown-item">View</a>
+                                <a href="#" class="dropdown-item">Send Message</a>
+                                <a href="#" class="dropdown-item">Assign</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex align-items-center p-l-r-0">
+                        <figure class="avatar avatar-sm avatar-state-success m-r-15">
+                            <span class="avatar-title bg-primary rounded-circle">AE</span>
+                        </figure>
+                        <div>
+                            <h6 class="m-b-0">Malanie Hanvey</h6>
+                            <small class="text-muted">Real estate agent</small>
+                        </div>
+                        <div class="dropdown ml-auto">
+                            <a href="#" data-toggle="dropdown" class="btn btn-primary btn-sm" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="#" class="dropdown-item">View</a>
+                                <a href="#" class="dropdown-item">Send Message</a>
+                                <a href="#" class="dropdown-item">Assign</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex align-items-center p-l-r-0">
+                        <figure class="avatar avatar-sm avatar-state-success m-r-15">
+                            <span class="avatar-title bg-dark rounded-circle">KC</span>
+                        </figure>
+                        <div>
+                            <h6 class="m-b-0">Kenneth Hune</h6>
+                            <small class="text-muted">Engineer</small>
+                        </div>
+                        <div class="dropdown ml-auto">
+                            <a href="#" data-toggle="dropdown" class="btn btn-primary btn-sm" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="#" class="dropdown-item">View</a>
+                                <a href="#" class="dropdown-item">Send Message</a>
+                                <a href="#" class="dropdown-item">Assign</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <a href="#" class="btn btn-block text-center text-uppercase font-size-11 p-b-0">
+                    View All
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-6 col-md-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                Daily Task List
+                <a href="#" class="js-card-refresh link-1">
+                    <i class="fa fa-refresh"></i>
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="custom-control custom-checkbox-success custom-checkbox todo-item">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                    <label class="custom-control-label d-flex justify-content-between" for="customCheck1">
+                        Talk
+                        to new customers
+                        <small class="text-muted font-size-11">13 May 2019</small>
+                    </label>
+                </div>
+                <div class="custom-control custom-checkbox-success custom-checkbox-success custom-checkbox todo-item">
+                    <input type="checkbox" class="custom-control-input" id="customCheck2" checked>
+                    <label class="custom-control-label d-flex justify-content-between" for="customCheck2">
+                        Older
+                        users will be deleted from
+                        the system
+                        <small class="text-muted font-size-11">20 Apr 2019</small>
+                    </label>
+                </div>
+                <div class="custom-control custom-checkbox-success custom-checkbox todo-item">
+                    <input type="checkbox" class="custom-control-input" id="customCheck3">
+                    <label class="custom-control-label d-flex justify-content-between" for="customCheck3">
+                        Assignment
+                        will be
+                        completed
+                        <small class="text-muted font-size-11">13 May 2019</small>
+                    </label>
+                </div>
+                <div class="custom-control custom-checkbox-success custom-checkbox todo-item">
+                    <input type="checkbox" class="custom-control-input" id="customCheck4" checked>
+                    <label class="custom-control-label d-flex justify-content-between" for="customCheck4">
+                        Customer
+                        notes
+                        <small class="text-muted font-size-11">10 Jan 2018</small>
+                    </label>
+                </div>
+                <div class="custom-control custom-checkbox-success custom-checkbox todo-item">
+                    <input type="checkbox" class="custom-control-input" id="customCheck5">
+                    <label class="custom-control-label d-flex justify-content-between" for="customCheck5">
+                        Clear
+                        old log records and backup
+                        will be taken
+                        <small class="text-muted font-size-11">13 May 2019</small>
+                    </label>
+                </div>
+                <div class="custom-control custom-checkbox custom-checkbox-success todo-item">
+                    <input type="checkbox" class="custom-control-input" id="customCheck6">
+                    <label class="custom-control-label d-flex justify-content-between" for="customCheck6">
+                        Talk
+                        to new customers
+                        <small class="text-muted font-size-11">27 Feb 2019</small>
+                    </label>
+                </div>
+                <div class="custom-control custom-checkbox-success custom-checkbox todo-item">
+                    <input type="checkbox" class="custom-control-input" id="customCheck7" checked>
+                    <label class="custom-control-label d-flex justify-content-between" for="customCheck7">
+                        Older
+                        users will be deleted from
+                        the system
+                        <small class="text-muted font-size-11">13 May 2019</small>
+                    </label>
+                </div>
+                <form class="mt-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" aria-label="Example text with button addon" placeholder="New task" aria-describedby="button-addon1">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button" id="button-addon1">Add</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                Users Assigned to Me
+                <a href="#" class="js-card-refresh link-1">
+                    <i class="fa fa-refresh"></i>
+                </a>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex align-items-center p-l-r-0">
+                        <figure class="avatar avatar-sm m-r-15">
+                            <span class="avatar-title bg-success rounded-circle">E</span>
+                        </figure>
+                        <div>
+                            <h6 class="m-b-0">Emma Maton</h6>
+                            <small class="text-muted">Engineer</small>
+                        </div>
+                        <span class="badge badge-danger ml-auto">Denied</span>
+                    </li>
+                    <li class="list-group-item d-flex align-items-center p-l-r-0">
+                        <figure class="avatar avatar-sm m-r-15">
+                            <span class="avatar-title bg-danger rounded-circle">K</span>
+                        </figure>
+                        <div>
+                            <h6 class="m-b-0">Kevin Cherryman</h6>
+                            <small class="text-muted">Human resources</small>
+                        </div>
+                        <span class="badge badge-success ml-auto">Completed</span>
+                    </li>
+                    <li class="list-group-item d-flex align-items-center p-l-r-0">
+                        <figure class="avatar avatar-sm m-r-15">
+                            <span class="avatar-title bg-warning rounded-circle">SA</span>
+                        </figure>
+                        <div>
+                            <h6 class="m-b-0">Sarah Hanvey</h6>
+                            <small class="text-muted">Real estate agent</small>
+                        </div>
+                        <span class="badge badge-warning ml-auto">Pending</span>
+                    </li>
+                    <li class="list-group-item d-flex align-items-center p-l-r-0">
+                        <figure class="avatar avatar-sm m-r-15">
+                            <span class="avatar-title bg-info rounded-circle">T</span>
+                        </figure>
+                        <div>
+                            <h6 class="m-b-0">Thomas Hune</h6>
+                            <small class="text-muted">Engineer</small>
+                        </div>
+                        <span class="badge badge-success ml-auto">Completed</span>
+                    </li>
+                </ul>
+                <a href="#" class="btn btn-block text-center text-uppercase font-size-11 p-b-0">
+                    View All
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chartjs -->
+<script src="~/vendors/charts/chartjs/chart.min.js"></script>
+
+<!-- Circle progress -->
+<script src="~/vendors/circle-progress/circle-progress.min.js"></script>
+
+<!-- Peity -->
+<script src="~/vendors/charts/peity/jquery.peity.min.js"></script>
+<script src="~/js/examples/charts/peity.js"></script>
+
+<!-- Datepicker -->
+<script src="~/vendors/datepicker/daterangepicker.js"></script>
+
+<!-- Slick -->
+<script src="~/vendors/slick/slick.min.js"></script>
+
+<!-- Vamp -->
+<script src="~/vendors/vmap/jquery.vmap.min.js"></script>
+<script src="~/vendors/vmap/maps/jquery.vmap.usa.js"></script>
+<script src="~/js/examples/vmap.js"></script>
+
+<!-- Dashboard scripts -->
+<script src="~/js/examples/dashboard.js"></script>
+<div class="colors">
+    <!-- To use theme colors with Javascript -->
+    <div class="bg-primary"></div>
+    <div class="bg-primary-bright"></div>
+    <div class="bg-secondary"></div>
+    <div class="bg-secondary-bright"></div>
+    <div class="bg-info"></div>
+    <div class="bg-info-bright"></div>
+    <div class="bg-success"></div>
+    <div class="bg-success-bright"></div>
+    <div class="bg-danger"></div>
+    <div class="bg-danger-bright"></div>
+    <div class="bg-warning"></div>
+    <div class="bg-warning-bright"></div>
+</div>

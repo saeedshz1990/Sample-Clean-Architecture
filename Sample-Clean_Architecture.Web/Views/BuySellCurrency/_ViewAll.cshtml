@@ -1,0 +1,924 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model Demo.Web.Models.Rimittance.BuySellCurrencyModel
+@{
+    IEnumerable<SelectListItem> accountLedgers = (IEnumerable<SelectListItem>)ViewBag.AccountLedgers;
+    IEnumerable<SelectListItem> customerAccountList = (IEnumerable<SelectListItem>)ViewBag.CustomerAccountList;
+    IEnumerable<SelectListItem> types = (IEnumerable<SelectListItem>)ViewBag.Types;
+    IEnumerable<SelectListItem> buyingcurrencies = (IEnumerable<SelectListItem>)ViewBag.BuyingCurrencies;
+    IEnumerable<SelectListItem> currencies = (IEnumerable<SelectListItem>)ViewBag.Currencies;
+}
+
+
+<div class="card">
+    <div class="card-body">
+        <div class="col-md-12">
+            @*<h1 class="text-center"><i class="fas fa-comments-dollar text-success"></i> @localizer["PageTitle"] </h1>*@
+            <form asp-action="Index" onsubmit="return jQueryAjaxPost(this);">
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="VoucherType" />
+
+                <input type="hidden" asp-for="Remittance_AmountDecimalNo" />
+                <input type="hidden" asp-for="Remittance_BalanceDifference" />
+                <input type="hidden" asp-for="Remittance_BalanceDifferenceLedger" />
+                <input type="hidden" asp-for="Remittance_RateDecimalNo" />
+                
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label asp-for="InvoiceNo" class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-8">
+                                <input asp-for="InvoiceNo" class="form-control" readonly  />
+                                <span asp-validation-for="InvoiceNo" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label asp-for="VoucherDate" class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-8">
+                                <input asp-for="VoucherDate" class="form-control" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group  row">
+                            <label asp-for="RefNo" class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-8">
+                                <input asp-for="RefNo" class="form-control" />
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-8">
+                        <div class="form-group row">
+
+                            <label asp-for="LedgerAccount_Id" class="col-sm-2 col-form-label"></label>
+                            <div class="col-sm-10">
+                                <select asp-for="LedgerAccount_Id" class="form-control  select2" data-placeholder="select" asp-items="@ViewBag.customerAccountList" onchange="rebuildDropdown(this)"></select>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label asp-for="RefNo2" class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-8">
+                                <input asp-for="RefNo2" class="form-control" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            @if (@Model.VoucherType == 65)
+                            {
+                                <label asp-for="BuyingCurrency_Id" class="col-sm-4 col-form-label"></label>
+                            }
+                            else
+                            { <label asp-for="BuyingCurrency_IdLable" class="col-sm-4 col-form-label"></label>}
+                            <div class="col-sm-8">
+                                <select asp-for="BuyingCurrency_Id" class="form-control select2" data-placeholder="select" asp-items="@ViewBag.CurrenciesWithoutDefault" onchange="loadRemittanceCurrencies(this)"></select>
+                                <span asp-validation-for="BuyingCurrency_Id" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label asp-for="BuyingAmount" class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-8">
+                                <input asp-for="BuyingAmount" class="form-control" onchange="calculateForm()" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label asp-for="BuyingExchangeRate" class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-8">
+                                <input asp-for="BuyingExchangeRate" class="form-control" onkeypress="calculateForm()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label asp-for="BuyingRemark" class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-8">
+                                <input asp-for="BuyingRemark" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label asp-for="BuyingType" class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-8">
+                                <input asp-for="BuyingType" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label id="lblTMN_AED" class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-8">
+                                <input asp-for="TMN_AED" class="form-control" onkeypress="calculateForm()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            @if (@Model.VoucherType == 65)
+                            {
+                                <label asp-for="SellingCurrency_Id" class="col-sm-4 col-form-label"></label>
+                            }
+                            else
+                            {
+                                <label asp-for="SellingCurrency_IdLable" class="col-sm-4 col-form-label"></label>
+                            }
+                            <div class="col-sm-8">
+                                <select asp-for="SellingCurrency_Id" class="form-control select2" data-placeholder="select" asp-items="@ViewBag.Currencies" onchange="setRate(this.value,2)"></select>
+                                <span asp-validation-for="SellingCurrency_Id" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label asp-for="SellingAmount" class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-8">
+                                <input asp-for="SellingAmount" class="form-control" onchange="calculateForm()" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label asp-for="SellingExchangeRate" class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-8">
+                                <input asp-for="SellingExchangeRate" class="form-control"  onchange="calculateForm()"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group row">
+                            <label asp-for="SellingRemark" class="col-sm-2 col-form-label"></label>
+                            <div class="col-sm-10">
+                                <input asp-for="SellingRemark" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label asp-for="SellingType" class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-8">
+                                <input asp-for="SellingType" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="Rate-tab" data-toggle="tab" href="#Rate" role="tab" aria-controls="Rate" aria-selected="true">Available Rate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="Other-tab" data-toggle="tab" href="#Other" role="tab" aria-controls="Other" aria-selected="false">Other Charges</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="Extra-tab" data-toggle="tab" href="#Extra" role="tab" aria-controls="Extra" aria-selected="false">Extra</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="Rates-tab" data-toggle="tab" href="#Rates" role="tab" aria-controls="Rates" aria-selected="false">Available Rates</a>
+                    </li>
+
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="Rate" role="tabpanel" aria-labelledby="Rate-tab">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="divTable">
+                                    <table class="table impactTable" id="avalableRateTable">
+                                        <thead class="thead-light">
+                                            <tr>
+
+                                                <th style="padding: 0px"></th>
+
+                                                <th style="width:200px">
+                                                    @Html.DisplayNameFor(model => model.AvalableRateContentModel.GetEnumerator().Current.RemittanceSell_Amount)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.AvalableRateContentModel.GetEnumerator().Current.RemmitenceBatch_Rate)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.AvalableRateContentModel.GetEnumerator().Current.RemmitenceBatch_Remaining)
+
+                                                </th>
+                                                <th style="padding: 0px">
+                                                </th>
+                                                <th style="padding: 0px">
+                                                </th>
+                                                <th style="padding: 0px">
+                                                </th>
+                                                <th style="padding: 0px">
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @for (int i = 0; i < Model.AvalableRateContentModel.Count(); i++)
+                                            {
+                                                <tr>
+                                                    <td style="padding: 0px">
+                                                        @Html.HiddenFor(modelItem => modelItem.AvalableRateContentModel[i].RemmitenceBatch_Id)
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBoxFor(modelItem => modelItem.AvalableRateContentModel[i].RemittanceSell_Amount, Model.VoucherType == 65 ? new { @class = "form-control", @readonly = "True", @onchange = "changeUsedAmount(this)" } : new { @class = "form-control", @onchange = "changeUsedAmount(this)" })
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.TextBoxFor(modelItem => modelItem.AvalableRateContentModel[i].RemmitenceBatch_Rate, new { @class = "form-control", @readonly = "True" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBoxFor(modelItem => modelItem.AvalableRateContentModel[i].RemmitenceBatch_Remaining, new { @class = "form-control", @readonly = "True" })
+                                                    </td>
+
+                                                    <td style="padding: 0px">
+                                                        @Html.HiddenFor(modelItem => modelItem.AvalableRateContentModel[i].RemittanceSell_Id)
+                                                    </td>
+
+                                                    <td style="padding: 0px">
+                                                        @Html.HiddenFor(modelItem => modelItem.AvalableRateContentModel[i].RemittanceSell_AmountInserted)
+                                                    </td>
+                                                    <td style="padding: 0px">
+                                                        @Html.HiddenFor(modelItem => modelItem.AvalableRateContentModel[i].RecStatus)
+                                                    </td>
+
+                                                    <td style="padding: 0px">
+                                                        @Html.HiddenFor(modelItem => modelItem.AvalableRateContentModel[i].RemittanceSell_OldAmount)
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="Other" role="tabpanel" aria-labelledby="Other-tab">
+                        <div class="row">
+                            <div class="divTable">
+                                <table class="table" id="mainTable">
+                                    <thead class="thead-light">
+                                        <tr>
+
+                                            <th style="padding: 0px"></th>
+                                            <th style="width:30px">
+                                                @Html.DisplayNameFor(model => model.JournalVoucherContentModel.GetEnumerator().Current.No)
+                                            </th>
+                                            <th style="width:200px">
+                                                @Html.DisplayNameFor(model => model.JournalVoucherContentModel.GetEnumerator().Current.AccountLedger_Id)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.JournalVoucherContentModel.GetEnumerator().Current.Amount)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.JournalVoucherContentModel.GetEnumerator().Current.Currency_Id)
+
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.JournalVoucherContentModel.GetEnumerator().Current.ExchangeRate)
+
+                                            </th>
+
+
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.JournalVoucherContentModel.GetEnumerator().Current.Remark)
+
+                                            </th>
+
+
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.JournalVoucherContentModel.GetEnumerator().Current.Type_Id)
+
+                                            </th>
+                                            <th style="padding: 0px"></th>
+                                            <th style="padding: 0px"></th>
+                                            <th style="width:30px"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @for (int i = 0; i < Model.JournalVoucherContentModel.Count(); i++)
+                                        {
+                                            <tr>
+                                                <td style="padding: 0px">
+                                                    @Html.HiddenFor(modelItem => modelItem.JournalVoucherContentModel[i].Id)
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(modelItem => modelItem.JournalVoucherContentModel[i].No, new { @class = "form-control", @readonly = "True", @disabled = "True" })
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownListFor(modelItem => modelItem.JournalVoucherContentModel[i].AccountLedger_Id, accountLedgers, new { @class = "form-control select2", @onchange = "initRow(this," + Model.JournalVoucherContentModel.ToList()[i].Id + ")" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(modelItem => modelItem.JournalVoucherContentModel[i].Amount, new { @class = "form-control", @onchange = "setDropdown(this.value)" })
+                                                </td>
+
+                                                <td>
+                                                    @Html.DropDownListFor(modelItem => modelItem.JournalVoucherContentModel[i].Currency_Id, currencies, new { @class = "form-control" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(modelItem => modelItem.JournalVoucherContentModel[i].ExchangeRate, new { @class = "form-control" })
+                                                </td>
+
+                                                <td>
+                                                    @Html.TextBoxFor(modelItem => modelItem.JournalVoucherContentModel[i].Remark, new { @class = "form-control" })
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownListFor(modelItem => modelItem.JournalVoucherContentModel[i].Type_Id, types, new { @class = "form-control" })
+                                                </td>
+                                                <td style="padding: 0px">
+                                                    @Html.HiddenFor(modelItem => modelItem.JournalVoucherContentModel[i].RecStatus)
+                                                </td>
+                                                <td style="padding: 0px">
+                                                    @Html.HiddenFor(modelItem => modelItem.JournalVoucherContentModel[i].ExchangeRateOld)
+                                                </td>
+                                                <td style="text-align:center">
+                                                    <a class="btnDelete">x</a>
+                                                </td>
+
+                                            </tr>
+                                        }
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="Extra" role="tabpanel" aria-labelledby="Extra-tab">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="divTable">
+                                    <table class="table">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <td>
+                                                    File Name
+                                                </td>
+                                                <td>
+                                                    View Date
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                </td>
+                                                <td>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <input type="submit" class="btn btn-primary" value="Scan" />
+                                    <input type="submit" class="btn btn-primary" value="Upload File" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <label asp-for="PublicNotes" class="col-form-label"></label>
+                                    <input asp-for="PublicNotes" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                @*<table class="table">
+                            <thead>
+                                <tr>
+                                    <td>
+                                        Currncy
+                                    </td>
+                                    <td>
+                                        Debit
+                                    </td>
+                                    <td>
+                                        Credit
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>*@
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group ">
+                                    <label asp-for="Notes" class="col-form-label"></label>
+                                    <input asp-for="Notes" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="form-group row">
+                                        <label class="col-sm-5 col-form-label">Debit Total</label>
+                                        <div class="col-sm-5">
+                                            <input class="form-control" />
+                                        </div>
+                                        <label class="col-sm-2 col-form-label">AED</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group  row">
+                                        <label class="col-sm-5 col-form-label">Credit Total</label>
+                                        <div class="col-sm-5">
+                                            <input class="form-control" />
+                                        </div>
+                                        <label class="col-sm-2 col-form-label">AED</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group  row">
+                                        <label class="col-sm-5 col-form-label">Templates</label>
+                                        <div class="col-sm-5">
+                                            <select class="form-control">
+                                                <option>Template 1</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-2 col-form-label">?</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="Rates" role="tabpanel" aria-labelledby="Rates-tab">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="divTable">
+                                    <table class="table impactTable" id="avalableRatesTable">
+                                        <thead class="thead-light">
+                                            <tr>
+
+
+                                                <th style="width:200px">
+                                                    @Html.DisplayNameFor(model => model.AvalableRatesContentModel.GetEnumerator().Current.CurrencyName)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.AvalableRatesContentModel.GetEnumerator().Current.RemmitenceBatch_Rate)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.AvalableRatesContentModel.GetEnumerator().Current.RemmitenceBatch_Tot)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.AvalableRatesContentModel.GetEnumerator().Current.RemmitenceBatch_Remaining)
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @for (int i = 0; i < Model.AvalableRatesContentModel.Count(); i++)
+                                            {
+                                                <tr>
+
+                                                    <td>
+                                                        @Html.TextBoxFor(modelItem => modelItem.AvalableRatesContentModel[i].CurrencyName, new { @class = "form-control", @readonly = "True" })
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.TextBoxFor(modelItem => modelItem.AvalableRatesContentModel[i].RemmitenceBatch_Rate, new { @class = "form-control", @readonly = "True" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBoxFor(modelItem => modelItem.AvalableRatesContentModel[i].RemmitenceBatch_Tot, new { @class = "form-control", @readonly = "True" })
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.TextBoxFor(modelItem => modelItem.AvalableRatesContentModel[i].RemmitenceBatch_Remaining, new { @class = "form-control", @readonly = "True" })
+                                                    </td>
+
+
+                                                </tr>
+                                            }
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:10px;margin-bottom:10px;padding:3px;background-color:#e9ecef">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-1">
+                        <input type="button" value="|<" onclick="loadBuySellCurrency('first')" />
+                    </div>
+                    <div class="col-md-1">
+                        <input type="button" value="<" onclick="loadBuySellCurrency('pre')" />
+                    </div>
+                    <div class="col-md-1">
+                        <input type="button" value=">" onclick="loadBuySellCurrency('next')" />
+                    </div>
+                    <div class="col-md-1">
+                        <input type="button" value=">|" onclick="loadBuySellCurrency('last')" />
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+                <input type="hidden" id="customInput" data-value="@ViewBag.Currencies" />
+                <div class="row">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <script type="text/javascript">
+
+            var remittance_AmountDecimalNo;
+            var remittance_BalanceDifference;
+            var remittance_BalanceDifferenceLedger;
+            var remittance_RateDecimalNo;
+
+            var avalableRate;
+            function calculateForm(rowChanged) {
+               
+                var sellingAmount = parseFloat($('#SellingAmount').val());
+                var buyingAmount = parseFloat($('#BuyingAmount').val());
+                var tMN_AED = parseFloat($('#TMN_AED').val());
+                var buyingExchangeRate = parseFloat($('#BuyingExchangeRate').val());
+                var sellingExchangeRate = parseFloat($('#SellingExchangeRate').val());
+
+
+                
+                var totalAmount = calculateColumn(3);
+                var buyingAmountTmp = buyingAmount;
+                var enoughAmount = false;
+                if (rowChanged == undefined && buyingAmount > 0) {
+                    fillAvalableRateTable(avalableRate);
+                    $('#avalableRateTable > tbody  > tr').each(function () {
+
+                        var row = $(this).closest("TR");
+                        var value = parseFloat($(row).find("td:eq(3) input").val());
+
+                        if (!isNaN(value)) {
+                            if (value >= buyingAmountTmp) {
+                                $(row).find("td:eq(1) input").val(buyingAmountTmp);
+                                $(row).find("td:eq(3) input").val(value - buyingAmountTmp);
+                                enoughAmount = true;
+                                changeUsedRowAmount(row);
+                                return false;
+                            } else {
+                                $(row).find("td:eq(1) input").val(value);
+                                $(row).find("td:eq(3) input").val(0);
+                                buyingAmountTmp = buyingAmountTmp - value;
+                                changeUsedRowAmount(row);
+                            }
+                        }
+                    });
+
+
+                    if (enoughAmount == false) {
+                        var fractional = buyingAmount - buyingAmountTmp;
+                        $('#BuyingAmount').val(parseFloat(fractional).toFixed(remittance_AmountDecimalNo));
+                        buyingAmount = fractional;
+                    }
+                } else {
+                    var amount = $(rowChanged).find("td:eq(1) input[type='text']").val();
+                    var remaining = $(rowChanged).find("td:eq(3) input").val();
+                    var newRemaining = parseFloat(remaining) - parseFloat(amount);
+                    $(rowChanged).find("td:eq(3) input").val(parseFloat(newRemaining).toFixed(remittance_AmountDecimalNo));
+                    var totalUsedAmount = calculateColumn(1);
+                    $('#BuyingAmount').val(parseFloat(totalUsedAmount).toFixed(remittance_AmountDecimalNo));
+                    buyingAmount = totalUsedAmount;
+                    changeUsedRowAmount(rowChanged);
+                    
+                }
+                tMN_AED = sellingExchangeRate / buyingExchangeRate;
+                sellingAmount = (buyingAmount * buyingExchangeRate) / sellingExchangeRate;
+                $('#SellingAmount').val(parseFloat(sellingAmount).toFixed(remittance_AmountDecimalNo));
+                $('#TMN_AED').val(parseFloat(tMN_AED).toFixed(remittance_AmountDecimalNo));
+            }
+            function calculateColumn(index) {
+                var total = 0;
+                $('#avalableRateTable > tbody  > tr').each(function () {
+
+                    var row = $(this).closest("TR");
+                    var value = parseFloat($(row).find("td:eq(" + index+") input").val());
+
+                    if (!isNaN(value)) {
+                        total += value;
+                    }
+                });
+
+                return total;
+            }
+            function changeSecondRate(ctrl) {
+                $('#TMN_AED').val(1 / parseFloat($(ctrl).val()));
+
+            }
+            function changeRate(ctrl) {
+                $('#BuyingExchangeRate').val(1 / parseFloat($(ctrl).val()));
+            }
+
+            function changeUsedRowAmount(row) {
+                var recstatus = 0;
+                var oldUsedAmount = parseFloat( $(row).find("td:eq(7) input[type='hidden']").val());
+                var usedAmount = parseFloat( $(row).find("td:eq(1) input[type='text']").val());
+                var remaining = parseFloat( $(row).find("td:eq(3) input[type='text']").val());
+                //if (usedAmount > remaining) {
+                //    return false;
+                //}
+                if (oldUsedAmount != usedAmount) {
+                    if (remaining == 0)
+                        recstatus = '2';
+                    else
+                        recstatus = '1';
+                }
+                $(row).find("td:eq(6) input[type='hidden']").val(recstatus);
+                return true;
+            }
+
+            function changeUsedAmount(ctrl) {
+              
+                var row = $(ctrl).closest('tr');
+                var usedAmount = $(row).find("td:eq(1) input[type='text']").val();
+                var remaining = $(row).find("td:eq(3) input[type='text']").val();
+                if (parseFloat(usedAmount) > parseFloat( remaining)) {
+                    return false;
+                }
+               // if (changeUsedRowAmount(row)) {
+                   
+                calculateForm(row);
+              //  }
+          
+
+            }
+           
+            function setRate(currency_Id, mode) {
+              
+                var rate = 0;
+                var rates = JSON.parse("@Html.Raw(ViewBag.CurrenciesLst)");
+                for (var i = 0; i < rates.length; i++) {
+                    if (rates[i].currency_Id ==parseInt( currency_Id)) {
+                        rate = rates[i].rate;
+                        break;
+                    }
+                }
+                if (mode == 1) {
+                    $('#BuyingExchangeRate').val(rate);
+                } else {
+                    $('#SellingExchangeRate').val(rate);
+                }
+                calculateForm();
+            }
+            function loadRemittanceCurrencies(ctrl) {
+               
+                   try {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/BuySellCurrency/GetRemittanceCurrencies',
+                        dataType: "JSON",
+                        data: {
+                            currencyId: $(ctrl).val() //ctrl.value
+                        },
+
+                        success: function (res) {
+                            if (res.isSuccess != undefined && res.isSuccess == false) {
+                                toastr.warning(res.message);
+                            } else {
+                                
+                                avalableRate = res.remittanceCurrenciesDto;
+                                fillAvalableRateTable(res.remittanceCurrenciesDto);
+                                $('#BuyingExchangeRate').val(res.rate);
+                                setSecondRateLabel();
+                                calculateForm();
+                            }
+
+                        },
+                        error: function (err) {
+                            console.log(err)
+                        }
+                    })
+                    //to prevent default form submit event
+                    return false;
+                } catch (ex) {
+                    console.log(ex)
+                }
+            }
+            function setSecondRateLabel() {
+                var lblSecondRate = $('#BuyingCurrency_Id').select2('data')[0].text.split('|')[1] + '-' + $('#SellingCurrency_Id').select2('data')[0].text.split('|')[1]
+                $('#lblTMN_AED').text(lblSecondRate);
+            }
+            function fillAvalableRateTable(result) {
+                var tblRows = '';
+
+
+                for (var i = 0; i < result.length; i++) {
+                    var d = result[i];
+                    tblRows = tblRows + '<tr><td style="padding: 0px">' +
+                        '<input data-val="true" data-val-required="The RemmitenceBatch_Id field is required." id="AvalableRateContentModel_' + i + '__RemmitenceBatch_Id" name="AvalableRateContentModel[' + i + '].RemmitenceBatch_Id" type="hidden" value="' + d.remmitenceBatch_Id+'">' +
+                        '</td>' +
+                        '<td>' +
+                        '<input class="form-control" data-val="true" data-val-number="The field Used Amount must be a number." data-val-required="The Used Amount field is required." id="AvalableRateContentModel_' + i + '__RemittanceSell_Amount" name="AvalableRateContentModel[' + i + '].RemittanceSell_Amount" onchange="changeUsedAmount(this)" type="text" ' +((@Model.VoucherType==65)? 'disabled="True"':'')  +' value="' + parseFloat(d.remittanceSell_Amount).toFixed(remittance_AmountDecimalNo) + '">' +
+                    ' </td>' +
+                        '<td>' +
+                        '<input class="form-control" data-val="true" data-val-number="The field Rate must be a number." data-val-required="The Rate field is required." disabled="True" id="AvalableRateContentModel_' + i + '__RemmitenceBatch_Rate" name="AvalableRateContentModel[' + i + '].RemmitenceBatch_Rate" readonly="True" type="text" value="' + d.remmitenceBatch_Rate.toFixed(remittance_RateDecimalNo)+'">'+
+                    '</td>' +
+                        '<td>' +
+                        '<input class="form-control" data-val="true" data-val-number="The field Remaining must be a number." data-val-required="The Remaining field is required." disabled="True" id="AvalableRateContentModel_' + i + '__RemmitenceBatch_Remaining" name="AvalableRateContentModel[' + i + '].RemmitenceBatch_Remaining" readonly="True" type="text" value="' + d.remmitenceBatch_Remaining.toFixed(remittance_AmountDecimalNo)+'">' +
+                        ' </td>' +
+                        '<td style="padding: 0px">' +
+                        '<input data-val="true" data-val-required="The RemittanceSell_Id field is required." id="AvalableRateContentModel_' + i + '__RemittanceSell_Id" name="AvalableRateContentModel[' + i + '].RemittanceSell_Id" type="hidden" value="' + d.remittanceSell_Id+'">' +
+                        '</td>' +
+                        '<td style="padding: 0px">' +
+                        '<input data-val="true" data-val-required="The RemittanceSell_AmountInserted field is required." id="AvalableRateContentModel_' + i + '__RemittanceSell_AmountInserted" name="AvalableRateContentModel[' + i + '].RemittanceSell_AmountInserted" type="hidden" value="' + d.remittanceSell_AmountInserted+'">' +
+                        '</td>' +
+                        '<td style="padding: 0px">' +
+                        '<input data-val="true" data-val-required="The RecStatus field is required." id="AvalableRateContentModel_' + i + '__RecStatus" name="AvalableRateContentModel[' + i + '].RecStatus" type="hidden" value="0">' +
+                        '</td>' +
+                        '<td style="padding: 0px">' +
+                        '<input data-val="true" data-val-number="The field RemittanceSell_OldAmount must be a number." data-val-required="The RemittanceSell_OldAmount field is required." id="AvalableRateContentModel_' + i + '__RemittanceSell_OldAmount" name="AvalableRateContentModel[' + i + '].RemittanceSell_OldAmount" type="hidden" value="0.00">' +
+                        '</td>'
+                        '</tr>'
+
+
+                }
+
+                $("#avalableRateTable tbody").html(tblRows);
+
+            }
+            function loadBuySellCurrency(kind) {
+
+                try {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/BuySellCurrency/LoadVoucher',
+                        dataType: "JSON",
+                        data: {
+                            Id: "@ViewBag.voucherMasters_Id",
+                            navType: kind,
+                            voucherType:"@Model.VoucherType"
+                        },
+
+                        success: function (res) {
+                            if (res.isSuccess != undefined && res.isSuccess == false) {
+                                toastr.warning(res.message);
+                            } else
+                                if (res.isValid) {
+                                    $('#view-all').html(res.html)
+
+                                }
+                                else
+                                    toastr.warning('Error');
+                        },
+                        error: function (err) {
+                            console.log(err)
+                        }
+                    })
+                    //to prevent default form submit event
+                    return false;
+                } catch (ex) {
+                    console.log(ex)
+                }
+
+            }
+
+            $("#mainTable").on('click', '.btnDelete', function () {
+                var row = $(this).closest('tr');
+                $(row).find("td:eq(8) input[type='hidden']").val('2');
+
+                $(row).hide();
+
+            });
+            function setDropdown(val) {
+                return;
+                alert(val);
+
+            }
+
+            function initRow(ctrl, id) {
+
+                if (id == 0) {
+                    var row = $(ctrl).closest("TR");
+                    var rowClone = row.clone();
+                    $(ctrl).attr('onchange', 'initRow(this, -1)');
+
+
+                    var opt = $(rowClone).find("td:eq(4) select").find('option').get(0);
+                    if ($(opt).val() != '0')
+                        $(rowClone).find("td:eq(4) select").prepend("<option value='' selected='selected'></option>");
+
+
+                    $(row).find("td:eq(2) select").find('option').get(0).remove();
+                    $(rowClone).find("td:eq(2) select").attr('onchange', 'initRow(this, 0)');
+                    $(rowClone).find("td:eq(2) select").next().remove();
+                    rowClone.removeAttr('data-select2-id');
+                    $(rowClone).find("td:eq(2) select").removeAttr('data-select2-id');
+                     $(rowClone).find("td:eq(2)").removeAttr('data-select2-id');
+                    $(rowClone).find("td:eq(2) select option").each(function () {
+
+                        $(this).removeAttr('data-select2-id');
+                    });
+
+                    $(rowClone).find("td:eq(2) select").removeClass('select2-hidden-accessible');
+                    var rowCount = $('#mainTable >tbody >tr').length;
+                    var colCount = $(rowClone).children('td').length;
+                    var preFix = 'JournalVoucherContentModel';
+                    for (var i = 0; i < colCount; i++) {
+                        var element = $(rowClone).find("td:eq(" + i + ")").html();
+                        var id = $(element).attr('id');
+
+                        if (id != undefined && id.indexOf('__') != -1) {
+                            var newId = preFix + rowCount + '__' + id.substr(id.indexOf("__") + 2);
+                            var name = $(element).attr('name');
+                            var newName = preFix+ '[' + rowCount + '].' + name.substr(name.indexOf("]") + 2);
+                            element = element.replace(id, newId);
+                            element = element.replace(name, newName);
+
+                        }
+                        $(rowClone).find("td:eq(" + i + ")").html(element);
+                    }
+                    $('#mainTable').find('tbody').append(rowClone);
+                    reloadJVBodyElements();
+                }
+            }
+
+
+            function rebuildDropdown(ctrl) {
+
+                $(ctrl).find('[value="0"]').remove();
+            }
+            function reloadJVBodyElements() {
+
+                $('#mainTable > tbody  > tr').each(function () {
+
+                    var row = $(this).closest("TR");
+                    var valSelected = $(row).find("td:eq(2) select").val();
+                    if (valSelected != '0') {
+                        var opt = $(row).find("td:eq(2) select").find('option').get(0);
+                        if ($(opt).val() == '0')
+                            $(opt).remove();
+                    }
+                });
+
+                if ($('.select2').length > 0) {
+                    $('.select2').each(function () {
+                      //  debugger;
+                        if ($(this).attr('data-select2-id') == undefined) {
+                            $(this).select2({
+                                placeholder: $(this).data('placeholder'),
+                            })
+                       }
+                    });
+                }
+                //$('[datainputmask="date"]').mask('0000/00/00');
+                $('[datainputmask="date"]').mask("@ViewBag.MaskDateFormat");
+                $('[datainputmask="date"]').attr('placeholder',"@ViewBag.MaskPlaceHolder");
+
+            }
+            $(document).ready(function () {
+              //  rowClone = $("#mainTable>tbody>tr:first");
+
+                reloadJVBodyElements();
+                var dateToday = new Date('2000/01/01');
+                $('input[name="VoucherDate"]').datepicker({
+                    dateFormat: "@ViewBag.DateFormat",
+                    minDate: dateToday,
+                    showOtherMonths: true,
+                    firstDay: 1
+                });
+                loadRemittanceCurrencies($('#BuyingCurrency_Id'));
+              //  setSecondRateLabel();
+
+                remittance_AmountDecimalNo =parseInt( $('#Remittance_AmountDecimalNo').val());
+                remittance_BalanceDifference =parseFloat( $('#Remittance_BalanceDifference').val());
+                remittance_BalanceDifferenceLedger = parseFloat( $('#Remittance_BalanceDifferenceLedger').val());
+                remittance_RateDecimalNo = parseInt( $('#Remittance_RateDecimalNo').val());
+
+            });
+
+        </script>
+       
+    </div>
+</div>

@@ -1,0 +1,434 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+@{
+    ViewData["Title"] = "Dashboard Three";
+    ViewData["IsAuthPage"] = false;
+    ViewData["Menu"] = "dashboard-three";
+   
+}
+
+<link rel="stylesheet" href="~/vendors/datepicker/daterangepicker.css">
+
+<div class="row">
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2 class="font-weight-bold mb-2">3.605</h2>
+                        <h6 class="text-uppercase font-size-11 mb-2 text-primary font-weight-bold">Click Through</h6>
+                        <p class="m-0 small text-muted">Lorem ipsum dolor sit amet, consectetur.</p>
+                    </div>
+                    <div>
+                        <span class="dashboard-pie-1">2/5</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2 class="font-weight-bold mb-2">3.137</h2>
+                        <h6 class="text-uppercase font-size-11 mb-2 text-success font-weight-bold">View Through</h6>
+                        <p class="m-0 small text-muted">Lorem ipsum dolor sit amet, consectetur.</p>
+                    </div>
+                    <div>
+                        <span class="dashboard-pie-2">4/5</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2 class="font-weight-bold mb-2">8.765</h2>
+                        <h6 class="text-uppercase font-size-11 mb-2 text-warning font-weight-bold">Total Conversions</h6>
+                        <p class="m-0 small text-muted">Lorem ipsum dolor sit amet, consectetur.</p>
+                    </div>
+                    <div>
+                        <span class="dashboard-pie-3">1/5</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2 class="font-weight-bold mb-2">68%</h2>
+                        <h6 class="text-uppercase font-size-11 mb-2 text-info font-weight-bold">Page Retention Rate</h6>
+                        <p class="m-0 small text-muted">Lorem ipsum dolor sit amet, consectetur.</p>
+                    </div>
+                    <div>
+                        <span class="dashboard-pie-4">2/5</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-md-flex mb-3 justify-content-between">
+                    <div>
+                        <h6 class="card-title">Website Audience Metrics</h6>
+                    </div>
+                    <div class="reportrange btn btn-light btn-sm">
+                        <i class="ti-calendar mr-2"></i>
+                        <span></span>
+                        <i class="ti-angle-down ml-2"></i>
+                    </div>
+                </div>
+                <div class="d-lg-none d-sm-block mb-4"></div>
+                <canvas id="users-chart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="m-b-30">
+                    <h6 class=" text-muted font-size-11 d-flex justify-content-between m-b-5">
+                        <span class="text-uppercase">New Users</span>
+                        <span>65% goal reached</span>
+                    </h6>
+                    <p class="font-size-16 m-b-10 font-weight-bolder">13,596</p>
+                    <div class="progress" style="height: 5px">
+                        <div class="progress-bar bg-success-bright" role="progressbar" style="width: 42%;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div class="m-b-30">
+                    <h6 class=" text-muted font-size-11 d-flex justify-content-between m-b-5">
+                        <span class="text-uppercase">Page Views</span>
+                        <span>45% goal reached</span>
+                    </h6>
+                    <p class="font-size-16 m-b-10 font-weight-bolder">43,596</p>
+                    <div class="progress" style="height: 5px">
+                        <div class="progress-bar bg-danger-bright" role="progressbar" style="width: 42%;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div class="m-b-30">
+                    <h6 class=" text-muted font-size-11 d-flex justify-content-between m-b-5">
+                        <span class="text-uppercase">Page Sessions</span>
+                        <span>20% goal reached</span>
+                    </h6>
+                    <p class="font-size-16 m-b-10 font-weight-bolder">16,869</p>
+                    <div class="progress" style="height: 5px">
+                        <div class="progress-bar bg-warning-bright" role="progressbar" style="width: 42%;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div>
+                    <h6 class=" text-muted font-size-11 d-flex justify-content-between m-b-5">
+                        <span class="text-uppercase">Bounce Rate</span>
+                        <span>85% goal reached</span>
+                    </h6>
+                    <p class="font-size-16 m-b-10 font-weight-bolder">28.50%</p>
+                    <div class="progress" style="height: 5px">
+                        <div class="progress-bar bg-info-bright" role="progressbar" style="width: 42%;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-3 col-lg-12">
+        <div class="card">
+            <div class="card-header">Sessions By Channel</div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-10 offset-1">
+                        <canvas id="chart_demo_7"></canvas>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <h6 class="text-uppercase font-size-11 text-muted mb-2">Organic Sear.</h6>
+                        <div class="d-flex align-items-center">
+                            <i class="fa fa-circle text-danger m-r-5 font-size-11"></i>
+                            <h4 class="mb-0">1.242</h4>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <h6 class="text-uppercase font-size-11 text-muted mb-2">Email</h6>
+                        <div class="d-flex align-items-center">
+                            <i class="fa fa-circle text-info m-r-5 font-size-11"></i>
+                            <h4 class="mb-0">742</h4>
+                        </div>
+                    </div>
+                    <div class="col-6 m-t-20">
+                        <h6 class="text-uppercase font-size-11 text-muted mb-2">Referrral</h6>
+                        <div class="d-flex align-items-center">
+                            <i class="fa fa-circle text-warning m-r-5 font-size-11"></i>
+                            <h4 class="mb-0">442</h4>
+                        </div>
+                    </div>
+                    <div class="col-6 m-t-20">
+                        <h6 class="text-uppercase font-size-11 text-muted mb-2">Social Media</h6>
+                        <div class="d-flex align-items-center">
+                            <i class="fa fa-circle text-success m-r-5 font-size-11"></i>
+                            <h4 class="mb-0">2.742</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-6 col-lg-12">
+        <div class="card">
+            <div class="card-header">Device Sessions</div>
+            <div class="card-body">
+                <div class="m-l-15">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="d-flex">
+                                <i class="fa fa-circle text-primary m-r-5 m-t-5 font-size-11"></i>
+                                <div>
+                                    <h4 class="mb-1">1.902</h4>
+                                    <h6 class="text-muted text-uppercase font-size-11">Mobile</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="d-flex">
+                                <i class="fa fa-circle text-success m-r-5 m-t-5 font-size-11"></i>
+                                <div>
+                                    <h4 class="mb-1">1.202</h4>
+                                    <h6 class="text-muted text-uppercase font-size-11">Desktop</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="d-flex">
+                                <i class="fa fa-circle text-warning m-r-5 m-t-5 font-size-11"></i>
+                                <div>
+                                    <h4 class="mb-1">365</h4>
+                                    <h6 class="text-muted text-uppercase font-size-11">Other</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <canvas id="device_session_chart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-12">
+        <div class="card">
+            <div class="card-header">Top Traffic Source</div>
+            <div class="card-body text-center">
+                <h1 class="font-size-40 font-weight-bold">30.201</h1>
+                <h6 class="text-uppercase font-size-11 m-b-0">Organic Search</h6>
+                <p class="small m-t-b-15 text-muted">
+                    Measures your user's sources that generate traffic metrics
+                    to your website for
+                    this month.
+                </p>
+                <div class="row mb-4">
+                    <div class="col-6">
+                        <h2 class="text-success font-weight-bold">%20</h2>
+                        <small class="text-uppercase font-size-11">Desktop</small>
+                    </div>
+                    <div class="col-6">
+                        <h2 class="text-warning font-weight-bold">%80</h2>
+                        <small class="text-uppercase font-size-11">Mobile</small>
+                    </div>
+                </div>
+                <button class="btn btn-outline-primary btn-uppercase">Learn More</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Total Visits</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <tr class="text-uppercase font-size-11 text-muted">
+                            <th>Link</th>
+                            <th>Page Title</th>
+                            <th>Percentage (%)</th>
+                            <th class="text-right">Value</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#">
+                                    <i class="fa fa-external-link"></i>
+                                </a>
+                            </td>
+                            <td>Homepage</td>
+                            <td>
+                                <div class="progress" style="height: 5px">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 65%;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </td>
+                            <td class="text-right">65.35%</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#">
+                                    <i class="fa fa-external-link"></i>
+                                </a>
+                            </td>
+                            <td>About</td>
+                            <td>
+                                <div class="progress" style="height: 5px">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 51%;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </td>
+                            <td class="text-right">51.20%</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#">
+                                    <i class="fa fa-external-link"></i>
+                                </a>
+                            </td>
+                            <td>Products</td>
+                            <td>
+                                <div class="progress" style="height: 5px">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 39%;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </td>
+                            <td class="text-right">39.10%</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#">
+                                    <i class="fa fa-external-link"></i>
+                                </a>
+                            </td>
+                            <td>Categories</td>
+                            <td>
+                                <div class="progress" style="height: 5px">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 40%;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </td>
+                            <td class="text-right">40%</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="#">
+                                    <i class="fa fa-external-link"></i>
+                                </a>
+                            </td>
+                            <td>Contact</td>
+                            <td>
+                                <div class="progress" style="height: 5px">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 80%;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </td>
+                            <td class="text-right">80%</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header"> Browser Used By Users</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <tr class="text-uppercase font-size-11 text-muted">
+                            <th></th>
+                            <th>Browser</th>
+                            <th>Sessions</th>
+                            <th>Bounce Rate</th>
+                            <th class="text-right">Conversion Rate</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i class="fa fa-chrome"></i>
+                            </td>
+                            <td>Google Chrome</td>
+                            <td>13,41</td>
+                            <td>40.95%</td>
+                            <td class="text-right">19.45%</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i class="fa fa-firefox"></i>
+                            </td>
+                            <td>Firefox</td>
+                            <td>13,41</td>
+                            <td>40.95%</td>
+                            <td class="text-right">19.45%</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i class="fa fa-edge"></i>
+                            </td>
+                            <td>Edge</td>
+                            <td>13,41</td>
+                            <td>40.95%</td>
+                            <td class="text-right">19.45%</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i class="fa fa-safari"></i>
+                            </td>
+                            <td>Safari</td>
+                            <td>13,41</td>
+                            <td>40.95%</td>
+                            <td class="text-right">19.45%</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i class="fa fa-opera"></i>
+                            </td>
+                            <td>Opera</td>
+                            <td>13,41</td>
+                            <td>40.95%</td>
+                            <td class="text-right">19.45%</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chartjs -->
+<script src="~/vendors/charts/chartjs/chart.min.js"></script>
+
+<!-- Circle progress -->
+<script src="~/vendors/circle-progress/circle-progress.min.js"></script>
+
+<!-- Datepicker -->
+<script src="~/vendors/datepicker/daterangepicker.js"></script>
+
+<!-- Dashboard scripts -->
+<script src="~/js/examples/dashboard.js"></script>
+<div class="colors">
+    <!-- To use theme colors with Javascript -->
+    <div class="bg-primary"></div>
+    <div class="bg-primary-bright"></div>
+    <div class="bg-secondary"></div>
+    <div class="bg-secondary-bright"></div>
+    <div class="bg-info"></div>
+    <div class="bg-info-bright"></div>
+    <div class="bg-success"></div>
+    <div class="bg-success-bright"></div>
+    <div class="bg-danger"></div>
+    <div class="bg-danger-bright"></div>
+    <div class="bg-warning"></div>
+    <div class="bg-warning-bright"></div>
+</div>
+
+<!-- Peity -->
+<script src="~/vendors/charts/peity/jquery.peity.min.js"></script>
+<script src="~/js/examples/charts/peity.js"></script>

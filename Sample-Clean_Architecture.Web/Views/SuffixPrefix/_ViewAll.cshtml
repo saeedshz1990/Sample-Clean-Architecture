@@ -1,0 +1,80 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model IEnumerable<Demo.Web.Models.SuffixPrefix.SuffixPrefixModel>
+
+
+<div class="col-md-12 ">
+    <h1 class="text-center"><i class="fas fa-comments-dollar text-success"></i> @localizer["PageTitle"] </h1>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.No)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.voucherType_Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SuffixPrefix_FromDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SuffixPrefix_ToDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SuffixPrefix_StartIndex)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SuffixPrefix_Prefix)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SuffixPrefix_Suffix)
+                </th>
+
+                <th>
+                    <a onclick="showInPopup('@Url.Action("AddOrEdit","SuffixPrefix",new {id=0,cId=ViewBag.Company_Id},Context.Request.Scheme)','New Company Suffix Prefix')" class="btn btn-success text-white"><i class="fa fa-plus"></i></a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.No)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.voucherType_Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.SuffixPrefix_FromDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SuffixPrefix_ToDate)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.SuffixPrefix_StartIndex)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SuffixPrefix_Prefix)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SuffixPrefix_Suffix)
+                </td>
+
+
+                <td>
+                    <div>
+                        <a onclick="showInPopup('@Url.Action("AddOrEdit","SuffixPrefix",new {id=item.SuffixPrefix_Id,cId=item.Company_Id},Context.Request.Scheme)','Update Suffix Prefix')" class="btn btn-info text-white" title="Edit Suffix Prefix"><i class="fa fa-pencil"></i> </a>
+                        @*<form asp-action="Delete" asp-route-id="@item.SuffixPrefix_Id" onsubmit="return jQueryAjaxDeleteL2(this)" class="d-inline">
+                            <input type="hidden" asp-for="@item.Company_Id" />
+                            <input type="hidden" asp-for="@item.SuffixPrefix_Id" />
+                           
+                        </form>*@
+
+                    </div>
+                </td>
+            </tr>}
+        </tbody>
+    </table>
+</div>

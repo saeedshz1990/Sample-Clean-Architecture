@@ -1,0 +1,149 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model Demo.Web.Models.ExchangeRate.ExchangeRateModel
+
+<div class="col-md-12">
+
+    <h1 class="text-center"><i class="fas fa-comments-dollar text-success"></i> @localizer["PageTitle"] </h1>
+   
+        <div class="col-md-12">
+            <div class="form-group row">
+                <label asp-for="VoucherDate" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-2">
+                    <input asp-for="VoucherDate" class="form-control" />
+                </div>
+                <div class="col-sm-4">
+                    <input type="submit" title="View" class="form-control" />
+                </div>
+                <div class="col-sm-4">
+
+                </div>
+            </div>
+        </div>
+
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th>
+
+                        @Html.DisplayNameFor(model => model.ExchangeRateListModel.GetEnumerator().Current.No)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ExchangeRateListModel.GetEnumerator().Current.Currency_Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ExchangeRateListModel.GetEnumerator().Current.ExchangeRate_Date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ExchangeRateListModel.GetEnumerator().Current.Rate)
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+                        <a onclick="showInPopup('@Url.Action("AddOrEdit","ExchangeRate", new { id =0, dateTime=Model.VoucherDate },Context.Request.Scheme)','New Exchange Rate')" class="btn btn-success text-white"><i class="fa fa-plus"></i></a>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.ExchangeRateListModel.Count(); i++)
+
+                {
+                    <tr>
+                        <td>
+
+                            @Html.DisplayFor(modelItem => Model.ExchangeRateListModel[i].No)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.ExchangeRateListModel[i].Currency_Name)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.ExchangeRateListModel[i].ExchangeRate_Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.ExchangeRateListModel[i].Rate)
+                        </td>
+
+                        <td>
+                            @Html.HiddenFor(modelItem => Model.ExchangeRateListModel[i].ExchangeRate_Id)
+                        </td>
+                        <td>
+                            @Html.HiddenFor(modelItem => Model.ExchangeRateListModel[i].ExchangeRate_Used)
+                        </td>
+                        <td>
+                            @if (Model.ExchangeRateListModel[i].ExchangeRate_Used == false)
+                            {
+                            <div>
+                                <a onclick="showInPopup('@Url.Action("AddOrEdit", "ExchangeRate", new { id = Model.ExchangeRateListModel[i].ExchangeRate_Id, dateTime=Model.VoucherDate }, Context.Request.Scheme)','')" class="btn btn-info text-white" title="Edit Suffix Prefix"><i class="fa fa-pencil"></i> </a>
+
+
+                                @*<button type="button" value="Delete" class="btn btn-danger" onclick="deleteExchange(@Model.ExchangeRateListModel[i].ExchangeRate_Id,@Model.VoucherDate)"><i class="fa fa-trash"></i></button>*@
+                                <form asp-action="Delete" asp-route-id="@Model.ExchangeRateListModel[i].ExchangeRate_Id" asp-route-datetime="@Model.VoucherDate" onsubmit="return jQueryAjaxDelete(this)" class="d-inline">
+                                    <input type="hidden" asp-for="@Model.ExchangeRateListModel[i].ExchangeRate_Id" />
+                                    <input type="hidden" asp-for="@Model.VoucherDate" />
+                                    
+                                        <button type="submit" value="Delete" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                    
+                                </form>
+                            </div>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+   
+</div>
+<script type="text/javascript">
+
+    //function deleteExchange(id,date) {
+
+    //            try {
+
+    //        $.ajax({
+    //            type: 'POST',
+    //            url: '/ExchangeRate/Delete',
+    //            dataType: "JSON",
+    //            data: {
+    //                Id: id,
+    //                dateTime:date
+    //            },
+
+    //            success: function (res) {
+
+    //                if (res.isSuccess != undefined && res.isSuccess == false) {
+    //                    toastr.warning(res.message);
+    //                } else
+    //                    if (res.isValid) {
+    //                        $('#view-all').html(res.html)
+
+    //                    }
+    //                    else
+    //                        toastr.warning('Error');
+    //            },
+    //            error: function (err) {
+    //                console.log(err)
+    //            }
+    //        })
+    //                //to prevent default form submit event
+    //                return false;
+    //            } catch (ex) {
+    //        console.log(ex)
+    //    }
+
+    //}
+
+
+            $(document).ready(function () {
+                $('input[name="VoucherDate"]').datepicker({
+                    dateFormat: "@ViewBag.DateFormat",
+                    minDate: 0,
+                    showOtherMonths: true,
+                    firstDay: 1
+                });
+            });
+</script>

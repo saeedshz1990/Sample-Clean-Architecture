@@ -1,0 +1,54 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model IEnumerable<Demo.Web.Models.Companies.CompanyListModel>
+
+
+<div class="col-md-12">
+    <h1 class="text-center"><i class="fas fa-comments-dollar text-success"></i> @localizer["PageTitle"] </h1>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.BusinessName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AliasName)
+                </th>
+              
+
+                <th>
+                    <a onclick="showInPopup('@Url.Action("AddOrEdit","Company",new {id=0},Context.Request.Scheme)','Company Information','@Url.Action("Close","Company",null,Context.Request.Scheme)')" class="btn btn-success text-white"><i class="fa fa-plus"></i></a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.BusinessName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.AliasName)
+    </td>
+    
+
+    <td>
+        <div>
+            <a onclick="showInPopup('@Url.Action("AddOrEdit","Company",new {id=item.CompanyId},Context.Request.Scheme)','Company Information')" class="btn btn-info text-white" title="Company Information"><i class="fa fa-pencil"></i> </a>
+            @*<form asp-action="Delete" asp-route-id="@item.CompanyId" onsubmit="return jQueryAjaxDelete(this)" class="d-inline">
+            <input type="hidden" asp-for="@item.CompanyId" />
+            <input type="submit" value="Delete" class="btn btn-danger"  />
+        </form>*@
+            <a onclick="showInPopup('@Url.Action("Index","CompanyUsers",new {id=item.CompanyId},Context.Request.Scheme)','Company Users')" class="btn btn-primary text-white" title="Company Users"><i class="fa fa-user"></i> </a>
+            @if (item.TransactionType == 2) {
+            <a onclick="showInPopup('@Url.Action("Index","CompanyFinancialCycle",new {id=item.CompanyId},Context.Request.Scheme)','Company Financial Cycle')" class="btn btn-dark text-white" title="Company Financial Cycle"><i class="fa fa-retweet"></i> </a>
+            }
+            <a onclick="showInPopup('@Url.Action("Index","CompanyBranch",new {id=item.CompanyId},Context.Request.Scheme)','Company Branch')" class="btn btn-danger text-white" title="Company Branch"><i class="fa fa-sitemap"></i> </a>
+
+        </div>
+    </td>
+</tr>
+}
+        </tbody>
+    </table>
+</div>

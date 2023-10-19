@@ -1,0 +1,67 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model IEnumerable<Demo.Web.Models.Companies.CompanyUserModel>
+
+
+<div class="col-md-12 ">
+    <h1 class="text-center"><i class="fas fa-comments-dollar text-success"></i> @localizer["PageTitle"] </h1>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserDescription)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CompanyUserStatus)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserStatus)
+                </th>
+
+                <th>
+                    <a onclick="showInPopupL2('@Url.Action("AddOrEdit","CompanyUsers",new {id=0,cId=ViewBag.Company_Id},Context.Request.Scheme)','New Company User')" class="btn btn-success text-white"><i class="fa fa-plus"></i></a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserDescription)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CompanyUserStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserStatus)
+                    </td>
+
+
+                    <td>
+                        <div>
+                            <a onclick="showInPopupL2('@Url.Action("AddOrEdit","CompanyUsers",new {id=item.CompanyUsers_Id,cId=item.Company_Id},Context.Request.Scheme)','Update Company User')" class="btn btn-info text-white" title="Edit Company User"><i class="fa fa-pencil"></i> </a>
+                            <a onclick="showInPopupL2('@Url.Action("Index","UserAccess",new {id=item.CompanyUsers_Id},Context.Request.Scheme)','User Access')" class="btn btn-primary text-white" title="User Access"><i class="fa fa-universal-access"></i> </a>
+                            <form asp-action="Delete" asp-route-id="@item.CompanyUsers_Id" asp-route-cid="@item.Company_Id" onsubmit="return jQueryAjaxDeleteL2(this)" class="d-inline">
+                                <input type="hidden" asp-for="@item.Company_Id" />
+                                <input type="hidden" asp-for="@item.CompanyUsers_Id" />
+                                @if (item.UserStatus == "Pending" || item.CompanyUserStatus == "Pending")
+                                {
+                                    <button type="submit" value="Delete" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                }
+                            </form>
+
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

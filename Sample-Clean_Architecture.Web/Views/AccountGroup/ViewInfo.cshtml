@@ -1,0 +1,76 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model Demo.Web.Models.Account.AccountGroupModel
+
+@{ Layout = null; }
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" disabled="disabled" />
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="Parent" class="control-label"></label>
+
+                    <select asp-for="Parent" class="form-control" asp-items="@ViewBag.AccountGroups" disabled="disabled"></select>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="Nature_Id" class="control-label"></label>
+
+                    <select asp-for="Nature_Id" class="form-control" asp-items="@ViewBag.Natures" disabled="disabled"></select>
+
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="Narration" class="control-label"></label>
+                    <input asp-for="Narration" class="form-control" disabled="disabled" />
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="GrossProfit" class="control-label"></label>
+                    <select asp-for="GrossProfit" class="form-control" disabled="disabled">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-8">
+
+                </div>
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-md-2 text-center">
+                    <input type="button" value="Close" class="btn btn-primary btn-block" onclick="jQueryAjaxCloseDialog()" />
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>

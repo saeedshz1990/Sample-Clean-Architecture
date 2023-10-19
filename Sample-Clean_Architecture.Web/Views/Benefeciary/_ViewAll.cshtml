@@ -1,0 +1,108 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model IEnumerable<Demo.Web.Models.Benefeciary.BenefeciaryModel>
+
+<div class="col-md-12">
+
+    <h1 class="text-center"><i class="fas fa-comments-dollar text-success"></i> @localizer["PageTitle"] </h1>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>
+
+                    @Html.DisplayNameFor(model => model.Beneficiary_Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Beneficiary_Mobile)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Beneficiary_Passport)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Beneficiary_IdNumber)
+                </th>
+                <th>
+
+                </th>
+
+                <th>
+                    <a onclick="showInPopup('@Url.Action("AddOrEdit","Benefeciary",new {id=0},Context.Request.Scheme)','New Benefeciary')" class="btn btn-success text-white"><i class="fa fa-plus"></i></a>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+
+                        @Html.DisplayFor(modelItem => item.Beneficiary_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Beneficiary_Mobile)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Beneficiary_Passport)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Beneficiary_IdNumber)
+                    </td>
+
+                    <td>
+                        @Html.HiddenFor(modelItem => item.Beneficiary_Id)
+                    </td>
+
+                    <td>
+                        <div>
+                            <a onclick="showInPopup('@Url.Action("AddOrEdit","Benefeciary",new {id=item.Beneficiary_Id},Context.Request.Scheme)','Benefeciary')" class="btn btn-info text-white" title="Edit Suffix Prefix"><i class="fa fa-pencil"></i> </a>
+                            @*<form asp-action="Delete" asp-route-id="@item.Beneficiary_Id" onsubmit="return jQueryAjaxDelete(this)" class="d-inline">
+            <input type="hidden" asp-for="@item.Beneficiary_Id" />
+            <button type="submit" value="Delete" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+        </form>*@
+                            <button type="submit" value="Delete" class="btn btn-danger" onclick="deleteBenfecioary(@item.Beneficiary_Id)"><i class="fa fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+<script type="text/javascript">
+            function deleteBenfecioary(id) {
+
+                try {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Benefeciary/Delete',
+                        dataType: "JSON",
+                        data: {
+                            Id: id
+                        },
+
+                        success: function (res) {
+
+                            if (res.isSuccess != undefined && res.isSuccess == false) {
+                                toastr.warning(res.message);
+                            }else
+                            if (res.isValid) {
+                                $('#view-all').html(res.html)
+
+                            }
+                            else
+                                toastr.warning('Error');
+                        },
+                        error: function (err) {
+                            console.log(err)
+                        }
+                    })
+                    //to prevent default form submit event
+                    return false;
+                } catch (ex) {
+                    console.log(ex)
+                }
+
+    }
+</script>

@@ -1,0 +1,103 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model Demo.Web.Models.ExchangeRate.ExchangeRateInfoModel
+
+
+@{ Layout = null;
+    ViewData["ButtonTitle"] = Model.ExchangeRate_Id > 0 ? "Update" : "Save";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="AddOrEdit" asp-route-id="@Model.ExchangeRate_Id" onsubmit="return jQueryAjaxPost(this);">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ExchangeRate_Id" />
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label asp-for="Currency_Id" class="control-label"></label>
+                            <select asp-for="Currency_Id" class="form-control select2" data-placeholder="select" asp-items="@ViewBag.Currencies"></select>
+                            <span asp-validation-for="Currency_Id" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="ExchangeRate_Date" class="control-label"></label>
+                        <input asp-for="ExchangeRate_Date" class="form-control" />
+                        <span asp-validation-for="ExchangeRate_Date" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Rate" class="control-label"></label>
+                        <input asp-for="Rate" class="form-control" />
+                        <span asp-validation-for="Rate" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="ExchangeRate_Narration" class="control-label"></label>
+                        <input asp-for="ExchangeRate_Narration" class="form-control" />
+                        <span asp-validation-for="ExchangeRate_Narration" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            @*<div class="form-group">
+            <div class="col-md-6 offset-md-3">
+                <input type="submit" value="Submit" class="btn btn-primary btn-block" />
+            </div>
+        </div>*@
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-8">
+                        <label class="control-label" style="color:@Model.OprMessage.Color">@Model.OprMessage.Message</label>
+                    </div>
+                    <div class="col-md-2">
+                        @*<input type="submit" value="Submit" class="btn btn-success btn-block" />*@
+                        <button type="submit" class="btn btn-success btn-block">@ViewData["ButtonTitle"]</button>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <input type="button" value="Close" class="btn btn-primary btn-block" onclick="jQueryAjaxCloseDialog('@Url.Action("Close","ExchangeRate",new {datetime=Model.ExchangeRate_Date },Context.Request.Scheme)')" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+
+            $(document).ready(function () {
+                if ($('.select2').length > 0) {
+                    $('.select2').each(function () {
+
+                        if ($(this).attr('data-select2-id') == undefined) {
+                            $(this).select2({
+                                placeholder: $(this).data('placeholder'),
+                            })
+                        }
+                    });
+                }
+
+                var dateToday = new Date('2000/01/01');
+                $('input[name="ExchangeRate_Date"]').datepicker({
+                    dateFormat: "@ViewBag.DateFormat",
+                    minDate: dateToday,
+                    showOtherMonths: true,
+                    firstDay: 1
+                });
+
+
+            });
+
+
+</script>

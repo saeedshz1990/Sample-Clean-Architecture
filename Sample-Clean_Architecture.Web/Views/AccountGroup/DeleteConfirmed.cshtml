@@ -1,0 +1,11 @@
+﻿@{ ViewData["Title"] = "Delete"; }
+@{ Layout = null; }
+
+<h1>Delete</h1>
+
+<h3>@ViewBag.ConfirmMessage</h3>
+<form asp-action="DeleteConfirmed" asp-route-id="@ViewBag.accountGroup_Id" onsubmit="return jQueryAjaxPost(this);">
+  
+    <input type="submit" value="Delete" class="btn btn-danger" /> |
+    <a asp-action="Index">Back to List</a>
+</form>

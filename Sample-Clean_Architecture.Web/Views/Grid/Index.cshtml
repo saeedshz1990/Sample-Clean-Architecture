@@ -1,0 +1,120 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model IEnumerable<Demo.Web.Models.Grid.GridModel>
+
+
+@{
+    IEnumerable<SelectListItem> categories = (IEnumerable<SelectListItem>)ViewBag.Categories;
+    IEnumerable<SelectListItem> accountGroups = (IEnumerable<SelectListItem>)ViewBag.AccountGroups;
+
+
+}
+
+<div class="col-md-12">
+    <h1 class="text-center"><i class="fas fa-comments-dollar text-success"></i> @localizer["PageTitle"] </h1>
+    <form asp-action="Index">
+        <table class="table" id="mainTable">
+            <thead class="thead-light">
+                <tr>
+
+                    <th></th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AccountGroup_Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AuthorName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Category_Id)
+                    </th>
+                    <th>
+
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @*@foreach (var item in Model)*@
+                @for (int i = 0; i < Model.Count(); i++)
+                {
+                    <tr>
+
+                        <td>
+                            @*<input asp-for="@item.Id" type="hidden" class="form-control" />*@
+                            @Html.HiddenFor(modelItem => modelItem.ToList()[i].Id)
+                        </td>
+
+                        <td>
+                            @*<select asp-for="@item.AccountGroup_Id" class="form-control" asp-items="@accountGroups" onfocus="initRow(this,@item.Id)"></select>*@
+                            @Html.DropDownListFor(modelItem => modelItem.ToList()[i].AccountGroup_Id, accountGroups, new { @class = "form-control", @onfocus = "initRow(this," + Model.ToList()[i].Id + ")" })
+                        </td>
+                        <td>
+                            @*<input asp-for="@item.Name" class="form-control" />*@
+                            @Html.TextBoxFor(modelItem => modelItem.ToList()[i].Name, new { @class = "form-control" })
+                        </td>
+                        <td>
+                            @*<input asp-for="@item.AuthorName" class="form-control" onchange="setDropdown(this.value)" />*@
+                            @Html.TextBoxFor(modelItem => modelItem.ToList()[i].AuthorName, new { @class = "form-control", @onchange = "setDropdown(this.value)" })
+                        </td>
+                        <td>
+                            @*<select asp-for="@item.Category_Id"  class="form-control" asp-items="@categories"></select>*@
+                            @Html.DropDownListFor(modelItem => modelItem.ToList()[i].Category_Id, categories, new { @class = "form-control" })
+                        </td>
+                        <td>
+                            <a class="btnDelete">x</a>
+                        </td>
+                        <td>
+                            @Html.HiddenFor(modelItem => modelItem.ToList()[i].Status)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+        <input type="submit" />
+    </form>
+</div>
+<script type="text/javascript">
+    $("#mainTable").on('click', '.btnDelete', function () {
+        var row = $(this).closest('tr');
+        $(row).find("td:eq(6) input[type='hidden']").val('2');
+        // $(this).closest('tr').remove();
+        $(row).hide();
+
+    });
+    function setDropdown(val) {
+        alert(val);
+
+    }
+    function initRow(ctrl, id) {
+
+        if (id == 0) {
+            var row = $(ctrl).closest("TR");
+            var rowClone = row.clone();
+            $(ctrl).attr('onfocus', 'initRow(this, -1)');
+            $(rowClone).find("td:eq(1) select").attr('onfocus', 'initRow(this, 0)');
+            var rowCount = $('#mainTable >tbody >tr').length;
+            var colCount = $(rowClone).children('td').length;
+            debugger;
+            for (var i = 0; i < colCount; i++) {
+                var element = $(rowClone).find("td:eq(" + i + ")").html();
+                var id = $(element).attr('id');
+                if (id != undefined && id.indexOf('__') != -1) {
+                    var newId = 'z' + rowCount + '__' + id.substr(id.indexOf("__") + 2);
+                    var name = $(element).attr('name');
+                    var newName = '[' + rowCount + '].' + name.substr(name.indexOf("]") + 2);
+                    element = element.replace(id, newId);
+                    element = element.replace(name, newName);
+                }
+                $(rowClone).find("td:eq(" + i + ")").html(element);
+            }
+            $('#mainTable').find('tbody').append(rowClone);
+
+        }
+    }
+</script>
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Demo.Web.Models.Companies.CompanyUserModel>
+@{ Layout = null; }
+@{ ViewData["Title"] = "Index"; }
+<div class="card">
+    <div class="card-body">
+        <div id="view-allL2">
+            @await Html.PartialAsync("_ViewAll", Model)
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-8">
+
+        </div>
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-2 text-center">
+            <input type="button" value="Close" class="btn btn-primary btn-block" onclick="jQueryAjaxCloseDialog()" />
+        </div>
+    </div>
+</div>
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

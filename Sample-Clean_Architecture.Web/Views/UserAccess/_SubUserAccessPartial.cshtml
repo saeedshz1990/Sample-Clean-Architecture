@@ -1,0 +1,36 @@
+﻿@using DumiSoft.Web.Models.UserAccess;
+
+@{ 
+    Layout = null;
+    ViewData["CountChildrent"] = Model.List != null ? ((IEnumerable<dynamic>)Model.List).Where(u => u.ParentId == Model.UserAccess.Id).Count() : 0;
+}
+
+<li>
+    <div class="form-group">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="userAccess@(Model.UserAccess.Id)" name="userAccess[@(Model.UserAccess.Id)]">
+            <label class="form-check-label" for="userAccess@(Model.UserAccess.Id)">@(Model.UserAccess.Title)</label>
+        </div>
+        @if((int)ViewData["CountChildrent"] > 0)
+        {
+            <a href="javascript:void(0);" class="collaspse-icon text-black-50">
+                <i class="fa fa-minus"></i>
+            </a>
+        }
+    </div>
+    @if (@Model.List != null && @Model.List.Count > 0)
+    {
+        <ul style="list-style: none; padding-left: 15px;">
+            @foreach (UserAccessModel userAccess in Model.List)
+            {
+                @if (userAccess.ParentId == Model.UserAccess.Id)
+                {
+                    @Html.Partial("_SubUserAccessPartial", new { UserAccess = userAccess, List = Model.List })
+                }
+            }
+        </ul>
+    }
+
+</li>
+
+

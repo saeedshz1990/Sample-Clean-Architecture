@@ -1,0 +1,431 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model Demo.Web.Models.Account.AccountModel
+@using Demo.Application.Services.Account.Commands.AddNewAccountGroup;
+
+@{
+    Layout = null;
+    ViewData["ButtonTitle"] = Model.Ledger_Id > 0 ? "Update" : "Save";
+    //int Selected_AccountGroup_Id = Model.AccountGroup_Id;
+}
+<form asp-action="AddOrEdit" asp-route-id="@Model.Ledger_Id" onsubmit="return jQueryAjaxPost(this);">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" id="Ledger_Id" value="@Model.Ledger_Id" />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Name</label>
+                <input asp-for="Ledger_Name" type="text" class="form-control" placeholder="Please fill name" autofocus />
+                <span asp-validation-for="Ledger_Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Ledger Code</label>
+                <input asp-for="Ledger_Code" type="text" class="form-control only-integer" placeholder="Please fill ledger code" />
+                <span asp-validation-for="Ledger_Code" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Priority in printing</label>
+                <input type="text" class="form-control only-integer" placeholder="Please fill priority in printing" />
+                <span class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Currency</label>
+                <select asp-for="Currency_Id" class="form-control" asp-items="@ViewBag.CurrencyCompanies" readonly>
+                </select>
+                <span asp-validation-for="Currency_Id" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Account Group</label>
+                <select asp-for="AccountGroup_Id" class="form-control" asp-items="@ViewBag.AccountGroups">
+                    <option value="">Please select account group</option>
+                </select>
+                <span asp-validation-for="AccountGroup_Id" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Narration</label>
+                <textarea asp-for="LedgerDetails_Narration" rows="2" class="form-control only-integer" placeholder="Please fill narration"></textarea>
+                <span asp-validation-for="LedgerDetails_Narration" class="text-danger"></span>
+            </div>
+        </div>
+        @*<div id="info-customer" class="col-md-12" style="display: none">*@
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Mailing name</label>
+                    <input asp-for="LedgerDetails_MailingName" type="text" class="form-control" placeholder="Please fill mailing name" />
+                    <span asp-validation-for="LedgerDetails_MailingName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Branch</label>
+                    <input asp-for="LedgerDetails_BankBranchName" type="text" class="form-control" placeholder="Please fill branch" />
+                    <span asp-validation-for="LedgerDetails_BankBranchName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Address</label>
+                    <textarea asp-for="LedgerDetails_Address" rows="2" class="form-control" placeholder="Please fill address"></textarea>
+                    <span asp-validation-for="LedgerDetails_Address" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input asp-for="LedgerDetails_Email" type="email" class="form-control" placeholder="Please fill email" />
+                    <span asp-validation-for="LedgerDetails_Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Mobile</label>
+                    <input asp-for="LedgerDetails_Mobile1" type="text" class="form-control" placeholder="Please fill mobile" />
+                    <span asp-validation-for="LedgerDetails_Mobile1" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Second mobile</label>
+                    <input asp-for="LedgerDetails_Mobile2" type="text" class="form-control" placeholder="Please fill second mobile" />
+                    <span asp-validation-for="LedgerDetails_Mobile2" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input asp-for="LedgerDetails_Phone" type="text" class="form-control" placeholder="Please fill phone" />
+                    <span asp-validation-for="LedgerDetails_Phone" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group" style="margin-top: 2rem">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" asp-for="Ledger_BillByBill">
+                        <label class="custom-control-label" asp-for="Ledger_BillByBill">Bill by bill</label>
+                    </div>
+                    <span asp-validation-for="Ledger_BillByBill" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Fax</label>
+                    <input asp-for="LedgerDetails_Fax" type="text" class="form-control" placeholder="Please fill fax" />
+                    <span asp-validation-for="LedgerDetails_Fax" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Contact Person</label>
+                    <input asp-for="LedgerDetails_ContactPerson" type="text" class="form-control" placeholder="Please fill contact person" />
+                    <span asp-validation-for="LedgerDetails_ContactPerson" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Credit limit</label>
+                    <input asp-for="LedgerDetails_CreditLimit" type="text" class="form-control only-float" placeholder="Please fill credit limit" />
+                    <span asp-validation-for="LedgerDetails_CreditLimit" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>CST</label>
+                    <input asp-for="LedgerDetails_CST" type="text" class="form-control" placeholder="Please fill cst" />
+                    <span asp-validation-for="LedgerDetails_CST" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>TIN</label>
+                    <input asp-for="LedgerDetails_TIN" type="text" class="form-control" placeholder="Please fill tin" />
+                    <span asp-validation-for="LedgerDetails_TIN" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>PAN</label>
+                    <input asp-for="LedgerDetails_PAN" type="text" class="form-control" placeholder="Please fill pan" />
+                    <span asp-validation-for="LedgerDetails_PAN" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <h4>Bank Details</h4>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>IBAN</label>
+                    <input asp-for="LedgerDetails_BankIBAN" type="text" class="form-control" placeholder="Please fill iban" />
+                    <span asp-validation-for="LedgerDetails_BankIBAN" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Branch name</label>
+                    <input asp-for="LedgerDetails_BankBranchName" type="text" class="form-control" placeholder="Please fill branch name" />
+                    <span asp-validation-for="LedgerDetails_BankBranchName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Branch code</label>
+                    <input asp-for="LedgerDetails_BankBranchCode" type="text" class="form-control" placeholder="Please fill branch code" />
+                    <span asp-validation-for="LedgerDetails_BankBranchCode" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Swift code</label>
+                    <input asp-for="LedgerDetails_BankSwiftCode" type="text" class="form-control" placeholder="Please fill swift code" />
+                    <span asp-validation-for="LedgerDetails_BankSwiftCode" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>A/C no</label>
+                    <input asp-for="LedgerDetails_BankAccountNumber" type="text" class="form-control" placeholder="Please fill account number" />
+                    <span asp-validation-for="LedgerDetails_BankAccountNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Cheque on name</label>
+                    <input asp-for="LedgerDetails_BankNameOnCheque" type="text" class="form-control" placeholder="Please fill cheque on name" />
+                    <span asp-validation-for="LedgerDetails_BankNameOnCheque" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <h4>Default terms</h4>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Ship to</label>
+                    <textarea asp-for="LedgerDetails_ShipTo" rows="2" class="form-control" placeholder="Please fill ship to"></textarea>
+                    <span asp-validation-for="LedgerDetails_ShipTo" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Term & Conditions</label>
+                    <select asp-for="@Model.TermsAndCondition_Id" class="form-control" asp-items="@ViewBag.TermsAndConditions">
+                    </select>
+                    <span asp-validation-for="TermsAndCondition_Id" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        @*</div>*@
+        @*<div id="info-bank" class="col-md-12" style="display: none">*@
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Bank Details</h4>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Bank name</label>
+                    <input asp-for="LedgerBank_BankName" type="text" class="form-control" placeholder="Please fill bank name" />
+                    <span asp-validation-for="LedgerBank_BankName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Account name</label>
+                    <input asp-for="LedgerBank_AccountName" type="text" class="form-control" placeholder="Please fill account name" />
+                    <span asp-validation-for="LedgerBank_AccountName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Branch name</label>
+                    <input asp-for="LedgerBank_BranchName" type="text" class="form-control" placeholder="Please fill branch name" />
+                    <span asp-validation-for="LedgerBank_BranchName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Branch code</label>
+                    <input asp-for="LedgerBank_BranchCode" type="text" class="form-control" placeholder="Please fill branch code" />
+                    <span asp-validation-for="LedgerBank_BranchCode" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Account no</label>
+                    <input asp-for="LedgerBank_AccountNumber" type="text" class="form-control" placeholder="Please fill account number" />
+                    <span asp-validation-for="LedgerBank_AccountNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Swift code</label>
+                    <input asp-for="LedgerBank_Swift" type="text" class="form-control" placeholder="Please fill swift code" />
+                    <span asp-validation-for="LedgerBank_Swift" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Header note</label>
+                    <textarea asp-for="LedgerBank_HeaderNote" rows="2" class="form-control" placeholder="Please fill header note"></textarea>
+                    <span asp-validation-for="LedgerBank_HeaderNote" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>footer note</label>
+                    <textarea asp-for="LedgerBank_FooterNote" rows="2" class="form-control" placeholder="Please fill footer note"></textarea>
+                    <span asp-validation-for="LedgerBank_FooterNote" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        @*</div>*@
+        @*<div class="col-md-2"></div>
+        <div class="col-md-8 text-center">
+        <button type="submit" class="btn btn-success btn-block">@ViewData["ButtonTitle"]</button>
+        </div>*@
+
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-8">
+                <label class="control-label" style="color:@Model.OprMessage.Color">@Model.OprMessage.Message</label>
+            </div>
+            <div class="col-md-2">
+
+                <button type="submit" class="btn btn-success btn-block">@ViewData["ButtonTitle"]</button>
+
+            </div>
+            <div class="col-md-2 text-center">
+                <input type="button" value="Close" class="btn btn-primary btn-block" onclick="jQueryAjaxCloseDialog('@Url.Action("Close","AccountGroup",null,Context.Request.Scheme)')" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@*<script>
+    "use strict";
+
+    $(document).ready(function () {
+
+        ChangeAccountGroup($('#AccountGroup_Id').val());
+
+        $('#save-account-ledger-form').submit(function (e) {
+            e.preventDefault();
+
+            $('#save-account-ledger-form button[type="submit"]').prop('disabled', true);
+
+            var id = $('#Ledger_Id').val();
+            var name = $('#Ledger_Name').val();
+            var code = $('#Ledger_Code').val();
+            var currency_id = $('#Currency_Id').val();
+            var account_group_id = $('#Selected_AccountGroup_Id').val();
+            var narration = $('#LedgerDetails_Narration').val();
+
+            if (name.length < 2) {
+                toastr.warning('Please fill name');
+                $('#Ledger_Name').focus();
+                $('#save-account-ledger-form button[type="submit"]').prop('disabled', false);
+            }
+            else {
+
+                $.ajax({
+                    url: '/Account/Save',
+                    type: "POST",
+                    dataType: "JSON",
+                    async: 'true',
+                    data: {
+                        Ledger_Id: id,
+                        Ledger_Name: name,
+                        AccountGroup_Id: account_group_id,
+                        Ledger_Code: code,
+                        Currency_Id: currency_id.trim() != '' ? currency_id : 0,
+                        Ledger_BillByBill: false,
+                        Ledger_Status: 1,
+                        LedgerBank_BankName: account_group_id == 28 ? $('#LedgerBank_BankName').val() : '',
+                        LedgerBank_BranchName: account_group_id == 28 ? $('#LedgerBank_BranchName').val() : '',
+                        LedgerBank_BranchCode: account_group_id == 28 ? $('#LedgerBank_BranchCode').val() : '',
+                        LedgerBank_AccountNumber: account_group_id == 28 ? $('#LedgerBank_AccountNumber').val() : '',
+                        LedgerBank_AccountName: account_group_id == 28 ? $('#LedgerBank_AccountName').val() : '',
+                        LedgerBank_IBAN: account_group_id == 28 ? $('#LedgerBank_IBAN').val() : '',
+                        LedgerBank_Swift: account_group_id == 28 ? $('#LedgerBank_Swift').val() : '',
+                        LedgerBank_HeaderNote: account_group_id == 28 ? $('#LedgerBank_HeaderNote').val() : '',
+                        LedgerBank_FooterNote: account_group_id == 28 ? $('#LedgerBank_FooterNote').val() : '',
+                        LedgerDetails_CreditLimit: 0,
+                        LedgerDetails_CreditPeriod: 0,
+                        LedgerDetails_MailingName: [22, 26].includes(account_group_id) ? $('#LedgerDetails_MailingName').val() : '',
+                        LedgerDetails_Branch: [22, 26].includes(account_group_id) ? $('#LedgerDetails_Branch').val() : '',
+                        LedgerDetails_Email: [22, 26].includes(account_group_id) ? $('#LedgerDetails_Email').val() : '',
+                        LedgerDetails_Address: [22, 26].includes(account_group_id) ? $('#LedgerDetails_Address').val() : '',
+                        LedgerDetails_ContactPerson: [22, 26].includes(account_group_id) ? $('#LedgerDetails_ContactPerson').val() : '',
+                        LedgerDetails_Mobile1: [22, 26].includes(account_group_id) ? $('#LedgerDetails_Mobile1').val() : '',
+                        LedgerDetails_Mobile2: [22, 26].includes(account_group_id) ? $('#LedgerDetails_Mobile2').val() : '',
+                        LedgerDetails_Phone: [22, 26].includes(account_group_id) ? $('#LedgerDetails_Phone').val() : '',
+                        LedgerDetails_Fax: [22, 26].includes(account_group_id) ? $('#LedgerDetails_Fax').val() : '',
+                        LedgerDetails_Narration: narration,
+                        LedgerDetails_BankIBAN: [22, 26].includes(account_group_id) ? $('#LedgerDetails_BankIBAN').val() : '',
+                        LedgerDetails_BankBranchName: [22, 26].includes(account_group_id) ? $('#LedgerDetails_BankBranchName').val() : '',
+                        LedgerDetails_BankBranchCode: [22, 26].includes(account_group_id) ? $('#LedgerDetails_BankBranchCode').val() : '',
+                        LedgerDetails_BankSwiftCode: [22, 26].includes(account_group_id) ? $('#LedgerDetails_BankSwiftCode').val() : '',
+                        LedgerDetails_BankAccountNumber: [22, 26].includes(account_group_id) ? $('#LedgerDetails_BankAccountNumber').val() : '',
+                        LedgerDetails_BankNameOnCheque: [22, 26].includes(account_group_id) ? $('#LedgerDetails_BankNameOnCheque').val() : '',
+                        LedgerDetails_ShipTo: [22, 26].includes(account_group_id) ? $('#LedgerDetails_ShipTo').val() : '',
+                        TermsAndCondition_Id: [22, 26].includes(account_group_id) ? $('#TermsAndCondition_Id').val() : 0,
+                        LedgerDetails_CST: [22, 26].includes(account_group_id) ? $('#LedgerDetails_CST').val() : '',
+                        LedgerDetails_TIN: [22, 26].includes(account_group_id) ? $('#LedgerDetails_TIN').val() : '',
+                        LedgerDetails_VAT: [22, 26].includes(account_group_id) ? $('#LedgerDetails_VAT').val() : '',
+                        LedgerDetails_PAN: [22, 26].includes(account_group_id) ? $('#LedgerDetails_PAN').val() : '',
+                    },
+                    error: function (error) {
+                        toastr.warning('Account saved failed! Please check fields and retry');
+                        $('#save-account-ledger-form button[type="submit"]').prop('disabled', false);
+                    },
+                    success: function (response) {
+
+                        if (response.isValid) {
+
+                            $('#save-account-ledger-form').parents().eq(3).modal('hide');
+                            $('#save-account-ledger-form').parents().eq(0).html('');
+                            toastr.success(response.message);
+                            $('#jstree-accunts').jstree('refresh');
+                        }
+                        else {
+                            toastr.warning(response.message);
+                        }
+
+                        $('#save-account-ledger-form button[type="submit"]').prop('disabled', false);
+                    }
+                });
+            }
+        });
+
+        $(document).on('change', '#Selected_AccountGroup_Id', function (e) {
+            e.preventDefault();
+
+            ChangeAccountGroup($(this).val());
+        });
+    });
+
+    function ChangeAccountGroup(account_group_id) {
+        switch (account_group_id) {
+            case '22': case '26':
+                $('#info-bank').fadeOut();
+                $('#info-customer').fadeIn();
+                break;
+            case '28':
+                $('#info-customer').fadeOut();
+                $('#info-bank').fadeIn();
+                break;
+            default:
+                $('#info-bank').fadeOut();
+                $('#info-customer').fadeOut();
+                break;
+        }
+    }
+</script>*@

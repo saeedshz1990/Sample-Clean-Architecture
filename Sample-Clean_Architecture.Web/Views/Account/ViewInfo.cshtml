@@ -1,0 +1,302 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model Demo.Web.Models.Account.AccountModel
+@using Demo.Application.Services.Account.Commands.AddNewAccountGroup;
+
+@{
+    Layout = null;
+   
+}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Name</label>
+                <input asp-for="Ledger_Name" type="text" class="form-control"  disabled="disabled" />
+                <span asp-validation-for="Ledger_Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Ledger Code</label>
+                <input asp-for="Ledger_Code" type="text" class="form-control only-integer"  disabled="disabled"/>
+                <span asp-validation-for="Ledger_Code" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Priority in printing</label>
+                <input type="text" class="form-control only-integer" disabled="disabled" />
+                <span class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Currency</label>
+                <select asp-for="Currency_Id" class="form-control" asp-items="@ViewBag.CurrencyCompanies" disabled="disabled">
+                </select>
+                <span asp-validation-for="Currency_Id" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Account Group</label>
+                <select asp-for="AccountGroup_Id" class="form-control" asp-items="@ViewBag.AccountGroups" disabled="disabled">
+                    <option value="">Please select account group</option>
+                </select>
+                <span asp-validation-for="AccountGroup_Id" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Narration</label>
+                <textarea asp-for="LedgerDetails_Narration" rows="2" class="form-control only-integer" disabled="disabled"></textarea>
+                <span asp-validation-for="LedgerDetails_Narration" class="text-danger"></span>
+            </div>
+        </div>
+        @*<div id="info-customer" class="col-md-12" style="display: none">*@
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Mailing name</label>
+                    <input asp-for="LedgerDetails_MailingName" type="text" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="LedgerDetails_MailingName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Branch</label>
+                    <input asp-for="LedgerDetails_BankBranchName" type="text" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="LedgerDetails_BankBranchName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Address</label>
+                    <textarea asp-for="LedgerDetails_Address" rows="2" class="form-control" disabled="disabled"></textarea>
+                    <span asp-validation-for="LedgerDetails_Address" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input asp-for="LedgerDetails_Email" type="email" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="LedgerDetails_Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Mobile</label>
+                    <input asp-for="LedgerDetails_Mobile1" type="text" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="LedgerDetails_Mobile1" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Second mobile</label>
+                    <input asp-for="LedgerDetails_Mobile2" type="text" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="LedgerDetails_Mobile2" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input asp-for="LedgerDetails_Phone" type="text" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="LedgerDetails_Phone" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group" style="margin-top: 2rem">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" asp-for="Ledger_BillByBill" disabled="disabled">
+                        <label class="custom-control-label" asp-for="Ledger_BillByBill">Bill by bill</label>
+                    </div>
+                    <span asp-validation-for="Ledger_BillByBill" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Fax</label>
+                    <input asp-for="LedgerDetails_Fax" type="text" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="LedgerDetails_Fax" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Contact Person</label>
+                    <input asp-for="LedgerDetails_ContactPerson" type="text" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="LedgerDetails_ContactPerson" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Credit limit</label>
+                    <input asp-for="LedgerDetails_CreditLimit" type="text" class="form-control only-float" disabled="disabled" />
+                    <span asp-validation-for="LedgerDetails_CreditLimit" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>CST</label>
+                    <input asp-for="LedgerDetails_CST" type="text" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="LedgerDetails_CST" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>TIN</label>
+                    <input asp-for="LedgerDetails_TIN" type="text" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="LedgerDetails_TIN" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>PAN</label>
+                    <input asp-for="LedgerDetails_PAN" type="text" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="LedgerDetails_PAN" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <h4>Bank Details</h4>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>IBAN</label>
+                    <input asp-for="LedgerDetails_BankIBAN" type="text" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="LedgerDetails_BankIBAN" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Branch name</label>
+                    <input asp-for="LedgerDetails_BankBranchName" type="text" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="LedgerDetails_BankBranchName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Branch code</label>
+                    <input asp-for="LedgerDetails_BankBranchCode" type="text" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="LedgerDetails_BankBranchCode" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Swift code</label>
+                    <input asp-for="LedgerDetails_BankSwiftCode" type="text" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="LedgerDetails_BankSwiftCode" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>A/C no</label>
+                    <input asp-for="LedgerDetails_BankAccountNumber" type="text" class="form-control" disabled="disabled"/>
+                    <span asp-validation-for="LedgerDetails_BankAccountNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Cheque on name</label>
+                    <input asp-for="LedgerDetails_BankNameOnCheque" type="text" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="LedgerDetails_BankNameOnCheque" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <h4>Default terms</h4>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Ship to</label>
+                    <textarea asp-for="LedgerDetails_ShipTo" rows="2" class="form-control" disabled="disabled"></textarea>
+                    <span asp-validation-for="LedgerDetails_ShipTo" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Term & Conditions</label>
+                    <select asp-for="@Model.TermsAndCondition_Id" class="form-control" asp-items="@ViewBag.TermsAndConditions" disabled="disabled">
+                    </select>
+                    <span asp-validation-for="TermsAndCondition_Id" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        @*</div>*@
+        @*<div id="info-bank" class="col-md-12" style="display: none">*@
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Bank Details</h4>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Bank name</label>
+                    <input asp-for="LedgerBank_BankName" type="text" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="LedgerBank_BankName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Account name</label>
+                    <input asp-for="LedgerBank_AccountName" type="text" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="LedgerBank_AccountName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Branch name</label>
+                    <input asp-for="LedgerBank_BranchName" type="text" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="LedgerBank_BranchName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Branch code</label>
+                    <input asp-for="LedgerBank_BranchCode" type="text" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="LedgerBank_BranchCode" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Account no</label>
+                    <input asp-for="LedgerBank_AccountNumber" type="text" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="LedgerBank_AccountNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Swift code</label>
+                    <input asp-for="LedgerBank_Swift" type="text" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="LedgerBank_Swift" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Header note</label>
+                    <textarea asp-for="LedgerBank_HeaderNote" rows="2" class="form-control" disabled="disabled"></textarea>
+                    <span asp-validation-for="LedgerBank_HeaderNote" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>footer note</label>
+                    <textarea asp-for="LedgerBank_FooterNote" rows="2" class="form-control" disabled="disabled"></textarea>
+                    <span asp-validation-for="LedgerBank_FooterNote" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+      
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-8">
+               
+            </div>
+            <div class="col-md-2">
+
+               
+
+            </div>
+            <div class="col-md-2 text-center">
+                <input type="button" value="Close" class="btn btn-primary btn-block" onclick="jQueryAjaxCloseDialog()" />
+            </div>
+        </div>
+    </div>
+
+

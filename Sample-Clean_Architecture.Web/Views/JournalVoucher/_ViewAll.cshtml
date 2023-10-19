@@ -1,0 +1,576 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model Demo.Web.Models.Voucher.JournalVoucherModel
+@{
+
+    IEnumerable<SelectListItem> accountLedgers = (IEnumerable<SelectListItem>)ViewBag.AccountLedgers;
+    IEnumerable<SelectListItem> projects = (IEnumerable<SelectListItem>)ViewBag.Projects;
+    IEnumerable<SelectListItem> branches = (IEnumerable<SelectListItem>)ViewBag.Branches;
+    IEnumerable<SelectListItem> types = (IEnumerable<SelectListItem>)ViewBag.Types;
+    IEnumerable<SelectListItem> drCrs = (IEnumerable<SelectListItem>)ViewBag.DrCr;
+    IEnumerable<SelectListItem> costCenters = (IEnumerable<SelectListItem>)ViewBag.CostCenters;
+    IEnumerable<SelectListItem> currencies = (IEnumerable<SelectListItem>)ViewBag.Currencies;
+
+}
+
+
+<div class="card">
+    <div class="card-body">
+        <div class="col-md-12">
+            @* <h1 class="text-center"><i class="fas fa-comments-dollar text-success"></i> @localizer["PageTitle"] </h1>*@
+            <form asp-action="Index" onsubmit="return jQueryAjaxPost(this);">
+                <input type="hidden" asp-for="Id"  />
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label asp-for="InvoiceNo" class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-8">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <input asp-for="InvoiceNo" class="form-control" readonly />
+                                    </div>
+
+                                    <a onclick="showInPopup('@Url.Action("VoucherList","JournalVoucher",new {id=0},Context.Request.Scheme)','Voucher List')" class="btn btn-success text-white"><i class="fa fa-plus"></i></a>
+                                    <span asp-validation-for="InvoiceNo" class="text-danger"></span>
+                                </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group  row">
+                            <label asp-for="RefNo" class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-8">
+                                <input asp-for="RefNo" class="form-control" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label asp-for="VoucherDate" class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-8">
+                                <input asp-for="VoucherDate" class="form-control" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label asp-for="Currency_Id" class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-8">
+                                <select asp-for="Currency_Id" class="form-control  select2" data-placeholder="select" asp-items="@ViewBag.Currencies"></select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label asp-for="RefNo2" class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-8">
+                                <input asp-for="RefNo2" class="form-control" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label asp-for="Branch_Id" class="col-sm-4 col-form-label"></label>
+                            <div class="col-sm-8">
+                                <select asp-for="Branch_Id" class="form-control" asp-items="@ViewBag.Branches"></select>
+                                <span asp-validation-for="Branch_Id" class="text-danger"></span>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label asp-for="Project_Id" class="col-sm-1 col-form-label"></label>
+                            <div class="col-sm-11">
+                                <select asp-for="Project_Id" class="form-control select2" data-placeholder="select" asp-items="@ViewBag.Projects"></select>
+                                <span asp-validation-for="Project_Id" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#voucher" role="tab" aria-controls="voucher" aria-selected="true">voucher</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#Other" role="tab" aria-controls="Other" aria-selected="false">Other</a>
+                    </li>
+
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="voucher" role="tabpanel" aria-labelledby="voucher-tab">
+                        <div class="row">
+
+                            <div class="divTable">
+                                <table class="table" id="mainTable">
+                                    <thead class="thead-light">
+                                        <tr class="clickableRow">
+
+                                            <th style="padding: 0px"></th>
+                                            <th style="width:30px">
+                                                @Html.DisplayNameFor(model => model.JournalVoucherContentModel.GetEnumerator().Current.No)
+                                            </th>
+                                            <th style="width:200px">
+                                                @Html.DisplayNameFor(model => model.JournalVoucherContentModel.GetEnumerator().Current.AccountLedger_Id)
+                                            </th>
+                                            <th>
+
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.JournalVoucherContentModel.GetEnumerator().Current.DrCr_Id)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.JournalVoucherContentModel.GetEnumerator().Current.Amount)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.JournalVoucherContentModel.GetEnumerator().Current.Currency_Id)
+
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.JournalVoucherContentModel.GetEnumerator().Current.ExchangeRate)
+
+                                            </th>
+
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.JournalVoucherContentModel.GetEnumerator().Current.ChequeNo)
+
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.JournalVoucherContentModel.GetEnumerator().Current.ChequeDate)
+
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.JournalVoucherContentModel.GetEnumerator().Current.Remark)
+
+                                            </th>
+
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.JournalVoucherContentModel.GetEnumerator().Current.CostCenter_Id)
+
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.JournalVoucherContentModel.GetEnumerator().Current.Type_Id)
+
+                                            </th>
+                                            <th style="padding: 0px"></th>
+                                            <th style="padding: 0px"></th>
+                                            <th style="width:30px"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @*@foreach (var item in Model)*@
+                                        @for (int i = 0; i < Model.JournalVoucherContentModel.Count(); i++)
+                                        {
+                                            <tr>
+
+                                                <td style="padding: 0px">
+                                                    @Html.HiddenFor(modelItem => modelItem.JournalVoucherContentModel[i].Id)
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(modelItem => modelItem.JournalVoucherContentModel[i].No, new { @class = "form-control", @readonly = "True", @disabled = "True" })
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownListFor(modelItem => modelItem.JournalVoucherContentModel[i].AccountLedger_Id, accountLedgers, new { @class = "form-control accountLedger select2", @onchange = "initRow(this," + Model.JournalVoucherContentModel.ToList()[i].Id + ")" })
+                                                </td>
+                                                <td>
+                                                    @*@Html.TextBoxFor(modelItem => modelItem.JournalVoucherContentModel[i].Balance, new { @class = "form-control", @readonly = "True", @disabled = "True" })*@
+                                                    <input type="button" value="Balance" class="form-control" />
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownListFor(modelItem => modelItem.JournalVoucherContentModel[i].DrCr_Id, drCrs, new { @class = "form-control", @onfocus = "rebuildDropdown(this)" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(modelItem => modelItem.JournalVoucherContentModel[i].Amount, new { @class = "form-control", @onchange = "setDropdown(this.value)" })
+                                                </td>
+
+                                                <td>
+                                                    @Html.DropDownListFor(modelItem => modelItem.JournalVoucherContentModel[i].Currency_Id, currencies, new { @class = "form-control" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(modelItem => modelItem.JournalVoucherContentModel[i].ExchangeRate, new { @class = "form-control" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(modelItem => modelItem.JournalVoucherContentModel[i].ChequeNo, new { @class = "form-control" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(modelItem => modelItem.JournalVoucherContentModel[i].ChequeDate, new { @class = "form-control", @datainputmask = "date" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(modelItem => modelItem.JournalVoucherContentModel[i].Remark, new { @class = "form-control" })
+                                                </td>
+
+                                                <td>
+                                                    @Html.DropDownListFor(modelItem => modelItem.JournalVoucherContentModel[i].CostCenter_Id, costCenters, new { @class = "form-control" })
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownListFor(modelItem => modelItem.JournalVoucherContentModel[i].Type_Id, types, new { @class = "form-control" })
+                                                </td>
+                                                <td style="padding: 0px">
+                                                    @Html.HiddenFor(modelItem => modelItem.JournalVoucherContentModel[i].RecStatus)
+                                                </td>
+                                                <td style="padding: 0px">
+                                                    @Html.HiddenFor(modelItem => modelItem.JournalVoucherContentModel[i].ExchangeRateOld)
+                                                    @Html.HiddenFor(modelItem => modelItem.JournalVoucherContentModel[i].Rate_Id)
+                                                </td>
+                                                <td style="text-align:center">
+                                                    <a class="btnDelete">x</a>
+                                                </td>
+
+                                            </tr>
+                                        }
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top:10px;margin-bottom:10px;padding:3px;background-color:#e9ecef">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-1">
+                                <input type="button" value="|<" onclick="loadVoucher('first')" />
+                            </div>
+                            <div class="col-md-1">
+                                <input type="button" value="<" onclick="loadVoucher('pre')" />
+                            </div>
+                            <div class="col-md-1">
+                                <input type="button" value=">" onclick="loadVoucher('next')" />
+                            </div>
+                            <div class="col-md-1">
+                                <input type="button" value=">|" onclick="loadVoucher('last')" />
+                            </div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6"></div>
+
+                            <div class="col-md-6">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <td>
+                                                Currncy
+                                            </td>
+                                            <td>
+                                                Debit
+                                            </td>
+                                            <td>
+                                                Credit
+                                            </td>
+                                            <td>
+                                                Closing
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                USD
+                                            </td>
+                                            <td>
+                                                1000
+                                            </td>
+                                            <td>
+                                                1000
+                                            </td>
+                                            <td>
+                                                0
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="Other" role="tabpanel" aria-labelledby="Other-tab">
+                        <div class="row">
+                            <div class="col-md-6" style="border-bottom: 1px solid #c1c1c1;">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <td>
+                                                File Name
+                                            </td>
+                                            <td>
+                                                View Date
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <input type="submit" class="btn btn-primary" value="Scan" />
+                                <input type="submit" class="btn btn-primary" value="Upload File" />
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label asp-for="PublicNotes" class="col-form-label"></label>
+                                    <textarea asp-for="PublicNotes" class="form-control" cols="50" rows="5"></textarea>
+                                </div>
+                            </div>
+                            @*<div class="col-md-4">
+                                                       <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <td>
+                                                    Currncy
+                                                </td>
+                                                <td>
+                                                    Debit
+                                                </td>
+                                                <td>
+                                                    Credit
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                </td>
+                                                <td>
+                                                </td>
+                                                <td>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>*@
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group ">
+                                    <label asp-for="Notes" class="col-form-label"></label>
+                                    <input asp-for="Notes" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                @*<div class="row">
+                                        <div class="form-group row">
+                                            <label class="col-sm-5 col-form-label">Debit Total</label>
+                                            <div class="col-sm-5">
+                                                <input class="form-control" />
+                                            </div>
+                                            <label class="col-sm-2 col-form-label">AED</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        Debit Total
+                                        <div class="form-group  row">
+                                            <label class="col-sm-5 col-form-label">Credit Total</label>
+                                            <div class="col-sm-5">
+                                                <input class="form-control" />
+                                            </div>
+                                            <label class="col-sm-2 col-form-label">AED</label>
+                                        </div>
+                                    </div>*@
+
+                                @*<div class="form-group  row">
+                                        <label class="col-sm-5 col-form-label">Templates</label>
+                                        <div class="col-sm-5">
+                                            <select class="form-control">
+                                                <option>Template 1</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-2 col-form-label">?</label>
+                                    </div>*@
+                                <div class="form-group ">
+                                    <label class="col-form-label">Templates</label>
+                                    <select class="form-control">
+                                        <option>Template 1</option>
+                                        <option>Template 2</option>
+                                        <option>Template 3</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="row">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <script type="text/javascript">
+            function loadVoucher(kind) {
+
+                try {
+                   
+                    $.ajax({
+                        type: 'POST',
+                        url: '/JournalVoucher/LoadVoucher',
+                        dataType: "JSON",
+                        data: {
+                            Id: "@ViewBag.JurnalVoucher_Id",
+                            navType: kind
+                        },
+                       
+                        success: function (res) {
+                           
+                            if (res.isSuccess != undefined && res.isSuccess == false) {
+                                toastr.warning(res.message);
+                            }else
+                            if (res.isValid) {
+                                $('#view-all').html(res.html)
+
+                            }
+                            else
+                                toastr.warning('Error');
+                        },
+                        error: function (err) {
+                            console.log(err)
+                        }
+                    })
+                    //to prevent default form submit event
+                    return false;
+                } catch (ex) {
+                    console.log(ex)
+                }
+
+            }
+           // var rowClone;
+            $("#mainTable").on('click', '.btnDelete', function () {
+                var row = $(this).closest('tr');
+                $(row).find("td:eq(13) input[type='hidden']").val('2');
+                // $(this).closest('tr').remove();
+                $(row).hide();
+
+            });
+            function setDropdown(val) {
+                return;
+                alert(val);
+
+            }
+           // var detachedMember;
+            function initRow(ctrl, id) {
+
+                if (id == 0) {
+                    var row = $(ctrl).closest("TR");
+                    var rowClone = row.clone();
+                    $(ctrl).attr('onchange', 'initRow(this, -1)');
+
+
+                    var opt = $(rowClone).find("td:eq(4) select").find('option').get(0);
+                    if ($(opt).val() != '0')
+                       $(rowClone).find("td:eq(4) select").prepend("<option value='' selected='selected'></option>");
+
+
+                    $(row).find("td:eq(2) select").find('option').get(0).remove();
+                    $(rowClone).find("td:eq(2) select").attr('onchange', 'initRow(this, 0)');
+                    $(rowClone).find("td:eq(2) select").next().remove();
+
+                    rowClone.removeAttr('data-select2-id');
+                    $(rowClone).find("td:eq(2) select").removeAttr('data-select2-id');
+                     $(rowClone).find("td:eq(2)").removeAttr('data-select2-id');
+                    $(rowClone).find("td:eq(2) select option").each(function () {
+
+                        $(this).removeAttr('data-select2-id');
+                    });
+
+                    $(rowClone).find("td:eq(2) select").removeClass('select2-hidden-accessible');
+                    var rowCount = $('#mainTable >tbody >tr').length;
+                    var colCount = $(rowClone).children('td').length;
+                    var preFix = 'JournalVoucherContentModel';
+                    for (var i = 0; i < colCount; i++) {
+                        var element = $(rowClone).find("td:eq(" + i + ")").html();
+                        var id = $(element).attr('id');
+
+                        if (id != undefined && id.indexOf('__') != -1) {
+                            var newId = preFix + rowCount + '__' + id.substr(id.indexOf("__") + 2);
+                            var name = $(element).attr('name');
+                            var newName = preFix+ '[' + rowCount + '].' + name.substr(name.indexOf("]") + 2);
+                            element = element.replace(id, newId);
+                            element = element.replace(name, newName);
+
+                        }
+                        $(rowClone).find("td:eq(" + i + ")").html(element);
+                    }
+                    $('#mainTable').find('tbody').append(rowClone);
+
+                    //if ($('.Select2').select2('val') == '0')
+                    //    $('.Select2').select2('val', '');
+                    //detachedMember= $('.accountLedger option[value="0"]').detach();
+
+                    reloadJVBodyElements();
+                }
+            }
+
+            //$('input[name="VoucherDate"]').daterangepicker({
+            //    singleDatePicker: true,
+            //    showDropdowns: true
+            //});
+            function rebuildDropdown(ctrl) {
+
+                $(ctrl).find('[value="0"]').remove();
+            }
+            function reloadJVBodyElements() {
+
+                $('#mainTable > tbody  > tr').each(function () {
+
+                    var row = $(this).closest("TR");
+                    var valSelected = $(row).find("td:eq(2) select").val();
+                    if (valSelected != '0') {
+                        var opt = $(row).find("td:eq(2) select").find('option').get(0);
+                        if ($(opt).val() == '0')
+                            $(opt).remove();
+                    }
+                });
+
+                if ($('.select2').length > 0) {
+                    $('.select2').each(function () {
+
+                        if ($(this).attr('data-select2-id') == undefined) {
+                            $(this).select2({
+                                placeholder: $(this).data('placeholder'),
+                            })
+                       }
+                    });
+                }
+
+
+
+                //$('[datainputmask="date"]').mask('0000/00/00');
+                $('[datainputmask="date"]').mask("@ViewBag.MaskDateFormat");
+                $('[datainputmask="date"]').attr('placeholder',"@ViewBag.MaskPlaceHolder");
+
+            }
+            $(document).ready(function () {
+              //  rowClone = $("#mainTable>tbody>tr:first");
+
+                reloadJVBodyElements();
+                var dateToday = new Date('2000/01/01');
+                $('input[name="VoucherDate"]').datepicker({
+                    dateFormat: "@ViewBag.DateFormat",
+                    minDate: dateToday,
+                    showOtherMonths: true,
+                    firstDay: 1
+                });
+            });
+        </script>
+        @*@section Scripts{
+                @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+            }*@
+    </div>
+</div>

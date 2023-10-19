@@ -7,4 +7,9 @@
     <RootNamespace>Sample_Clean_Architecture.Web</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Sample-Clean_Architecture.Application\Sample-Clean_Architecture.Application.csproj" />
+    <ProjectReference Include="..\Sample-Clean_Architecture.Common\Sample-Clean_Architecture.Common.csproj" />
+  </ItemGroup>
+
 </Project>

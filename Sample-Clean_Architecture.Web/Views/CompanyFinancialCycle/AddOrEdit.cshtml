@@ -1,0 +1,77 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model Demo.Web.Models.Companies.CompanyFinancialCycleModel
+
+@{ Layout = null; }
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="AddOrEdit" asp-route-id="@Model.FinancialCycle_Id" onsubmit="return jQueryAjaxPostL2(this);">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="FinancialCycle_Id" />
+            <input type="hidden" asp-for="Company_Id" />
+
+            <div class="form-group">
+                <label asp-for="FinancialCycle_Title" class="control-label"></label>
+                <input asp-for="FinancialCycle_Title" class="form-control" />
+                <span asp-validation-for="FinancialCycle_Title" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="FinancialCycle_FromDate" class="control-label"></label>
+                        <input asp-for="FinancialCycle_FromDate" class="form-control"  datainputmask="date" />
+                        <span asp-validation-for="FinancialCycle_FromDate" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="FinancialCycle_ToDate" class="control-label"></label>
+                        <input asp-for="FinancialCycle_ToDate" class="form-control"  datainputmask="date" />
+                        <span asp-validation-for="FinancialCycle_ToDate" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="FinancialCycle_isActive" class="control-label"></label>
+                        <input asp-for="FinancialCycle_isActive" type="checkbox" class="form-control" />
+                      
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-6 offset-md-3">
+                    <input type="submit" value="Submit" class="btn btn-primary btn-block" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var dateToday = new Date('2000/01/01');
+     $('[datainputmask="date"]').mask("@ViewBag.MaskDateFormat");
+          $('[datainputmask="date"]').attr('placeholder', "@ViewBag.MaskPlaceHolder");
+
+          $('input[name="FinancialCycle_FromDate"]').datepicker({
+                    dateFormat: "@ViewBag.DateFormat",
+              minDate: dateToday,
+                    showOtherMonths: true,
+                    firstDay: 1
+          });
+          $('input[name="FinancialCycle_ToDate"]').datepicker({
+                    dateFormat: "@ViewBag.DateFormat",
+                    minDate: dateToday,
+                    showOtherMonths: true,
+                    firstDay: 1
+                });
+      });
+
+</script>

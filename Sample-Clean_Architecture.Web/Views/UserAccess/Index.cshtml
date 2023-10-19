@@ -1,0 +1,98 @@
+﻿@{
+
+    Layout = null;
+}
+<style type="text/css">
+    .jstree-wholerow {
+        height: auto;
+        border: 0px;
+        
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+
+        <form asp-action="Index" onsubmit="return jQueryAjaxPostL2(this);">
+
+            <input type="hidden" name="selectedItems" id="selectedItems" />
+            <div id="jstree" class="divTree" >
+            </div>
+            <br />
+            <div class="form-group">
+                <div class="col-md-6 offset-md-3">
+                    <input type="submit" value="Submit" class="btn btn-primary btn-block" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@*<script src="~/js/custom.js"></script>*@
+<script type="text/javascript">
+    (function ($) {
+       // $('#jstree').jstree("deselect_all");
+       
+    })(jQuery);
+
+    $(function () {
+        
+        $('#jstree').on('changed.jstree', function (e, data) {
+            var i, j;
+            var selectedItems = [];
+            
+            for (i = 0, j = data.selected.length; i < j; i++) {
+
+                //Fetch the Id.
+                var id = data.selected[i];
+
+                //Remove the ParentId.
+                if (id.indexOf('-') != -1) {
+                    id = id.split("-")[1];
+                }
+
+                //Add the Node to the JSON Array.
+                selectedItems.push({
+                    text: data.instance.get_node(data.selected[i]).text,
+                    id: id,
+                    parent: data.node.parents[0]
+                });
+            }
+
+            var selectedNodes = $('#jstree').jstree("get_undetermined", true);
+            $.each(selectedNodes, function () {
+                selectedItems.push({
+                    text: this.text,
+                    id: this.id,
+                    parent: this.parents[0]
+                });
+            });
+            //Serialize the JSON Array and save in HiddenField.
+            $('#selectedItems').val(JSON.stringify(selectedItems));
+        }).jstree({
+            "checkbox": {
+                "keep_selected_style": false,
+                "cascade": 'up',
+                "three_state": true
+                
+            },
+            "plugins": ["state", "types", "wholerow", "sort", "unique", "checkbox"],
+            "core": {
+                "multiple": true,
+                "check_callback": false,
+                'data': {
+                    'url': '/UserAccess/GetTreeJson/'+ @ViewBag.CompanyUsers_Id,
+                    "type": "POST",
+                    "cache": false,
+                    "dataType": "json",
+                    "contentType": "application/json; charset=utf8"
+                },
+
+                'themes': {
+                    'variant': 'small'
+                }
+
+            }
+        })
+    });
+
+</script>

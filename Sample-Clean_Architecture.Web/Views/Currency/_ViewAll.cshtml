@@ -1,0 +1,50 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model IEnumerable<Demo.Web.Models.Currency.CurrencyModel>
+
+
+<div class="col-md-12">
+    <h1 class="text-center"><i class="fas fa-comments-dollar text-success"></i> @localizer["PageTitle"] </h1>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Currency_Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Currency_Symbol)
+                </th>
+                <th>
+
+                </th>
+                <th>
+                    <a onclick="showInPopup('@Url.Action("AddOrEdit","Currency",null,Context.Request.Scheme)','New Currency')" class="btn btn-success text-white"><i class="fa fa-plus"></i></a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Currency_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Currency_Symbol)
+                </td>
+                <td>
+                    @Html.HiddenFor(modelItem => item.Currency_Id)
+                </td>
+                <td>
+                    <div>
+                        <a onclick="showInPopup('@Url.Action("AddOrEdit","Currency",new {id=item.Currency_Id},Context.Request.Scheme)','Update Curenncy')" class="btn btn-info text-white" title="Edit Company"><i class="fa fa-pencil"></i> </a>
+                        @*<form asp-action="Delete" asp-route-id="@item.CompanyId" onsubmit="return jQueryAjaxDelete(this)" class="d-inline">
+                    <input type="hidden" asp-for="@item.CompanyId" />
+                    <input type="submit" value="Delete" class="btn btn-danger"  />
+                </form>*@
+                       
+                    </div>
+                </td>
+            </tr>}
+        </tbody>
+    </table>
+</div>

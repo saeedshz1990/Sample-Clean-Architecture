@@ -1,0 +1,31 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model DumiSoft.Common.Dtos.InFormAccess
+
+@{
+    ViewData["Title"] = @localizer["PageTitle"] + " - Index";
+}
+<div class="card">
+    <div class="card-body">
+        <div id="view-all">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="text-center"><i class="fas fa-comments-dollar text-success"></i> @localizer["PageTitle"] </h1>
+                </div>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-12 form-group pt-3">
+                            <input type="hidden" id="account_group_id" value="@ViewData["AccountGroupId"]" />
+                            <input id="search-account-ledger" class="form-control" placeholder="Plase enter customer name" />
+                        </div>
+                        <div class="col-md-12">
+                            @await Html.PartialAsync("_ViewAllPartial", Model)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9 pt-5">
+                    @await Html.PartialAsync("_ViewChildrenPartial")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

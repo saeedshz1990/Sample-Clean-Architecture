@@ -1,0 +1,39 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model IEnumerable<Demo.Web.Models.Companies.CompanyBranchModel>
+
+
+<div class="col-md-12 ">
+    <h1 class="text-center"><i class="fas fa-comments-dollar text-success"></i> @localizer["PageTitle"] </h1>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CompanyBranch_Title)
+                </th>
+               
+
+                <th>
+                    <a onclick="showInPopupL2('@Url.Action("AddOrEdit","CompanyBranch",new {id=0,cId=ViewBag.Company_Id},Context.Request.Scheme)','New Company Branch')" class="btn btn-success text-white"><i class="fa fa-plus"></i></a>
+                </th>
+            </tr>
+        </thead>
+        <tbody> 
+            @foreach (var item in Model)
+            {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.CompanyBranch_Title)
+    </td>
+  
+    <td>
+        <div>
+            <a onclick="showInPopupL2('@Url.Action("AddOrEdit","CompanyBranch",new {id=item.CompanyBranch_Id,cId=item.Company_Id},Context.Request.Scheme)','Update Company Branch')" class="btn btn-info text-white" title="Edit Company Branch"><i class="fa fa-pencil"></i> </a>
+            <a onclick="showInPopupL2('@Url.Action("Index","BranchUsers",new {id=item.CompanyBranch_Id,kind=1},Context.Request.Scheme)','Branch Users')" class="btn btn-primary text-white" title="Branch Users"><i class="fa fa-user"></i> </a>
+
+        </div>
+    </td>
+</tr>}
+        </tbody>
+    </table>
+</div>
+

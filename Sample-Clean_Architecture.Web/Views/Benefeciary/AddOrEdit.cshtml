@@ -1,0 +1,73 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@model Demo.Web.Models.Benefeciary.BenefeciaryInfoModel
+
+@{ Layout = null; }
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="AddOrEdit" asp-route-id="@Model.Beneficiary_Id" onsubmit="return jQueryAjaxPost(this);">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Beneficiary_Id" />
+            <input type="hidden" asp-for="Company_Id" />
+
+            <div class="row">
+                <div class="col-md-12">
+                    <label asp-for="Beneficiary_Name" class="control-label"></label>
+                    <input asp-for="Beneficiary_Name" class="form-control" />
+                    <span asp-validation-for="Beneficiary_Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Beneficiary_Mobile" class="control-label"></label>
+                        <input asp-for="Beneficiary_Mobile" class="form-control" />
+                        <span asp-validation-for="Beneficiary_Mobile" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Beneficiary_Passport" class="control-label"></label>
+                        <input asp-for="Beneficiary_Passport" class="form-control" />
+                        <span asp-validation-for="Beneficiary_Passport" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Beneficiary_IdNumber" class="control-label"></label>
+                        <input asp-for="Beneficiary_IdNumber"  class="form-control" />
+                        <span asp-validation-for="Beneficiary_IdNumber" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Beneficiary_RefNo" class="control-label"></label>
+                        <input asp-for="Beneficiary_RefNo" class="form-control" />
+                        <span asp-validation-for="Beneficiary_RefNo" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Beneficiary_Remark" class="control-label"></label>
+                        <input asp-for="Beneficiary_Remark" class="form-control" />
+                        <span asp-validation-for="Beneficiary_Remark" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6 offset-md-3">
+                    <input type="submit" value="Submit" class="btn btn-primary btn-block" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
