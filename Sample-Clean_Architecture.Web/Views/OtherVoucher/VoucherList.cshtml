@@ -1,5 +1,5 @@
 ﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
-@model Demo.Web.Models.Voucher.VoucherDialogModel
+@model Sample_Clean_Architecture.Web.Models.Voucher.VoucherDialogModel
 @{ Layout = null; }
 <div class="col-md-12 ">
     <form asp-action="VoucherList" asp-route-id="@Model.Id" onsubmit="return jQueryAjaxPost(this);">

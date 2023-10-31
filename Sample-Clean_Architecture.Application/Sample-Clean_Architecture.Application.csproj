@@ -1,30 +1,33 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <RootNamespace>Sample_Clean_Architecture.Application</RootNamespace>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<RootNamespace>Sample_Clean_Architecture.Application</RootNamespace>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\Account\" />
-    <Folder Include="Services\Common\" />
-    <Folder Include="Services\Beneficiary\" />
-    <Folder Include="Services\Companies\" />
-    <Folder Include="Services\CostCenter\" />
-    <Folder Include="Services\Currencies\" />
-    <Folder Include="Services\ExchangeRate\" />
-    <Folder Include="Services\MemoryCash\" />
-    <Folder Include="Services\Vouchers\" />
-    <Folder Include="Services\Users\" />
-    <Folder Include="Services\SuffixPrefix\" />
-    <Folder Include="Services\Project\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Sample-Clean_Architecture.Common\Sample-Clean_Architecture.Common.csproj" />
-    <ProjectReference Include="..\Sample-Clean_Architecture.Domain\Sample-Clean_Architecture.Domain.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Services\Account\" />
+		<Folder Include="Services\Common\" />
+		<Folder Include="Services\Beneficiary\" />
+		<Folder Include="Services\Companies\" />
+		<Folder Include="Services\CostCenter\" />
+		<Folder Include="Services\Currencies\" />
+		<Folder Include="Services\ExchangeRate\" />
+		<Folder Include="Services\MemoryCash\" />
+		<Folder Include="Services\Vouchers\" />
+		<Folder Include="Services\Users\" />
+		<Folder Include="Services\SuffixPrefix\" />
+		<Folder Include="Services\Project\" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="5.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Sample-Clean_Architecture.Common\Sample-Clean_Architecture.Common.csproj" />
+		<ProjectReference Include="..\Sample-Clean_Architecture.Domain\Sample-Clean_Architecture.Domain.csproj" />
+	</ItemGroup>
 
 </Project>

@@ -1,8 +1,6 @@
-﻿using Demo.Application.Services.Common.Queries.GetMenuItem;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Sample_Clean_Architecture.Application.Services.Common.Queries.GetMenuItem;
 using Sample_Clean_Architecture.Web.Utilities;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Sample_Clean_Architecture.Web.ViewComponents
 {

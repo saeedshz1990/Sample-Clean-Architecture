@@ -1,11 +1,6 @@
-﻿using Demo.Application.Interfaces.Contexts;
-using Demo.Common;
-using Demo.Common.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Sample_Clean_Architecture.Application.Interfaces.Contexts;
+using Sample_Clean_Architecture.Common;
+using Sample_Clean_Architecture.Common.Dtos;
 
 namespace Sample_Clean_Architecture.Application.Services.Currencies.Queries.GetCurrencies
 {
@@ -62,9 +57,9 @@ namespace Sample_Clean_Architecture.Application.Services.Currencies.Queries.GetC
     {
         public long Currency_Id { get; set; }
         public int Company_Id { get; set; }
-        public string Currency_Name { get; set; }
-        public string Currency_Symbol { get; set; }
-        public string Currency_Subunit { get; set; }
+        public string Currency_Name { get; set; }=string.Empty;
+        public string Currency_Symbol { get; set; } = string.Empty;
+        public string Currency_Subunit { get; set; } = string.Empty;
 
     }
 }

@@ -68,10 +68,10 @@ namespace Sample_Clean_Architecture.Application.Services.Vouchers.PaymentVoucher
     //    public InFormAccess InFormAccess { get; set; }
     //    public List<CurrencyCompany> CurrencyCompanyList { get; set; }
     //    public List<CompanyBranch> CompanyBranchList { get; set; }
-    //    public List<Demo.Application.Services.Vouchers.JournalVoucher.Queries.LoadJournalVoucher.Project> ProjectList { get; set; }
+    //    public List<Sample_Clean_Architecture.Application.Services.Vouchers.JournalVoucher.Queries.LoadJournalVoucher.Project> ProjectList { get; set; }
     //    public List<AccountLedger> AccountLedgerList { get; set; }
     //    public List<PaymentReceiptAccount> PaymentReceiptAccountList { get; set; }
-    //    public List<Demo.Application.Services.Vouchers.JournalVoucher.Queries.LoadJournalVoucher.CostCenter> CostCenterList { get; set; }
+    //    public List<Sample_Clean_Architecture.Application.Services.Vouchers.JournalVoucher.Queries.LoadJournalVoucher.CostCenter> CostCenterList { get; set; }
     //    public List<VoucherType> VoucherTypeList { get; set; }
 
     //    public PaymentVoucherLoadDto()
@@ -79,9 +79,9 @@ namespace Sample_Clean_Architecture.Application.Services.Vouchers.PaymentVoucher
     //        InFormAccess = new InFormAccess();
     //        CurrencyCompanyList = new List<CurrencyCompany>();
     //        CompanyBranchList = new List<CompanyBranch>();
-    //        ProjectList = new List<Demo.Application.Services.Vouchers.JournalVoucher.Queries.LoadJournalVoucher.Project>();
+    //        ProjectList = new List<Sample_Clean_Architecture.Application.Services.Vouchers.JournalVoucher.Queries.LoadJournalVoucher.Project>();
     //        AccountLedgerList = new List<AccountLedger>();
-    //        CostCenterList = new List<Demo.Application.Services.Vouchers.JournalVoucher.Queries.LoadJournalVoucher.CostCenter>();
+    //        CostCenterList = new List<Sample_Clean_Architecture.Application.Services.Vouchers.JournalVoucher.Queries.LoadJournalVoucher.CostCenter>();
     //        VoucherTypeList = new List<VoucherType>();
     //    }
 

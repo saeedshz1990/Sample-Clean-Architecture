@@ -1,11 +1,5 @@
-﻿using Demo.Application.Interfaces.Contexts;
-using Demo.Common.Dtos;
-using Demo.Domain.Entities.Companies;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Sample_Clean_Architecture.Application.Interfaces.Contexts;
+using Sample_Clean_Architecture.Common.Dtos;
 
 namespace Sample_Clean_Architecture.Application.Services.Companies.Queries.GetCompanyFinancialCycle
 {
@@ -23,24 +17,7 @@ namespace Sample_Clean_Architecture.Application.Services.Companies.Queries.GetCo
 
         public ResultDto<CompanyFinancialCycleDto> Execute(int Company_Id)
         {
-
-
             List<CompanyFinancialCycle_Dto> companyFinancialCycleLst = _context.Sp_CompanyFinancialCycle_List(Company_Id);
-
-            /*  List<CompanyFinancialCycleList_Dto> companyFinancialCycleLst = new List<CompanyFinancialCycleList_Dto>();
-              foreach (CompanyFinancialCycle companyFinancialCycle in companyFinancialCycles)
-              {
-                  companyFinancialCycleLst.Add(new CompanyFinancialCycleList_Dto()
-                  {
-                      Company_Id = companyFinancialCycle.Company_Id,
-                      FinancialCycle_FromDate = companyFinancialCycle.FinancialCycle_FromDate,
-                      FinancialCycle_Id = companyFinancialCycle.FinancialCycle_Id,
-                      FinancialCycle_isActive = companyFinancialCycle.FinancialCycle_isActive,
-                      FinancialCycle_Title = companyFinancialCycle.FinancialCycle_Title,
-                      FinancialCycle_ToDate = companyFinancialCycle.FinancialCycle_ToDate
-
-                  });
-              }*/
 
             return new ResultDto<CompanyFinancialCycleDto>()
             {

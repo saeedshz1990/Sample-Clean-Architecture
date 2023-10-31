@@ -1,13 +1,8 @@
-﻿using Demo.Application.Interfaces.Contexts;
-using Demo.Common;
-using Demo.Common.Dtos;
+﻿using Sample_Clean_Architecture.Application.Interfaces.Contexts;
 using Sample_Clean_Architecture.Application.Services.Vouchers.JournalVoucher.Queries.LoadJournalVoucher;
 using Sample_Clean_Architecture.Application.Services.Vouchers.PaymentVoucher.Queries.LoadPaymentlVoucher;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Sample_Clean_Architecture.Common;
+using Sample_Clean_Architecture.Common.Dtos;
 
 namespace Sample_Clean_Architecture.Application.Services.Vouchers.Remittance.Queries.LoadRemittance
 {

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Demo.Application.Interfaces.Contexts;
-using Demo.Application.Services.CostCenter.Commands.IAddNewCostCenterService;
-using Demo.Common;
-using Demo.Common.Dtos;
+﻿using Sample_Clean_Architecture.Application.Interfaces.Contexts;
+using Sample_Clean_Architecture.Common;
+using Sample_Clean_Architecture.Common.Dtos;
 
 namespace Sample_Clean_Architecture.Application.Services.CostCenter.Queries.GetCostCenters
 {

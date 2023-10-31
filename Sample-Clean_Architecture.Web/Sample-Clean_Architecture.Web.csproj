@@ -1,15 +1,30 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>Sample_Clean_Architecture.Web</RootNamespace>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Sample-Clean_Architecture.Application\Sample-Clean_Architecture.Application.csproj" />
-    <ProjectReference Include="..\Sample-Clean_Architecture.Common\Sample-Clean_Architecture.Common.csproj" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<RootNamespace>Sample_Clean_Architecture.Web</RootNamespace>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="HtmlTextWriter" Version="2.1.0" />
+		<PackageReference Include="jsTree" Version="3.1.1.2" />
+		<PackageReference Include="LazZiya.ExpressLocalization" Version="4.0.4" />
+		<PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="7.0.3" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+		<PackageReference Include="Nancy" Version="2.0.0" />
+		<PackageReference Include="PasswordGenerator" Version="2.0.5" />
+		<PackageReference Include="Serilog" Version="2.10.0" />
+		<PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
+		<PackageReference Include="Serilog.Settings.Configuration" Version="3.2.0" />
+		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.6.0" />
+		<PackageReference Include="ServiceStack.Interfaces" Version="5.12.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Sample-Clean_Architecture.Application\Sample-Clean_Architecture.Application.csproj" />
+		<ProjectReference Include="..\Sample-Clean_Architecture.Common\Sample-Clean_Architecture.Common.csproj" />
+		<ProjectReference Include="..\Sample-Clean_Architecture.Infrastructure\Sample-Clean_Architecture.Infrastructure.csproj" />
+		<ProjectReference Include="..\Sample-Clean_Architecture.Persistence\Sample-Clean_Architecture.Persistence.csproj" />
+	</ItemGroup>
 
 </Project>

@@ -1,8 +1,4 @@
-﻿using Demo.Common.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Sample_Clean_Architecture.Common.Dtos;
 
 namespace Sample_Clean_Architecture.Application.Services.Users.Queries.GetRoles
 {

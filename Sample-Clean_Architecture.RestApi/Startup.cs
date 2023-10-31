@@ -1,3 +1,4 @@
+using Microsoft.OpenApi.Models;
 using System.Globalization;
 
 namespace Sample_Clean_Architecture.RestApi
@@ -32,7 +33,7 @@ namespace Sample_Clean_Architecture.RestApi
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo.WebApi", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sample_Clean_Architecture.WebApi", Version = "v1" });
             });
         }
 
@@ -43,7 +44,7 @@ namespace Sample_Clean_Architecture.RestApi
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Demo.WebApi v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sample_Clean_Architecture.WebApi v1"));
             }
 
             app.UseRouting();

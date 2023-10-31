@@ -1,9 +1,7 @@
-﻿using Demo.Application.Interfaces.Contexts;
-using Demo.Common;
-using Demo.Common.Dtos;
+﻿using Sample_Clean_Architecture.Application.Interfaces.Contexts;
 using Sample_Clean_Architecture.Application.Services.CostCenter.Commands.AddNewCostCenter;
-using System;
-using System.Collections.Generic;
+using Sample_Clean_Architecture.Common;
+using Sample_Clean_Architecture.Common.Dtos;
 
 namespace Sample_Clean_Architecture.Application.Services.Project.Commands.AddNewProject
 {

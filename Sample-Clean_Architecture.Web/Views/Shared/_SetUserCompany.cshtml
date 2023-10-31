@@ -1,17 +1,17 @@
-﻿@    using Demo.Web.Models.Companies;
-@    using Demo.Web.Utilities;
-@    using Microsoft.AspNetCore.Http
+﻿@using Sample_Clean_Architecture.Web.Models.Companies;
+@using Sample_Clean_Architecture.Web.Utilities;
+@using Microsoft.AspNetCore.Http
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     UserCompaniesModel companyUsersModel = new UserCompaniesModel();
-    // Demo.Web.Utilities.SessionExtensions sessionExtensions = new Demo.Web.Utilities.SessionExtensions();
+    // Sample_Clean_Architecture.Web.Utilities.SessionExtensions sessionExtensions = new Sample_Clean_Architecture.Web.Utilities.SessionExtensions();
     ActiveUser activeUser = CurrentUser.Get();// SessionExtension.GetObject<ActiveUser>(@HttpContextAccessor.HttpContext.Session, "ActiveUser");
-    // companyUsersModel.UserBusiness = activeUser.UserInBusiness;
-    // companyUsersModel.CompanyUsers_Id = activeUser.CompanyUsers_Id;
+                                              // companyUsersModel.UserBusiness = activeUser.UserInBusiness;
+                                              // companyUsersModel.CompanyUsers_Id = activeUser.CompanyUsers_Id;
 
     var companyUserItems = activeUser.UserInBusiness
-   .Select(c => new SelectListItem { Value = c.CompanyUsers_Id.ToString(), Text = c.Company_BusinessName })
-   .ToList();
+           .Select(c => new SelectListItem { Value = c.CompanyUsers_Id.ToString(), Text = c.Company_BusinessName })
+           .ToList();
     var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}{Context.Request.QueryString}";
 }
 
@@ -20,7 +20,6 @@
           asp-controller="CompanyUsers"
           asp-action="SetUserInformation"
           asp-route-returnUrl="@returnUrl"
-          
           method="post"
           class="form-horizontal nav-link text-dark"
           role="form">

@@ -1,11 +1,6 @@
-﻿using Demo.Application.Interfaces.Contexts;
-using Demo.Common;
-using Demo.Common.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Sample_Clean_Architecture.Application.Interfaces.Contexts;
+using Sample_Clean_Architecture.Common;
+using Sample_Clean_Architecture.Common.Dtos;
 
 namespace Sample_Clean_Architecture.Application.Services.Companies.Commands.DeleteCompanyUser
 {

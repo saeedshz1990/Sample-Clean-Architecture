@@ -2859,7 +2859,7 @@ class Modal extends BaseComponent {
     EventHandler.off(this._element, EVENT_CLICK_DISMISS);
     EventHandler.off(this._dialog, EVENT_MOUSEDOWN_DISMISS);
 
-    this._queueCallback(() => this._hideModal(), this._element, isAnimated);
+    this._queueCallback(() => this._hiSample_Clean_Architecturedal(), this._element, isAnimated);
   }
 
   dispose() {
@@ -2967,7 +2967,7 @@ class Modal extends BaseComponent {
     }
   }
 
-  _hideModal() {
+  _hiSample_Clean_Architecturedal() {
     this._element.style.display = 'none';
 
     this._element.setAttribute('aria-hidden', true);
@@ -3671,7 +3671,7 @@ class Tooltip extends BaseComponent {
 
   dispose() {
     clearTimeout(this._timeout);
-    EventHandler.off(this._element.closest(SELECTOR_MODAL), EVENT_MODAL_HIDE, this._hideModalHandler);
+    EventHandler.off(this._element.closest(SELECTOR_MODAL), EVENT_MODAL_HIDE, this._hiSample_Clean_ArchitecturedalHandler);
 
     if (this.tip) {
       this.tip.remove();
@@ -3995,13 +3995,13 @@ class Tooltip extends BaseComponent {
       }
     });
 
-    this._hideModalHandler = () => {
+    this._hiSample_Clean_ArchitecturedalHandler = () => {
       if (this._element) {
         this.hide();
       }
     };
 
-    EventHandler.on(this._element.closest(SELECTOR_MODAL), EVENT_MODAL_HIDE, this._hideModalHandler);
+    EventHandler.on(this._element.closest(SELECTOR_MODAL), EVENT_MODAL_HIDE, this._hiSample_Clean_ArchitecturedalHandler);
 
     if (this._config.selector) {
       this._config = { ...this._config,

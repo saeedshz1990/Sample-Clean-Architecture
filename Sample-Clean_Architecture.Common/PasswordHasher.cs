@@ -31,8 +31,6 @@ namespace Sample_Clean_Architecture.Common
         private readonly int _requestedLength;
         private readonly int _iterCount;
 
-        public object KeyDerivationPrf { get; private set; }
-
         public PasswordHasher()
         {
             _useAspNetCore = true;
@@ -91,7 +89,7 @@ namespace Sample_Clean_Architecture.Common
 
             var outputBytes = new byte[headerByteLength + salt.Length + subkey.Length];
 
-            outputBytes[0] = _formatMarker;
+            outputBytes[0] = (byte)_formatMarker;
 
             if (_includeHeaderInfo)
             {
@@ -136,7 +134,7 @@ namespace Sample_Clean_Architecture.Common
             if (decodedHashedPassword.Length == 0) return false;
 
             // Read the format marker          
-            var verifyMarker = decodedHashedPassword[0];
+            var verifyMarker = (byte)decodedHashedPassword[0];
             if (_formatMarker != verifyMarker) return false;
 
             try
@@ -144,7 +142,7 @@ namespace Sample_Clean_Architecture.Common
                 if (_includeHeaderInfo)
                 {
                     // Read header information
-                    var shaUInt = ReadNetworkByteOrder(decodedHashedPassword, 1);
+                    var shaUInt = (uint)ReadNetworkByteOrder(decodedHashedPassword, 1);
                     var verifyPrf = shaUInt switch
                     {
                         0 => KeyDerivationPrf.HMACSHA1,
@@ -215,16 +213,16 @@ namespace Sample_Clean_Architecture.Common
             if (a == null && b == null) return true;
             if (a == null || b == null || a.Length != b.Length) return false;
             var areSame = true;
-            for (var i = 0; i < a.Length; i++) { areSame &= a[i] == b[i]; }
+            for (var i = 0; i < a.Length; i++) { areSame &= (a[i] == b[i]); }
             return areSame;
         }
 
         private static uint ReadNetworkByteOrder(byte[] buffer, int offset)
         {
-            return (uint)buffer[offset + 0] << 24
-                | (uint)buffer[offset + 1] << 16
-                | (uint)buffer[offset + 2] << 8
-                | buffer[offset + 3];
+            return ((uint)(buffer[offset + 0]) << 24)
+                | ((uint)(buffer[offset + 1]) << 16)
+                | ((uint)(buffer[offset + 2]) << 8)
+                | ((uint)(buffer[offset + 3]));
         }
 
         private static void WriteNetworkByteOrder(byte[] buffer, int offset, uint value)

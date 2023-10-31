@@ -1,21 +1,14 @@
-﻿using Demo.Application.Interfaces.Contexts;
-using Demo.Application.Interfaces.FacadPatterns;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Demo.Application.Services.Users.Commands.UserChange;
-using Sample_Clean_Architecture.Application.Services.Companies.Queries.GetCompanies;
-using Sample_Clean_Architecture.Application.Services.Companies.Queries.GetCompanyFinancialCycle;
-using Sample_Clean_Architecture.Application.Services.Companies.Commands.AddNewCompanyFinancialCycle;
+﻿using Sample_Clean_Architecture.Application.Interfaces.Contexts;
+using Sample_Clean_Architecture.Application.Interfaces.FacadPatterns;
 using Sample_Clean_Architecture.Application.Services.Companies.Commands.AddNewCompany;
-using Sample_Clean_Architecture.Application.Services.Companies.Queries.GetCompanyBranches;
-using Sample_Clean_Architecture.Application.Services.Companies.Commands.DeleteCompanyUser;
 using Sample_Clean_Architecture.Application.Services.Companies.Commands.AddNewCompanyBranch;
-using Sample_Clean_Architecture.Application.Services.Companies.Queries.GetCompanyUsers;
+using Sample_Clean_Architecture.Application.Services.Companies.Commands.AddNewCompanyFinancialCycle;
 using Sample_Clean_Architecture.Application.Services.Companies.Commands.AddNewCompanyUser;
+using Sample_Clean_Architecture.Application.Services.Companies.Commands.DeleteCompanyUser;
+using Sample_Clean_Architecture.Application.Services.Companies.Queries.GetCompanies;
+using Sample_Clean_Architecture.Application.Services.Companies.Queries.GetCompanyBranches;
+using Sample_Clean_Architecture.Application.Services.Companies.Queries.GetCompanyFinancialCycle;
+using Sample_Clean_Architecture.Application.Services.Companies.Queries.GetCompanyUsers;
 
 namespace Sample_Clean_Architecture.Application.Services.Companies.FacadPattern
 {

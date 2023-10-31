@@ -10,7 +10,7 @@ else
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>@ViewData["Title"] - Demo.Web</title>
+        <title>@ViewData["Title"] - Sample_Clean_Architecture.Web</title>
         <!-- Favicon -->
         <link rel="shortcut icon" href="~/media/image/favicon.png" />
 
@@ -22,11 +22,20 @@ else
         <link rel="stylesheet" href="~/vendors/datepicker/daterangepicker.css">
         <!-- App styles -->
         <link rel="stylesheet" href="~/css/app.css" type="text/css">
-
+        <!-- Font Awesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+              rel="stylesheet" />
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+              rel="stylesheet" />
+        <!-- MDB -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css"
+              rel="stylesheet" />
         <script src="~/vendors/bundle.js"></script>
         <link href="~/css/jsTree/themes/default/style.css" rel="stylesheet" />
         <link href="~/css/custom.css" rel="stylesheet" />
-
+        <script type="text/javascript"
+                src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
     </head>
     <body>
         <!-- begin::page loader-->
@@ -694,7 +703,7 @@ else
                                 $(this).addClass('active');
 
                             window.history.pushState($(this).text(), "Title", $(this).attr('href'));
-                            $('head title').html($(this).text() + ' - Demo.Web');
+                            $('head title').html($(this).text() + ' - Sample_Clean_Architecture.Web');
                         }
                     });
                 }

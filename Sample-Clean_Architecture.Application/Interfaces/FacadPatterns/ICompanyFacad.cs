@@ -1,4 +1,14 @@
-﻿namespace Sample_Clean_Architecture.Application.Interfaces.FacadPatterns
+﻿using Sample_Clean_Architecture.Application.Services.Companies.Commands.AddNewCompany;
+using Sample_Clean_Architecture.Application.Services.Companies.Commands.AddNewCompanyBranch;
+using Sample_Clean_Architecture.Application.Services.Companies.Commands.AddNewCompanyFinancialCycle;
+using Sample_Clean_Architecture.Application.Services.Companies.Commands.AddNewCompanyUser;
+using Sample_Clean_Architecture.Application.Services.Companies.Commands.DeleteCompanyUser;
+using Sample_Clean_Architecture.Application.Services.Companies.Queries.GetCompanies;
+using Sample_Clean_Architecture.Application.Services.Companies.Queries.GetCompanyBranches;
+using Sample_Clean_Architecture.Application.Services.Companies.Queries.GetCompanyFinancialCycle;
+using Sample_Clean_Architecture.Application.Services.Companies.Queries.GetCompanyUsers;
+
+namespace Sample_Clean_Architecture.Application.Interfaces.FacadPatterns
 {
     public interface ICompanyFacad
     {

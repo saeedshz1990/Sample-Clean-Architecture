@@ -1,6 +1,5 @@
-﻿using Demo.Application.Interfaces.Contexts;
-using Demo.Common.Dtos;
-using System.Collections.Generic;
+﻿using Sample_Clean_Architecture.Application.Interfaces.Contexts;
+using Sample_Clean_Architecture.Common.Dtos;
 
 namespace Sample_Clean_Architecture.Application.Services.Beneficiary.Queries.GetBenefeciaries
 {

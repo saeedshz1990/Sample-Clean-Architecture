@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace Sample_Clean_Architecture.Web
 {
@@ -37,7 +38,7 @@ namespace Sample_Clean_Architecture.Web
                         logger.AddFile("logs/logtext.txt");
                         logger.AddSerilog();
                     });
-                    webBuilder.UseStartup("Demo.Web");
+                    webBuilder.UseStartup("Sample_Clean_Architecture.Web");
                     webBuilder.UseIISIntegration();
                     webBuilder.UseContentRoot(Directory.GetCurrentDirectory());
 

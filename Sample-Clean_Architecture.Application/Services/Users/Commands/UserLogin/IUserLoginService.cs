@@ -1,15 +1,8 @@
-﻿using Demo.Application.Interfaces.Contexts;
-using Demo.Common;
-using Demo.Common.Dtos;
-using Demo.Domain.Entities.Commons;
-using Demo.Domain.Entities.Users;
+﻿using Sample_Clean_Architecture.Application.Interfaces.Contexts;
 using Sample_Clean_Architecture.Application.Services.Common.Commands.UserProfile;
 using Sample_Clean_Architecture.Application.Services.Common.Queries.GetMenuItem;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Sample_Clean_Architecture.Common;
+using Sample_Clean_Architecture.Common.Dtos;
 
 namespace Sample_Clean_Architecture.Application.Services.Users.Commands.UserLogin
 {
